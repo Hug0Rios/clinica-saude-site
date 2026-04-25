@@ -165,3 +165,35 @@ Este projeto é fornecido como base para desenvolvimento. Sinta-se livre para us
 ---
 
 **Desenvolvido com ❤️ para a Clínica Vitalis**
+
+## Equipe
+
+* Arthur Vieira
+* Felipe Alves
+* Hugo Rios
+* Mateus Coelho
+
+---
+
+## Como executar
+
+1. Clone o repositório:
+
+```bash
+git clone URL_DO_REPOSITORIO
+```
+
+2. Acesse o diretório do projeto:
+
+```bash
+cd clinica-saude-site/frontend
+```
+
+3. Abra o arquivo `index.html` em um navegador de sua preferência
+
+---
+
+## Observações
+
+Projeto acadêmico com foco na prática de desenvolvimento web e colaboração em equipe.
+>>>>>>> 7f04c4ec63d9d674ce13d21f254bc99dc01eb7e6

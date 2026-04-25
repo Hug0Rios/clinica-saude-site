@@ -305,14 +305,35 @@ function exibirResumo(dados) {
         resumoAgendamento.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }, 300);
     
-    // Mostrar alerta
-    alert(`✅ Consulta agendada com sucesso!\n\n${dados.profissional}\n${dados.data} às ${dados.horario}\n\nUm email de confirmação foi enviado para ${dados.email}`);
+    // Mostrar modal de confirmação
+    exibirModalConfirmacao(dados);
     
     // Limpar formulário e resetar
     formulario.reset();
     horarioSelecionado.value = '';
     horariosContainer.innerHTML = '<p class="horario-placeholder">Selecione uma data</p>';
     mensagemAgendamento.innerHTML = '';
+}
+
+// ========== MODAL DE CONFIRMAÇÃO ==========
+function exibirModalConfirmacao(dados) {
+    const modal = document.getElementById('modalConfirmacao');
+    document.getElementById('modalProfissional').textContent = dados.profissional;
+    document.getElementById('modalDataHora').textContent = `${dados.data} às ${dados.horario}`;
+    document.getElementById('modalEmail').textContent = dados.email;
+    
+    modal.classList.remove('hidden');
+    
+    // Fechar modal automaticamente após 8 segundos
+    setTimeout(() => {
+        fecharModalConfirmacao();
+    }, 8000);
+}
+
+// ========== FECHAR MODAL ==========
+function fecharModalConfirmacao() {
+    const modal = document.getElementById('modalConfirmacao');
+    modal.classList.add('hidden');
 }
 
 // ========== INICIALIZAÇÃO ==========

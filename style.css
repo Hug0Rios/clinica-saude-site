@@ -354,6 +354,37 @@ html {
     box-shadow: var(--shadow);
 }
 
+/* Seção de Contato Simples (sem formulário) */
+.contact-info-simple {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+}
+
+.contact-item {
+    background: var(--white);
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: var(--shadow);
+    border-top: 5px solid var(--primary-color);
+    transition: all 0.3s ease;
+}
+
+.contact-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+.contact-item strong {
+    color: var(--secondary-color);
+    font-size: 1.05rem;
+}
+
+.contact-item a {
+    display: inline-block;
+    margin-top: 0.8rem;
+}
+
 .contact-info h3, .contact-form h3 {
     color: var(--primary-color);
     margin-bottom: 1.5rem;
@@ -1309,5 +1340,165 @@ footer p {
 
     .resumo-rodape {
         padding: 1rem;
+    }
+}
+
+/* ===== MODAL DE CONFIRMAÇÃO ===== */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    animation: fadeIn 0.3s ease-out;
+}
+
+.modal.hidden {
+    display: none;
+}
+
+.modal-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(4px);
+}
+
+.modal-content {
+    background: linear-gradient(135deg, #ffffff 0%, #f5f9f7 100%);
+    border-radius: 16px;
+    padding: 3rem 2rem;
+    max-width: 500px;
+    width: 90%;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    position: relative;
+    z-index: 1001;
+    animation: slideUp 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    border: 2px solid var(--primary-color);
+    text-align: center;
+}
+
+.modal-header {
+    margin-bottom: 1.5rem;
+}
+
+.modal-icon {
+    font-size: 4rem;
+    color: var(--primary-color);
+    animation: scaleIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.modal-content h2 {
+    color: var(--secondary-color);
+    font-size: 1.8rem;
+    margin-bottom: 2rem;
+    font-weight: 700;
+}
+
+.modal-body {
+    margin-bottom: 2rem;
+}
+
+.modal-info {
+    background: var(--light-bg);
+    border-radius: 10px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    border-left: 4px solid var(--primary-color);
+}
+
+.modal-info p {
+    margin: 0.5rem 0;
+    color: var(--secondary-color);
+    font-size: 1rem;
+}
+
+.modal-info p strong {
+    color: var(--primary-color);
+    font-size: 1.1rem;
+}
+
+.data-hora {
+    font-weight: 600 !important;
+    font-size: 1.05rem !important;
+}
+
+.modal-message {
+    background: #f0f8f5;
+    border-radius: 10px;
+    padding: 1.5rem;
+    border: 1px solid #d0e8e0;
+}
+
+.modal-message p {
+    color: #333;
+    margin: 0;
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+.modal-footer {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-top: 2rem;
+}
+
+.modal-footer .btn {
+    min-width: 120px;
+    padding: 12px 30px;
+    font-weight: 600;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes scaleIn {
+    from {
+        opacity: 0;
+        transform: scale(0.3);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@media (max-width: 768px) {
+    .modal-content {
+        padding: 2rem 1.5rem;
+        max-width: 90%;
+    }
+
+    .modal-content h2 {
+        font-size: 1.5rem;
+    }
+
+    .modal-icon {
+        font-size: 3rem;
     }
 }

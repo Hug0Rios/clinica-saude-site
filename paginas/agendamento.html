@@ -188,6 +188,29 @@
         </div>
     </section>
 
+    <!-- MODAL DE CONFIRMAÇÃO -->
+    <div id="modalConfirmacao" class="modal hidden">
+        <div class="modal-overlay"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <i class="fas fa-check-circle modal-icon"></i>
+            </div>
+            <h2>Consulta agendada com sucesso!</h2>
+            <div class="modal-body">
+                <div class="modal-info">
+                    <p><strong id="modalProfissional"></strong></p>
+                    <p id="modalDataHora" class="data-hora"></p>
+                </div>
+                <div class="modal-message">
+                    <p>Um email de confirmação foi enviado para <strong id="modalEmail"></strong></p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" onclick="fecharModalConfirmacao()">OK</button>
+            </div>
+        </div>
+    </div>
+
     <!-- INFORMAÇÕES ÚTEIS -->
     <section class="informacoes-uteis">
         <div class="container">

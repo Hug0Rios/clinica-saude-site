@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Clínica Vitalis - Sua Saúde é Nossa Prioridade</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="/style.css">
 </head>
+
 <body>
     <!-- Navegação -->
     <nav class="navbar">
@@ -16,7 +18,7 @@
             </div>
             <ul class="nav-menu">
                 <li><a href="#home" class="nav-link">Home</a></li>
-                <li><a href="#sobre" class="nav-link">Sobre</a></li>
+                <li><a href="/paginas/sobre_clinica.htm" class="nav-link">Sobre</a></li>
                 <li><a href="#profissionais" class="nav-link">Profissionais</a></li>
                 <li><a href="#servicos" class="nav-link">Serviços</a></li>
                 <li><a href="#contato" class="nav-link">Contato</a></li>
@@ -36,7 +38,8 @@
             <p>Cuidando da sua saúde com excelência e dedicação</p>
             <div class="cta-buttons">
                 <button class="btn btn-primary" onclick="scroll_to('contato')">Agendar Consulta</button>
-                <button class="btn btn-secondary" onclick="scroll_to('sobre')">Saiba Mais</button>
+                <button class="btn btn-secondary" onclick="window.location.href='sobre_clinica.html'">Saiba
+                    Mais</button>
             </div>
         </div>
     </section>
@@ -64,32 +67,6 @@
             </div>
         </div>
     </section>
-
-    <!-- SOBRE A CLÍNICA -->
-    <section id="sobre" class="about">
-        <div class="container">
-            <h2>Sobre a Clínica Vitalis</h2>
-            <div class="about-content">
-                <div class="about-text">
-                    <h3>Nossa Apresentação</h3>
-                    <p>A Clínica Vitalis é uma instituição de saúde moderna, comprometida em oferecer atendimento de qualidade com profissionais especializados e equipamentos de última geração.</p>
-                    
-                    <h3>Missão</h3>
-                    <p>Proporcionar cuidados de saúde integrais, acessíveis e humanizados, contribuindo para o bem-estar e qualidade de vida de nossos pacientes.</p>
-                    
-                    <h3>Nossos Diferenciais</h3>
-                    <ul class="diferentials">
-                        <li>✓ Profissionais altamente qualificados</li>
-                        <li>✓ Atendimento humanizado e personalizado</li>
-                        <li>✓ Infraestrutura moderna</li>
-                        <li>✓ Agende suas consultas online</li>
-                        <li>✓ Aceita diversos planos de saúde</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </section>
-
     <!-- PROFISSIONAIS -->
     <section id="profissionais" class="professionals">
         <div class="container">
@@ -99,37 +76,43 @@
                     <div class="professional-avatar">👨‍⚕️</div>
                     <h3>Dr. Carlos Silva</h3>
                     <p class="specialty">Clínico Geral</p>
-                    <p class="description">Formado há 15 anos, especialista em atendimento clínico com experiência em medicina preventiva.</p>
+                    <p class="description">Formado há 15 anos, especialista em atendimento clínico com experiência em
+                        medicina preventiva.</p>
                 </div>
                 <div class="professional-card">
                     <div class="professional-avatar">👩‍⚕️</div>
                     <h3>Dra. Marina Costa</h3>
                     <p class="specialty">Cardiologista</p>
-                    <p class="description">Especialista em cardiologia com pós-graduação em hemodinâmica. Atende consultas e realiza procedimentos.</p>
+                    <p class="description">Especialista em cardiologia com pós-graduação em hemodinâmica. Atende
+                        consultas e realiza procedimentos.</p>
                 </div>
                 <div class="professional-card">
                     <div class="professional-avatar">👨‍⚕️</div>
                     <h3>Dr. Fernando Oliveira</h3>
                     <p class="specialty">Dentista</p>
-                    <p class="description">Especialista em odontologia estética e implantodontia com 12 anos de experiência.</p>
+                    <p class="description">Especialista em odontologia estética e implantodontia com 12 anos de
+                        experiência.</p>
                 </div>
                 <div class="professional-card">
                     <div class="professional-avatar">👩‍⚕️</div>
                     <h3>Dra. Ana Paula</h3>
                     <p class="specialty">Fisioterapeuta</p>
-                    <p class="description">Especialista em reabilitação e tratamento de lesões ortopédicas. Atendimento individual e em grupo.</p>
+                    <p class="description">Especialista em reabilitação e tratamento de lesões ortopédicas. Atendimento
+                        individual e em grupo.</p>
                 </div>
                 <div class="professional-card">
                     <div class="professional-avatar">👨‍⚕️</div>
                     <h3>Dr. Roberto Santos</h3>
                     <p class="specialty">Dermatologista</p>
-                    <p class="description">Especialista em dermatologia clínica e estética. Tratamentos personalizados para sua pele.</p>
+                    <p class="description">Especialista em dermatologia clínica e estética. Tratamentos personalizados
+                        para sua pele.</p>
                 </div>
                 <div class="professional-card">
                     <div class="professional-avatar">👩‍⚕️</div>
                     <h3>Dra. Juliana Martins</h3>
                     <p class="specialty">Nutricionista</p>
-                    <p class="description">Nutrição clínica e funcional. Acompanhamento personalizado para reeducação alimentar.</p>
+                    <p class="description">Nutrição clínica e funcional. Acompanhamento personalizado para reeducação
+                        alimentar.</p>
                 </div>
             </div>
         </div>
@@ -143,32 +126,38 @@
                 <div class="service-item">
                     <div class="service-image">🩺</div>
                     <h3>Clínica Geral</h3>
-                    <p>Atendimento completo com diagnóstico e tratamento de doenças diversas. Consultas de rotina e acompanhamento de crônicos.</p>
+                    <p>Atendimento completo com diagnóstico e tratamento de doenças diversas. Consultas de rotina e
+                        acompanhamento de crônicos.</p>
                 </div>
                 <div class="service-item">
                     <div class="service-image">❤️</div>
                     <h3>Cardiologia</h3>
-                    <p>Avaliação cardiovascular, tratamento de hipertensão, arritmias e doenças do coração. Eletrocardiograma disponível.</p>
+                    <p>Avaliação cardiovascular, tratamento de hipertensão, arritmias e doenças do coração.
+                        Eletrocardiograma disponível.</p>
                 </div>
                 <div class="service-item">
                     <div class="service-image">🦷</div>
                     <h3>Odontologia</h3>
-                    <p>Limpeza, restauração, implantes, tratamento de cárie e estética dental. Ambiente acolhedor e equipamento moderno.</p>
+                    <p>Limpeza, restauração, implantes, tratamento de cárie e estética dental. Ambiente acolhedor e
+                        equipamento moderno.</p>
                 </div>
                 <div class="service-item">
                     <div class="service-image">💪</div>
                     <h3>Fisioterapia</h3>
-                    <p>Reabilitação de lesões, RPG, reeducação postural e alongamento. Tratamento de dores musculares e articulares.</p>
+                    <p>Reabilitação de lesões, RPG, reeducação postural e alongamento. Tratamento de dores musculares e
+                        articulares.</p>
                 </div>
                 <div class="service-item">
                     <div class="service-image">🧴</div>
                     <h3>Dermatologia</h3>
-                    <p>Tratamento de acne, manchas, rugas e outras condições de pele. Procedimentos estéticos seguros e eficazes.</p>
+                    <p>Tratamento de acne, manchas, rugas e outras condições de pele. Procedimentos estéticos seguros e
+                        eficazes.</p>
                 </div>
                 <div class="service-item">
                     <div class="service-image">🥗</div>
                     <h3>Nutrição</h3>
-                    <p>Acompanhamento nutricional personalizado para emagrecimento, ganho de massa e reeducação alimentar.</p>
+                    <p>Acompanhamento nutricional personalizado para emagrecimento, ganho de massa e reeducação
+                        alimentar.</p>
                 </div>
             </div>
         </div>
@@ -183,7 +172,8 @@
                     <h3>Informações de Contato</h3>
                     <p class="info-item">
                         <strong>📍 Endereço:</strong><br>
-                        <a href="https://maps.google.com/maps?q=R.+Halfeld,+1179,+Centro,+Juiz+de+Fora,+MG,+36015-360" target="_blank" class="location-btn">
+                        <a href="https://maps.google.com/maps?q=R.+Halfeld,+1179,+Centro,+Juiz+de+Fora,+MG,+36015-360"
+                            target="_blank" class="location-btn">
                             R. Halfeld, 1179 - Centro<br>
                             Juiz de Fora - MG, 36015-360<br>
                             📌 Clique para abrir no mapa
@@ -204,8 +194,7 @@
                     </p>
                     <p class="info-item">
                         <strong>🕐 Horário de Funcionamento:</strong><br>
-                        Segunda a Sexta: 7h - 18h<br>
-                        Sábado: 8h - 12h<br>
+                        Segunda a Sext 2h<br>
                         Domingo: Fechado
                     </p>
                 </div>
@@ -224,14 +213,18 @@
                             <option>Dermatologia</option>
                             <option>Nutrição</option>
                         </select>
-                        
-                        <label for="data-consulta" style="display: block; margin-top: 20px; font-weight: 600; color: var(--secondary-color); margin-bottom: 0.5rem;">📅 Data da Consulta</label>
+
+                        <label for="data-consulta"
+                            style="display: block; margin-top: 20px; font-weight: 600; color: var(--secondary-color); margin-bottom: 0.5rem;">📅
+                            Data da Consulta</label>
                         <input type="date" id="data-consulta" style="margin-top: 0;">
-                        
-                        <label for="horarios" style="display: block; margin-top: 20px; font-weight: 600; color: var(--secondary-color); margin-bottom: 1rem;">🕐 Horário Disponível</label>
+
+                        <label for="horarios"
+                            style="display: block; margin-top: 20px; font-weight: 600; color: var(--secondary-color); margin-bottom: 1rem;">🕐
+                            Horário Disponível</label>
                         <div class="horarios" id="horarios"></div>
                         <div class="mensagem-agendamento" id="mensagem-agendamento"></div>
-                        
+
                         <input type="hidden" id="horario-selecionado" name="horario-selecionado" required>
                         <textarea placeholder="Mensagem adicional" rows="4" style="margin-top: 20px;"></textarea>
                         <button type="submit" class="btn btn-primary">Enviar Agendamento</button>
@@ -252,7 +245,7 @@
     <script src="script.js"></script>
     <script>
         // ========== SELETOR DE HORÁRIO FUNCIONAL COM LOCALSTORAGE ==========
-        
+
         const horariosPadrao = [
             "08:00", "09:00", "10:00",
             "11:00", "13:00", "14:00",
@@ -351,4 +344,5 @@
         inputData.setAttribute("min", today);
     </script>
 </body>
+
 </html>

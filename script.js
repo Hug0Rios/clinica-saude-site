@@ -38,12 +38,14 @@ if (form) {
         const nome = form.querySelector('input[type="text"]').value;
         const email = form.querySelector('input[type="email"]').value;
         const telefone = form.querySelector('input[type="tel"]').value;
+        const data = document.getElementById('data-consulta').value;
+        const horario = document.getElementById('horario-selecionado').value;
         const servico = form.querySelector('select').value;
         const mensagem = form.querySelector('textarea').value;
         
         // Validar campos obrigatórios
-        if (!nome || !email || !telefone || servico === 'Selecione um serviço') {
-            alert('Por favor, preencha todos os campos obrigatórios!');
+        if (!nome || !email || !telefone || !data || !horario || servico === 'Selecione um serviço') {
+            alert('Por favor, preencha todos os campos obrigatórios, incluindo a data e horário!');
             return;
         }
         
@@ -52,15 +54,18 @@ if (form) {
             nome,
             email,
             telefone,
+            data,
+            horario,
             servico,
             mensagem
         });
         
         // Mensagem de sucesso
-        alert(`Obrigado ${nome}! Sua solicitação de agendamento foi enviada com sucesso. Entraremos em contato em breve!`);
+        alert(`Obrigado ${nome}! Sua consulta foi marcada para ${data} às ${horario}. Entraremos em contato em breve para confirmar!`);
         
         // Limpar formulário
         form.reset();
+        document.getElementById('horario-selecionado').value = '';
         
         // Em um projeto real, você enviaria para um servidor
         // Exemplo com fetch:
@@ -74,6 +79,8 @@ if (form) {
                 nome,
                 email,
                 telefone,
+                data,
+                horario,
                 servico,
                 mensagem
             })

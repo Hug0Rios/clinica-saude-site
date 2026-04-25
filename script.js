@@ -1,0 +1,135 @@
+// Menu Mobile Toggle
+const hamburger = document.querySelector('.hamburger');
+const navMenu = document.querySelector('.nav-menu');
+
+if (hamburger) {
+    hamburger.addEventListener('click', () => {
+        hamburger.classList.toggle('active');
+        navMenu.classList.toggle('active');
+    });
+}
+
+// Fechar menu ao clicar em um link
+const navLinks = document.querySelectorAll('.nav-link');
+navLinks.forEach(link => {
+    link.addEventListener('click', () => {
+        hamburger.classList.remove('active');
+        navMenu.classList.remove('active');
+    });
+});
+
+// Função de scroll suave
+function scroll_to(section) {
+    const element = document.getElementById(section);
+    if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+        hamburger.classList.remove('active');
+        navMenu.classList.remove('active');
+    }
+}
+
+// Formulário de Agendamento
+const form = document.getElementById('appointmentForm');
+if (form) {
+    form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        
+        // Pegando os valores do formulário
+        const nome = form.querySelector('input[type="text"]').value;
+        const email = form.querySelector('input[type="email"]').value;
+        const telefone = form.querySelector('input[type="tel"]').value;
+        const servico = form.querySelector('select').value;
+        const mensagem = form.querySelector('textarea').value;
+        
+        // Validar campos obrigatórios
+        if (!nome || !email || !telefone || servico === 'Selecione um serviço') {
+            alert('Por favor, preencha todos os campos obrigatórios!');
+            return;
+        }
+        
+        // Simulando envio do formulário
+        console.log({
+            nome,
+            email,
+            telefone,
+            servico,
+            mensagem
+        });
+        
+        // Mensagem de sucesso
+        alert(`Obrigado ${nome}! Sua solicitação de agendamento foi enviada com sucesso. Entraremos em contato em breve!`);
+        
+        // Limpar formulário
+        form.reset();
+        
+        // Em um projeto real, você enviaria para um servidor
+        // Exemplo com fetch:
+        /*
+        fetch('/api/agendamento', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                nome,
+                email,
+                telefone,
+                servico,
+                mensagem
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            alert('Agendamento realizado com sucesso!');
+            form.reset();
+        })
+        .catch(error => console.error('Erro:', error));
+        */
+    });
+}
+
+// Adicionar animação aos elementos quando aparecem na tela
+const observerOptions = {
+    threshold: 0.1,
+    rootMargin: '0px 0px -50px 0px'
+};
+
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.style.animation = 'fadeInUp 0.6s ease-out forwards';
+            observer.unobserve(entry.target);
+        }
+    });
+}, observerOptions);
+
+// Aplicar observer aos cards
+document.querySelectorAll('.service-card, .professional-card, .service-item').forEach(card => {
+    observer.observe(card);
+});
+
+// Definir animação
+const style = document.createElement('style');
+style.textContent = `
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+`;
+document.head.appendChild(style);
+
+// Efeito de scroll na navbar
+window.addEventListener('scroll', () => {
+    const navbar = document.querySelector('.navbar');
+    if (window.scrollY > 100) {
+        navbar.style.boxShadow = '0 4px 20px rgba(0, 0, 0, 0.2)';
+    } else {
+        navbar.style.boxShadow = '0 2px 10px rgba(0, 0, 0, 0.1)';
+    }
+});

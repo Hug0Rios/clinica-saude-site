@@ -140,3 +140,23 @@ window.addEventListener('scroll', () => {
         navbar.style.boxShadow = '0 2px 10px rgba(0, 0, 0, 0.1)';
     }
 });
+
+// ========== CARROSSEL DE IMAGENS ==========
+const carousel = document.querySelector('.carousel-container');
+const images = document.querySelectorAll('.carousel-container img');
+
+if (carousel && images.length > 0) {
+    let currentIndex = 0;
+
+    function showImage(index) {
+        carousel.style.transform = `translateX(-${index * 100}%)`;
+    }
+
+    function nextImage() {
+        currentIndex = (currentIndex + 1) % images.length;
+        showImage(currentIndex);
+    }
+
+    // Auto-play a cada 3 segundos
+    setInterval(nextImage, 3000);
+}

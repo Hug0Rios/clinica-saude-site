@@ -228,6 +228,23 @@ html {
 }
 
 /* ===== PROFISSIONAIS ===== */
+.professionals-hero {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: var(--white);
+    padding: 60px 20px;
+    text-align: center;
+}
+
+.professionals-hero h2 {
+    font-size: 2.8rem;
+    margin-bottom: 1rem;
+}
+
+.professionals-hero p {
+    font-size: 1.2rem;
+    margin: 0;
+}
+
 .professionals {
     padding: 60px 20px;
     background: var(--light-bg);
@@ -348,14 +365,16 @@ html {
     gap: 3rem;
 }
 
-.contact-info, .contact-form {
+.contact-info,
+.contact-form {
     background: var(--white);
     padding: 2rem;
     border-radius: 10px;
     box-shadow: var(--shadow);
 }
 
-.contact-info h3, .contact-form h3 {
+.contact-info h3,
+.contact-form h3 {
     color: var(--primary-color);
     margin-bottom: 1.5rem;
 }
@@ -745,6 +764,7 @@ footer p {
         opacity: 0;
         transform: translateY(20px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);
@@ -785,6 +805,7 @@ footer p {
     object-fit: cover;
     flex-shrink: 0;
 }
+
 .carousel h2 {
     position: absolute;
     top: 50%;

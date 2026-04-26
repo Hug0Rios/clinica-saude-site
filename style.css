@@ -210,6 +210,90 @@ html {
     gap: 3rem;
 }
 
+/* ===== CARROSSEL SOBRE ===== */
+.about-hero {
+    padding: 60px 20px;
+    background: linear-gradient(135deg, rgba(81, 185, 158, 0.18), rgba(44, 62, 80, 0.12));
+}
+
+.carousel {
+    max-width: 1000px;
+    margin: 0 auto;
+    background: var(--white);
+    border-radius: 24px;
+    padding: 2rem;
+    box-shadow: var(--shadow);
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    align-items: center;
+}
+
+.carousel-container {
+    width: 100%;
+    overflow: hidden;
+    border-radius: 18px;
+    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.05);
+    position: relative;
+}
+
+.carousel-title {
+    position: absolute;
+    z-index: 2;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: var(--white);
+    text-align: center;
+    font-size: 2.6rem;
+    margin: 0;
+    padding: 1rem 1.6rem;
+    background: rgba(0, 0, 0, 0.35);
+    border-radius: 999px;
+    width: calc(100% - 3rem);
+    max-width: 840px;
+}
+
+.carousel-track {
+    display: flex;
+    width: 100%;
+    transition: transform 0.6s ease;
+}
+
+.carousel-track {
+    display: flex;
+    width: 100%;
+    transition: transform 0.6s ease;
+}
+
+.carousel-track img {
+    min-width: 100%;
+    width: 100%;
+    height: 460px;
+    object-fit: cover;
+    display: block;
+}
+
+@media (max-width: 768px) {
+    .carousel-container img {
+        height: 320px;
+    }
+
+    .carousel h2 {
+        font-size: 2rem;
+    }
+}
+
+@media (max-width: 560px) {
+    .carousel {
+        padding: 1.5rem;
+    }
+
+    .carousel-container img {
+        height: 240px;
+    }
+}
+
 .about-text h3 {
     color: var(--primary-color);
     margin-bottom: 1rem;

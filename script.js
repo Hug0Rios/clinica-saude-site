@@ -142,18 +142,18 @@ window.addEventListener('scroll', () => {
 });
 
 // ========== CARROSSEL DE IMAGENS ==========
-const carousel = document.querySelector('.carousel-container');
-const images = document.querySelectorAll('.carousel-container img');
+const carouselTrack = document.querySelector('.carousel-track');
+const carouselImages = document.querySelectorAll('.carousel-track img');
 
-if (carousel && images.length > 0) {
+if (carouselTrack && carouselImages.length > 0) {
     let currentIndex = 0;
 
     function showImage(index) {
-        carousel.style.transform = `translateX(-${index * 100}%)`;
+        carouselTrack.style.transform = `translateX(-${index * 100}%)`;
     }
 
     function nextImage() {
-        currentIndex = (currentIndex + 1) % images.length;
+        currentIndex = (currentIndex + 1) % carouselImages.length;
         showImage(currentIndex);
     }
 

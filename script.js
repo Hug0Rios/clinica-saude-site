@@ -160,3 +160,54 @@ if (carouselTrack && carouselImages.length > 0) {
     // Auto-play a cada 3 segundos
     setInterval(nextImage, 3000);
 }
+
+// ========== ANIMAÇÕES DE ENTRADA DA PÁGINA ==========
+document.addEventListener('DOMContentLoaded', () => {
+    // Animação do carrossel
+    const carousel = document.querySelector('.carousel');
+    if (carousel) {
+        setTimeout(() => {
+            carousel.classList.add('animate-in');
+        }, 200);
+    }
+
+    // Animação do título do carrossel
+    const carouselTitle = document.querySelector('.carousel-title');
+    if (carouselTitle) {
+        setTimeout(() => {
+            carouselTitle.classList.add('animate-in');
+        }, 600);
+    }
+
+    // Animação da seção about
+    const aboutSection = document.querySelector('.about');
+    if (aboutSection) {
+        setTimeout(() => {
+            aboutSection.classList.add('animate-in');
+        }, 800);
+    }
+
+    // Animação dos elementos de texto da seção about
+    const aboutTexts = document.querySelectorAll('.about-text h3, .about-text p, .diferentials li');
+    aboutTexts.forEach((text, index) => {
+        setTimeout(() => {
+            text.classList.add('animate-in');
+        }, 1000 + (index * 200));
+    });
+
+    // Animação do botão voltar
+    const backButton = document.querySelector('.back-to-home');
+    if (backButton) {
+        setTimeout(() => {
+            backButton.classList.add('animate-in');
+        }, 1400);
+    }
+
+    // Animação do footer
+    const footer = document.querySelector('footer');
+    if (footer) {
+        setTimeout(() => {
+            footer.classList.add('animate-in');
+        }, 1600);
+    }
+});

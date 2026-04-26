@@ -173,12 +173,12 @@ html {
     border-radius: 10px;
     text-align: center;
     box-shadow: var(--shadow);
-    transition: transform 0.3s ease;
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .service-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.15);
+    transform: translateY(-10px) scale(1.05);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2), 0 5px 15px rgba(104, 221, 189, 0.3);
 }
 
 .service-icon {
@@ -211,47 +211,104 @@ html {
 }
 
 /* ===== ANIMAÇÕES DE ENTRADA ===== */
-.carousel,
+.hero,
+.hero-agendamento,
+.location,
 .about,
+.scheduling-section,
+.scheduling-container,
+.scheduling-info,
+.scheduling-form-container,
+.info-grid,
+.resumo-agendamento,
+.info-box,
 .back-to-home,
-footer {
+footer,
+.carousel,
+.informacoes-uteis {
     opacity: 0;
-    transform: translateY(50px);
+    transform: translateY(20px);
 }
 
-.carousel.animate-in,
+.hero.animate-in,
+.hero-agendamento.animate-in,
+.location.animate-in,
 .about.animate-in,
+.scheduling-section.animate-in,
+.scheduling-container.animate-in,
+.scheduling-info.animate-in,
+.scheduling-form-container.animate-in,
+.info-grid.animate-in,
+.resumo-agendamento.animate-in,
+.info-box.animate-in,
 .back-to-home.animate-in,
-footer.animate-in {
+footer.animate-in,
+.carousel.animate-in,
+.informacoes-uteis.animate-in {
     opacity: 1;
     transform: translateY(0);
-    transition: all 0.8s ease-out;
+    transition: all 0.45s ease-out;
+}
+
+.featured-services h2,
+.service-card {
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+.featured-services h2.animate-in,
+.service-card.animate-in {
+    opacity: 1;
+    transform: translateY(0);
+    transition: all 0.45s ease-out;
 }
 
 .carousel-title {
     opacity: 0;
-    transform: translate(-50%, -50%) scale(0.8);
+    transform: translate(-50%, -50%) scale(0.85);
 }
 
 .carousel-title.animate-in {
     opacity: 1;
     transform: translate(-50%, -50%) scale(1);
-    transition: all 0.6s ease-out;
+    transition: all 0.45s ease-out;
 }
 
 .about-text h3,
 .about-text p,
-.diferentials li {
+.diferentials li,
+.info-card,
+.horario-item,
+.location-details,
+.hero-content h2,
+.hero-content p,
+.scheduling-form-container .form-fieldset,
+.scheduling-section h2,
+.resumo-agendamento h3,
+.info-box h3,
+.info-box p,
+.informacoes-uteis h2 {
     opacity: 0;
-    transform: translateY(30px);
+    transform: translateY(20px);
 }
 
 .about-text h3.animate-in,
 .about-text p.animate-in,
-.diferentials li.animate-in {
+.diferentials li.animate-in,
+.info-card.animate-in,
+.horario-item.animate-in,
+.location-details.animate-in,
+.hero-content h2.animate-in,
+.hero-content p.animate-in,
+.scheduling-form-container .form-fieldset.animate-in,
+.scheduling-section h2.animate-in,
+.resumo-agendamento h3.animate-in,
+.info-box h3.animate-in,
+.info-box p.animate-in,
+.informacoes-uteis h2.animate-in {
     opacity: 1;
     transform: translateY(0);
-    transition: all 0.6s ease-out;
+    transition: all 0.45s ease-out;
 }
 
 .carousel {
@@ -399,13 +456,13 @@ footer.animate-in {
     border-radius: 10px;
     text-align: center;
     box-shadow: var(--shadow);
-    transition: all 0.3s ease;
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
     border-top: 5px solid var(--primary-color);
 }
 
 .professional-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 10px 30px rgba(104, 221, 189, 0.2);
+    transform: translateY(-10px) scale(1.05);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2), 0 5px 15px rgba(104, 221, 189, 0.3);
 }
 
 .professional-avatar {
@@ -473,12 +530,13 @@ footer.animate-in {
     padding: 2rem;
     border-radius: 10px;
     border-left: 5px solid var(--primary-color);
-    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08), 0 2px 8px rgba(104, 221, 189, 0.1);
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .service-item:hover {
-    box-shadow: 0 5px 20px rgba(104, 221, 189, 0.2);
-    transform: translateX(5px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15), 0 6px 20px rgba(104, 221, 189, 0.25);
+    transform: translateX(5px) scale(1.03);
 }
 
 .service-image {
@@ -1669,41 +1727,4 @@ footer p {
     .modal-icon {
         font-size: 3rem;
     }
-}
-
-/* ===== ANIMAÇÕES DE ENTRADA PARA AGENDAMENTO ===== */
-.breadcrumb-section,
-.hero-agendamento,
-.scheduling-section,
-.informacoes-uteis,
-footer {
-    opacity: 0;
-    transform: translateY(50px);
-}
-
-.breadcrumb-section.animate-in,
-.hero-agendamento.animate-in,
-.scheduling-section.animate-in,
-.informacoes-uteis.animate-in,
-footer.animate-in {
-    opacity: 1;
-    transform: translateY(0);
-    transition: all 0.8s ease-out;
-}
-
-.info-card,
-.form-fieldset,
-.form-actions,
-.info-box {
-    opacity: 0;
-    transform: translateY(30px);
-}
-
-.info-card.animate-in,
-.form-fieldset.animate-in,
-.form-actions.animate-in,
-.info-box.animate-in {
-    opacity: 1;
-    transform: translateY(0);
-    transition: all 0.6s ease-out;
 }

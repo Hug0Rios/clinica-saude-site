@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Clínica Vitalis - Sua Saúde é Nossa Prioridade</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="/style.css">
 </head>
+
 <body>
     <!-- Navegação -->
     <nav class="navbar">
@@ -16,9 +18,9 @@
             </div>
             <ul class="nav-menu">
                 <li><a href="#home" class="nav-link">Home</a></li>
-                <li><a href="#sobre" class="nav-link">Sobre</a></li>
-                <li><a href="#profissionais" class="nav-link">Profissionais</a></li>
-                <li><a href="#servicos" class="nav-link">Serviços</a></li>
+                <li><a href="/paginas/sobre_clinica.htm" class="nav-link">Sobre</a></li>
+                <li><a href="/paginas/profissionais.html" class="nav-link">Profissionais</a></li>
+                <li><a href="/paginas/servicos_especialidades.html" class="nav-link">Serviços</a></li>
                 <li><a href="#contato" class="nav-link">Contato</a></li>
             </ul>
             <div class="hamburger">
@@ -35,8 +37,14 @@
             <h2>Bem-vindo à Clínica Vitalis</h2>
             <p>Cuidando da sua saúde com excelência e dedicação</p>
             <div class="cta-buttons">
+<<<<<<< HEAD
                 <button class="btn btn-primary" onclick="scroll_to('contato')">Agendar Consulta</button>
+                <button class="btn btn-secondary" onclick="window.location.href='sobre_clinica.html'">Saiba
+                    Mais</button>
+=======
+                <a href="agendamento.html" class="btn btn-primary">Agendar Consulta</a>
                 <button class="btn btn-secondary" onclick="scroll_to('sobre')">Saiba Mais</button>
+>>>>>>> 7ae7d3d37ec76bc905474d3037ffdfe95a11af08
             </div>
         </div>
     </section>
@@ -61,30 +69,11 @@
                     <h3>Fisioterapia</h3>
                     <p>Reabilitação e bem-estar</p>
                 </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- SOBRE A CLÍNICA -->
-    <section id="sobre" class="about">
-        <div class="container">
-            <h2>Sobre a Clínica Vitalis</h2>
-            <div class="about-content">
-                <div class="about-text">
-                    <h3>Nossa Apresentação</h3>
-                    <p>A Clínica Vitalis é uma instituição de saúde moderna, comprometida em oferecer atendimento de qualidade com profissionais especializados e equipamentos de última geração.</p>
-                    
-                    <h3>Missão</h3>
-                    <p>Proporcionar cuidados de saúde integrais, acessíveis e humanizados, contribuindo para o bem-estar e qualidade de vida de nossos pacientes.</p>
-                    
-                    <h3>Nossos Diferenciais</h3>
-                    <ul class="diferentials">
-                        <li>✓ Profissionais altamente qualificados</li>
-                        <li>✓ Atendimento humanizado e personalizado</li>
-                        <li>✓ Infraestrutura moderna</li>
-                        <li>✓ Agende suas consultas online</li>
-                        <li>✓ Aceita diversos planos de saúde</li>
-                    </ul>
+<<<<<<< HEAD
+                <div class="service-card">
+                    <div class="service-icon">👁️</div>
+                    <h3>Oftalmologia</h3>
+                    <p>Cuidados com sua visão</p>
                 </div>
             </div>
         </div>
@@ -170,20 +159,24 @@
                     <h3>Nutrição</h3>
                     <p>Acompanhamento nutricional personalizado para emagrecimento, ganho de massa e reeducação alimentar.</p>
                 </div>
+=======
+>>>>>>> arthur
             </div>
         </div>
     </section>
 
-    <!-- CONTATO/AGENDAMENTO -->
+    <!-- CONTATO -->
     <section id="contato" class="contact">
         <div class="container">
             <h2>Entre em Contato</h2>
+<<<<<<< HEAD
             <div class="contact-content">
                 <div class="contact-info">
                     <h3>Informações de Contato</h3>
                     <p class="info-item">
                         <strong>📍 Endereço:</strong><br>
-                        <a href="https://maps.google.com/maps?q=R.+Halfeld,+1179,+Centro,+Juiz+de+Fora,+MG,+36015-360" target="_blank" class="location-btn">
+                        <a href="https://maps.google.com/maps?q=R.+Halfeld,+1179,+Centro,+Juiz+de+Fora,+MG,+36015-360"
+                            target="_blank" class="location-btn">
                             R. Halfeld, 1179 - Centro<br>
                             Juiz de Fora - MG, 36015-360<br>
                             📌 Clique para abrir no mapa
@@ -204,8 +197,7 @@
                     </p>
                     <p class="info-item">
                         <strong>🕐 Horário de Funcionamento:</strong><br>
-                        Segunda a Sexta: 7h - 18h<br>
-                        Sábado: 8h - 12h<br>
+                        Segunda a Sext 2h<br>
                         Domingo: Fechado
                     </p>
                 </div>
@@ -225,18 +217,81 @@
                             <option>Dermatologia</option>
                             <option>Nutrição</option>
                         </select>
-                        
-                        <label for="data-consulta" style="display: block; margin-top: 20px; font-weight: 600; color: var(--secondary-color); margin-bottom: 0.5rem;">📅 Data da Consulta</label>
+
+                        <label for="data-consulta"
+                            style="display: block; margin-top: 20px; font-weight: 600; color: var(--secondary-color); margin-bottom: 0.5rem;">📅
+                            Data da Consulta</label>
                         <input type="date" id="data-consulta" style="margin-top: 0;">
-                        
-                        <label for="horarios" style="display: block; margin-top: 20px; font-weight: 600; color: var(--secondary-color); margin-bottom: 1rem;">🕐 Horário Disponível</label>
+
+                        <label for="horarios"
+                            style="display: block; margin-top: 20px; font-weight: 600; color: var(--secondary-color); margin-bottom: 1rem;">🕐
+                            Horário Disponível</label>
                         <div class="horarios" id="horarios"></div>
                         <div class="mensagem-agendamento" id="mensagem-agendamento"></div>
-                        
+
                         <input type="hidden" id="horario-selecionado" name="horario-selecionado" required>
                         <textarea placeholder="Mensagem adicional" rows="4" style="margin-top: 20px;"></textarea>
                         <button type="submit" class="btn btn-primary">Enviar Agendamento</button>
                     </form>
+=======
+            <div class="contact-info-simple">
+                <div class="contact-item">
+                    <strong>📍 Endereço:</strong><br>
+                    <a href="https://maps.google.com/maps?q=R.+Halfeld,+1179,+Centro,+Juiz+de+Fora,+MG,+36015-360" target="_blank" class="location-btn">
+                        R. Halfeld, 1179 - Centro<br>
+                        Juiz de Fora - MG, 36015-360<br>
+                        📌 Clique para abrir no mapa
+                    </a>
+                </div>
+                <div class="contact-item">
+                    <strong>📞 Telefone:</strong><br>
+                    <a href="tel:+553221027700" class="phone-btn">
+                        (32) 2102-7700
+                    </a>
+                </div>
+                <div class="contact-item">
+                    <strong>💬 WhatsApp:</strong><br>
+                    <a href="https://wa.me/5532991362745" target="_blank" class="whatsapp-btn">
+                        <i class="fab fa-whatsapp"></i> (32) 99136-2745<br>
+                        <span class="btn-text">Clique para conversar</span>
+                    </a>
+                </div>
+                <div class="contact-item">
+                    <strong>🕐 Horário de Funcionamento:</strong><br>
+                    Segunda a Sexta: 08:00 - 18:00<br>
+                    Sábado: 08:00 - 12:00<br>
+                    Domingo: Fechado
+>>>>>>> 7ae7d3d37ec76bc905474d3037ffdfe95a11af08
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- LOCALIZAÇÃO -->
+    <section class="location">
+        <div class="container">
+            <h2>Nossa Localização</h2>
+            <div class="location-content">
+                <div class="location-info">
+                    <div class="location-details">
+                        <div class="location-icon">📍</div>
+                        <div class="location-text">
+                            <h3>Clínica Vitalis</h3>
+                            <p>Colégio Cristo Redentor</p>
+                            <p>Academia de Comércio</p>
+                            <p>Juiz de Fora - MG</p>
+                            <a href="https://maps.google.com/maps?q=Colegio+Cristo+Redentor+Academia+de+Comercio+Juiz+de+Fora"
+                                target="_blank" class="btn btn-primary">
+                                Ver no Mapa
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="location-map">
+                    <iframe
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3745.5!2d-43.3527!3d-21.7644!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xa3d54d6a7e7e7e7d%3A0x1234567890abcdef!2sCol%C3%A9gio%20Cristo%20Redentor%20Academia%20de%20Com%C3%A9rcio%2C%20Juiz%20de%20Fora%2C%20MG!5e0!3m2!1spt-BR!2sbr!4v1234567890"
+                        width="100%" height="300" style="border:0; border-radius: 10px;" allowfullscreen=""
+                        loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                 </div>
             </div>
         </div>
@@ -251,105 +306,18 @@
     </footer>
 
     <script src="script.js"></script>
+<<<<<<< HEAD
     <script>
         // ========== SELETOR DE HORÁRIO FUNCIONAL COM LOCALSTORAGE ==========
-        
+
         const horariosPadrao = [
             "08:00", "09:00", "10:00",
             "11:00", "13:00", "14:00",
             "15:00", "16:00", "17:00"
         ];
+=======
+>>>>>>> 7ae7d3d37ec76bc905474d3037ffdfe95a11af08
 
-        const horariosDiv = document.getElementById("horarios");
-        const mensagem = document.getElementById("mensagem-agendamento");
-        const inputData = document.getElementById("data-consulta");
-        const horarioSelecionado = document.getElementById("horario-selecionado");
-
-        // Simulação de banco usando localStorage
-        function getAgendamentos() {
-            return JSON.parse(localStorage.getItem("agendamentos")) || {};
-        }
-
-        function salvarAgendamento(data, hora) {
-            const agendamentos = getAgendamentos();
-
-            if (!agendamentos[data]) {
-                agendamentos[data] = [];
-            }
-
-            if (!agendamentos[data].includes(hora)) {
-                agendamentos[data].push(hora);
-            }
-
-            localStorage.setItem("agendamentos", JSON.stringify(agendamentos));
-        }
-
-        function renderizarHorarios() {
-            const dataSelecionada = inputData.value;
-            horariosDiv.innerHTML = "";
-            mensagem.innerText = "";
-            horarioSelecionado.value = "";
-
-            if (!dataSelecionada) {
-                horariosDiv.innerHTML = '<p class="horario-placeholder">Selecione uma data acima</p>';
-                return;
-            }
-
-            const agendamentos = getAgendamentos();
-            const ocupados = agendamentos[dataSelecionada] || [];
-
-            const agora = new Date();
-            const hoje = agora.toISOString().split("T")[0];
-
-            horariosPadrao.forEach(hora => {
-                const div = document.createElement("div");
-                div.classList.add("horario");
-                div.innerText = hora;
-
-                // Bloquear horário ocupado
-                if (ocupados.includes(hora)) {
-                    div.classList.add("ocupado");
-                }
-
-                // Bloquear horário passado (se for hoje)
-                if (dataSelecionada === hoje) {
-                    const [h, m] = hora.split(":");
-                    const dataHora = new Date();
-                    dataHora.setHours(h, m, 0);
-
-                    if (dataHora < agora) {
-                        div.classList.add("passado");
-                    }
-                }
-
-                // Clique
-                if (!div.classList.contains("ocupado") && !div.classList.contains("passado")) {
-                    div.onclick = () => selecionarHorario(div, dataSelecionada, hora);
-                }
-
-                horariosDiv.appendChild(div);
-            });
-        }
-
-        function selecionarHorario(elemento, data, hora) {
-            document.querySelectorAll(".horario").forEach(el => {
-                el.classList.remove("selecionado");
-            });
-
-            elemento.classList.add("selecionado");
-            horarioSelecionado.value = hora;
-
-            salvarAgendamento(data, hora);
-
-            mensagem.innerHTML = `<span class="sucesso-msg">✓ Horário selecionado: ${hora}</span>`;
-        }
-
-        // Atualiza ao mudar data
-        inputData.addEventListener("change", renderizarHorarios);
-
-        // Definir data mínima como hoje
-        const today = new Date().toISOString().split("T")[0];
-        inputData.setAttribute("min", today);
-    </script>
 </body>
+
 </html>

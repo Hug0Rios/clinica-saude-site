@@ -37,9 +37,14 @@
             <h2>Bem-vindo à Clínica Vitalis</h2>
             <p>Cuidando da sua saúde com excelência e dedicação</p>
             <div class="cta-buttons">
+<<<<<<< HEAD
                 <button class="btn btn-primary" onclick="scroll_to('contato')">Agendar Consulta</button>
                 <button class="btn btn-secondary" onclick="window.location.href='sobre_clinica.html'">Saiba
                     Mais</button>
+=======
+                <a href="agendamento.html" class="btn btn-primary">Agendar Consulta</a>
+                <button class="btn btn-secondary" onclick="scroll_to('sobre')">Saiba Mais</button>
+>>>>>>> 7ae7d3d37ec76bc905474d3037ffdfe95a11af08
             </div>
         </div>
     </section>
@@ -160,10 +165,11 @@
         </div>
     </section>
 
-    <!-- CONTATO/AGENDAMENTO -->
+    <!-- CONTATO -->
     <section id="contato" class="contact">
         <div class="container">
             <h2>Entre em Contato</h2>
+<<<<<<< HEAD
             <div class="contact-content">
                 <div class="contact-info">
                     <h3>Informações de Contato</h3>
@@ -226,6 +232,35 @@
                         <textarea placeholder="Mensagem adicional" rows="4" style="margin-top: 20px;"></textarea>
                         <button type="submit" class="btn btn-primary">Enviar Agendamento</button>
                     </form>
+=======
+            <div class="contact-info-simple">
+                <div class="contact-item">
+                    <strong>📍 Endereço:</strong><br>
+                    <a href="https://maps.google.com/maps?q=R.+Halfeld,+1179,+Centro,+Juiz+de+Fora,+MG,+36015-360" target="_blank" class="location-btn">
+                        R. Halfeld, 1179 - Centro<br>
+                        Juiz de Fora - MG, 36015-360<br>
+                        📌 Clique para abrir no mapa
+                    </a>
+                </div>
+                <div class="contact-item">
+                    <strong>📞 Telefone:</strong><br>
+                    <a href="tel:+553221027700" class="phone-btn">
+                        (32) 2102-7700
+                    </a>
+                </div>
+                <div class="contact-item">
+                    <strong>💬 WhatsApp:</strong><br>
+                    <a href="https://wa.me/5532991362745" target="_blank" class="whatsapp-btn">
+                        <i class="fab fa-whatsapp"></i> (32) 99136-2745<br>
+                        <span class="btn-text">Clique para conversar</span>
+                    </a>
+                </div>
+                <div class="contact-item">
+                    <strong>🕐 Horário de Funcionamento:</strong><br>
+                    Segunda a Sexta: 08:00 - 18:00<br>
+                    Sábado: 08:00 - 12:00<br>
+                    Domingo: Fechado
+>>>>>>> 7ae7d3d37ec76bc905474d3037ffdfe95a11af08
                 </div>
             </div>
         </div>
@@ -270,6 +305,7 @@
     </footer>
 
     <script src="script.js"></script>
+<<<<<<< HEAD
     <script>
         // ========== SELETOR DE HORÁRIO FUNCIONAL COM LOCALSTORAGE ==========
 
@@ -278,98 +314,9 @@
             "11:00", "13:00", "14:00",
             "15:00", "16:00", "17:00"
         ];
+=======
+>>>>>>> 7ae7d3d37ec76bc905474d3037ffdfe95a11af08
 
-        const horariosDiv = document.getElementById("horarios");
-        const mensagem = document.getElementById("mensagem-agendamento");
-        const inputData = document.getElementById("data-consulta");
-        const horarioSelecionado = document.getElementById("horario-selecionado");
-
-        // Simulação de banco usando localStorage
-        function getAgendamentos() {
-            return JSON.parse(localStorage.getItem("agendamentos")) || {};
-        }
-
-        function salvarAgendamento(data, hora) {
-            const agendamentos = getAgendamentos();
-
-            if (!agendamentos[data]) {
-                agendamentos[data] = [];
-            }
-
-            if (!agendamentos[data].includes(hora)) {
-                agendamentos[data].push(hora);
-            }
-
-            localStorage.setItem("agendamentos", JSON.stringify(agendamentos));
-        }
-
-        function renderizarHorarios() {
-            const dataSelecionada = inputData.value;
-            horariosDiv.innerHTML = "";
-            mensagem.innerText = "";
-            horarioSelecionado.value = "";
-
-            if (!dataSelecionada) {
-                horariosDiv.innerHTML = '<p class="horario-placeholder">Selecione uma data acima</p>';
-                return;
-            }
-
-            const agendamentos = getAgendamentos();
-            const ocupados = agendamentos[dataSelecionada] || [];
-
-            const agora = new Date();
-            const hoje = agora.toISOString().split("T")[0];
-
-            horariosPadrao.forEach(hora => {
-                const div = document.createElement("div");
-                div.classList.add("horario");
-                div.innerText = hora;
-
-                // Bloquear horário ocupado
-                if (ocupados.includes(hora)) {
-                    div.classList.add("ocupado");
-                }
-
-                // Bloquear horário passado (se for hoje)
-                if (dataSelecionada === hoje) {
-                    const [h, m] = hora.split(":");
-                    const dataHora = new Date();
-                    dataHora.setHours(h, m, 0);
-
-                    if (dataHora < agora) {
-                        div.classList.add("passado");
-                    }
-                }
-
-                // Clique
-                if (!div.classList.contains("ocupado") && !div.classList.contains("passado")) {
-                    div.onclick = () => selecionarHorario(div, dataSelecionada, hora);
-                }
-
-                horariosDiv.appendChild(div);
-            });
-        }
-
-        function selecionarHorario(elemento, data, hora) {
-            document.querySelectorAll(".horario").forEach(el => {
-                el.classList.remove("selecionado");
-            });
-
-            elemento.classList.add("selecionado");
-            horarioSelecionado.value = hora;
-
-            salvarAgendamento(data, hora);
-
-            mensagem.innerHTML = `<span class="sucesso-msg">✓ Horário selecionado: ${hora}</span>`;
-        }
-
-        // Atualiza ao mudar data
-        inputData.addEventListener("change", renderizarHorarios);
-
-        // Definir data mínima como hoje
-        const today = new Date().toISOString().split("T")[0];
-        inputData.setAttribute("min", today);
-    </script>
 </body>
 
 </html>

@@ -172,8 +172,8 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     };
 
-    reveal('.hero, .hero-agendamento, .carousel, .about, .featured-services, .location, .scheduling-section, .scheduling-container, .scheduling-info, .scheduling-form-container, .resumo-agendamento, .info-grid, .back-to-home, footer', 100);
+    reveal('.hero, .hero-agendamento, .carousel, .about, .featured-services, .location, .scheduling-section, .scheduling-container, .scheduling-info, .scheduling-form-container, .resumo-agendamento, .info-grid, .informacoes-uteis, .back-to-home, footer', 100);
     reveal('.carousel-title', 140);
-    reveal('.hero-content h2, .hero-content p, .service-card, .featured-services h2, .location-details, .info-card, .scheduling-form-container .form-fieldset, .resumo-agendamento h3, .info-box', 160, 60);
-    reveal('.about-text h3, .about-text p, .diferentials li, .horario-item', 180, 50);
+    reveal('.hero-content h2, .hero-content p, .service-card, .featured-services h2, .location-details, .info-card, .scheduling-form-container .form-fieldset, .resumo-agendamento h3, .info-box, .informacoes-uteis h2', 160, 60);
+    reveal('.about-text h3, .about-text p, .diferentials li, .horario-item, .info-box h3, .info-box p', 180, 50);
 });

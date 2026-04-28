@@ -86,7 +86,7 @@ html {
 /* ===== HERO SECTION ===== */
 .hero {
     background: linear-gradient(135deg, rgba(0, 168, 107, 0.6), rgba(44, 62, 80, 0.65)),
-        url("/img/hero-bg.jpg") center/cover no-repeat;
+        url("./img/hero-bg.jpg") center/cover no-repeat;
     color: var(--white);
     padding: 100px 20px;
     text-align: center;
@@ -116,7 +116,7 @@ html {
 /* ===== HERO AGENDAMENTO ===== */
 .hero-agendamento {
     background: linear-gradient(135deg, rgba(0, 168, 107, 0.6), rgba(44, 62, 80, 0.65)),
-        url("/img/hero-bg.jpg") center/cover no-repeat;
+        url("./img/hero-bg.jpg") center/cover no-repeat;
     color: var(--white);
     padding: 150px 20px;
     text-align: center;

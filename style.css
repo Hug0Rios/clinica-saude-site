@@ -113,6 +113,28 @@ html {
     flex-wrap: wrap;
 }
 
+/* ===== HERO AGENDAMENTO ===== */
+.hero-agendamento {
+    background: linear-gradient(135deg, rgba(0, 168, 107, 0.6), rgba(44, 62, 80, 0.65)),
+        url("/img/hero-bg.jpg") center/cover no-repeat;
+    color: var(--white);
+    padding: 150px 20px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.hero-agendamento h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+.hero-agendamento p {
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+}
+
 /* ===== BOTÕES ===== */
 .btn {
     padding: 12px 30px;
@@ -1073,6 +1095,12 @@ footer p {
     gap: 3rem;
     max-width: 1200px;
     margin: 0 auto;
+}
+
+/* Quando o scheduling-container tem a classe scheduling-form-container, centraliza */
+.scheduling-container.scheduling-form-container {
+    grid-template-columns: 1fr;
+    max-width: 700px;
 }
 
 /* Informações Laterais */

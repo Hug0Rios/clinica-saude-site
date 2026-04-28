@@ -306,7 +306,6 @@ footer.animate-in,
 .about-text p,
 .diferentials li,
 .info-card,
-.horario-item,
 .location-details,
 .hero-content h2,
 .hero-content p,
@@ -324,7 +323,6 @@ footer.animate-in,
 .about-text p.animate-in,
 .diferentials li.animate-in,
 .info-card.animate-in,
-.horario-item.animate-in,
 .location-details.animate-in,
 .hero-content h2.animate-in,
 .hero-content p.animate-in,
@@ -1270,6 +1268,10 @@ footer p {
 
 .horario-item {
     padding: 12px;
+    min-height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     text-align: center;
     border-radius: 8px;
     cursor: pointer;
@@ -1281,15 +1283,16 @@ footer p {
     user-select: none;
 }
 
+.horario-item.disponivel {
+    cursor: pointer;
+    color: #000000;
+}
+
 .horario-item.disponivel:hover {
     background: #f0f0f0;
     border-color: var(--primary-color);
     box-shadow: 0 4px 12px rgba(0, 168, 107, 0.2);
     transform: translateY(-4px);
-}
-
-.horario-item.disponivel {
-    cursor: pointer;
 }
 
 .horario-item.selecionado {

@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" role="img" aria-labelledby="title-marina">
+  <title id="title-marina">Foto estilizada da Dra. Marina Costa</title>
+  <defs>
+    <linearGradient id="grad-marina" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0%" stop-color="#e47a4f" />
+      <stop offset="100%" stop-color="#8c3f3d" />
+    </linearGradient>
+  </defs>
+  <rect width="400" height="400" fill="url(#grad-marina)" />
+  <circle cx="200" cy="130" r="80" fill="#ffffff" opacity="0.92" />
+  <path d="M110 250 C 160 230 240 230 290 250 L 290 300 C 250 320 150 320 110 300 Z" fill="#ffffff" opacity="0.92" />
+  <circle cx="160" cy="120" r="12" fill="#8c3f3d" opacity="0.85" />
+  <circle cx="240" cy="120" r="12" fill="#8c3f3d" opacity="0.85" />
+  <path d="M170 160 C 190 190 210 190 230 160" stroke="#8c3f3d" stroke-width="10" fill="none" stroke-linecap="round" />
+  <path d="M120 90 C 140 30 260 30 280 90" fill="#8c3f3d" opacity="0.65" />
+  <text x="200" y="380" font-family="Segoe UI, Arial, sans-serif" font-size="26" fill="#ffffff" text-anchor="middle">Dra. Marina Costa</text>
+</svg>

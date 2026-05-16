@@ -721,19 +721,31 @@ footer.animate-in,
 }
 
 .professional-card {
-    background: var(--light-bg);
+    background: var(--white);
     padding: 2rem;
-    border-radius: 10px;
+    border-radius: 8px;
     text-align: center;
-    box-shadow: var(--shadow);
-    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    box-shadow: var(--soft-shadow);
+    transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+    border: 1px solid var(--border-color);
     border-top: 5px solid var(--primary-color);
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
     min-width: 0;
+    text-decoration: none;
 }
 
 .professional-card:hover {
-    transform: translateY(-10px) scale(1.05);
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2), 0 5px 15px rgba(104, 221, 189, 0.3);
+    transform: translateY(-6px);
+    border-color: rgba(67, 184, 151, 0.45);
+    box-shadow: var(--shadow);
+}
+
+.professional-card:focus-visible {
+    outline: 3px solid rgba(67, 184, 151, 0.55);
+    outline-offset: 4px;
 }
 
 .professional-avatar {
@@ -795,6 +807,119 @@ footer.animate-in,
     font-size: 0.95rem;
     color: #666;
     overflow-wrap: break-word;
+}
+
+.professional-card-action {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.45rem;
+    color: var(--primary-dark);
+    font-weight: 800;
+    margin-top: auto;
+    padding-top: 1.2rem;
+}
+
+.professional-profile {
+    background: var(--surface);
+}
+
+.profile-hero {
+    padding: 76px 0;
+    background: linear-gradient(135deg, rgba(38, 57, 75, 0.96), rgba(37, 133, 110, 0.9));
+    color: var(--white);
+}
+
+.profile-layout {
+    display: grid;
+    grid-template-columns: minmax(260px, 390px) minmax(0, 1fr);
+    gap: 3rem;
+    align-items: center;
+}
+
+.profile-photo-card {
+    overflow: hidden;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    box-shadow: 0 24px 70px rgba(0, 0, 0, 0.22);
+    background: rgba(255, 255, 255, 0.08);
+    aspect-ratio: 4 / 5;
+}
+
+.profile-photo-card img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+    object-position: center top;
+}
+
+.profile-content {
+    max-width: 720px;
+    min-width: 0;
+}
+
+.profile-content h1 {
+    font-size: clamp(2.2rem, 5vw, 4rem);
+    line-height: 1.08;
+    margin-bottom: 0.6rem;
+}
+
+.profile-specialty {
+    color: #a9f0db;
+    font-size: 1.2rem;
+    font-weight: 800;
+    margin-bottom: 1.2rem;
+}
+
+.profile-content p:not(.section-eyebrow):not(.profile-specialty) {
+    color: rgba(255, 255, 255, 0.84);
+    font-size: 1.08rem;
+    max-width: 62ch;
+}
+
+.profile-actions {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-top: 2rem;
+}
+
+.profile-environment {
+    padding: 58px 0 72px;
+}
+
+.environment-card {
+    display: grid;
+    grid-template-columns: minmax(260px, 480px) minmax(0, 1fr);
+    gap: 2rem;
+    align-items: center;
+    background: var(--white);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    box-shadow: var(--soft-shadow);
+    padding: 1.2rem;
+}
+
+.environment-card img {
+    width: 100%;
+    height: 320px;
+    display: block;
+    border-radius: 8px;
+    object-fit: cover;
+    object-position: center;
+}
+
+.environment-card h2 {
+    color: var(--secondary-color);
+    font-size: clamp(1.6rem, 3vw, 2.2rem);
+    margin-bottom: 0.8rem;
+}
+
+.environment-card p {
+    color: var(--muted-color);
+    font-size: 1.05rem;
+    max-width: 60ch;
 }
 
 /* ===== SERVIÇOS ===== */
@@ -1291,6 +1416,30 @@ footer p {
         grid-template-columns: 1fr;
     }
 
+    .profile-layout,
+    .environment-card {
+        grid-template-columns: 1fr;
+    }
+
+    .profile-hero {
+        padding: 56px 0;
+    }
+
+    .profile-photo-card {
+        max-width: 360px;
+        width: 100%;
+        margin: 0 auto;
+    }
+
+    .profile-actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .environment-card img {
+        height: 260px;
+    }
+
     .service-card {
         min-height: auto;
     }
@@ -1428,6 +1577,24 @@ footer p {
         max-width: calc(100vw - 48px);
         width: 100%;
         margin: 0 auto;
+    }
+
+    .profile-content h1 {
+        font-size: 2.05rem;
+    }
+
+    .profile-content p:not(.section-eyebrow):not(.profile-specialty),
+    .environment-card p {
+        font-size: 1rem;
+    }
+
+    .environment-card {
+        max-width: calc(100vw - 48px);
+        padding: 1rem;
+    }
+
+    .environment-card img {
+        height: 220px;
     }
 
     .professional-card .description {

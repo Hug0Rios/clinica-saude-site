@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Profissionais - Clínica Vitalis</title>
+    <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="../style.css">
 </head>
@@ -13,21 +14,22 @@
     <!-- Navegação -->
     <nav class="navbar">
         <div class="container">
-            <div class="logo">
-                <h1>Clínica Vitalis</h1>
-            </div>
+            <a href="../index.html" class="logo" aria-label="Clínica Vitalis - página inicial">
+                <span class="logo-mark"><i class="fa-solid fa-heart-pulse" aria-hidden="true"></i></span>
+                <span>Clínica Vitalis</span>
+            </a>
             <ul class="nav-menu">
                 <li><a href="../index.html" class="nav-link">Home</a></li>
                 <li><a href="sobre_clinica.html" class="nav-link">Sobre</a></li>
                 <li><a href="profissionais.html" class="nav-link">Profissionais</a></li>
                 <li><a href="servicos_especialidades.html" class="nav-link">Serviços</a></li>
-                <li><a href="agendamento.html" class="nav-link">Agendamento</a></li>
+                <li><a href="agendamento.html" class="nav-link nav-link-cta">Agendamento</a></li>
             </ul>
-            <div class="hamburger">
+            <button class="hamburger" type="button" aria-label="Abrir menu" aria-expanded="false">
                 <span></span>
                 <span></span>
                 <span></span>
-            </div>
+            </button>
         </div>
     </nav>
 
@@ -43,7 +45,7 @@
     <section id="profissionais" class="professionals">
         <div class="container">
             <div class="professionals-grid">
-                <div class="professional-card">
+                <a class="professional-card" href="profissionais/dr-carlos-silva.html" aria-label="Ver perfil do Dr. Carlos Silva">
                     <div class="professional-avatar" data-name="Dr. Carlos Silva">
                         <img src="../assets/profissionais/carlos-silva.jpg" alt="Dr. Carlos Silva" width="110" height="110" loading="eager" decoding="sync">
                         <span class="professional-initials" aria-hidden="true"></span>
@@ -52,8 +54,9 @@
                     <p class="specialty">Clínico Geral</p>
                     <p class="description">Formado há 15 anos, especialista em atendimento clínico com experiência em
                         medicina preventiva.</p>
-                </div>
-                <div class="professional-card">
+                    <span class="professional-card-action">Ver perfil <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></span>
+                </a>
+                <a class="professional-card" href="profissionais/dra-marina-costa.html" aria-label="Ver perfil da Dra. Marina Costa">
                     <div class="professional-avatar" data-name="Dra. Marina Costa">
                         <img src="../assets/profissionais/marina-costa.jpg" alt="Dra. Marina Costa" width="110" height="110" loading="eager" decoding="sync">
                         <span class="professional-initials" aria-hidden="true"></span>
@@ -62,8 +65,9 @@
                     <p class="specialty">Cardiologista</p>
                     <p class="description">Especialista em cardiologia com pós-graduação em hemodinâmica. Atende
                         consultas e realiza procedimentos.</p>
-                </div>
-                <div class="professional-card">
+                    <span class="professional-card-action">Ver perfil <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></span>
+                </a>
+                <a class="professional-card" href="profissionais/dr-fernando-oliveira.html" aria-label="Ver perfil do Dr. Fernando Oliveira">
                     <div class="professional-avatar" data-name="Dr. Fernando Oliveira">
                         <img src="../assets/profissionais/fernando-oliveira.jpg" alt="Dr. Fernando Oliveira" width="110" height="110" loading="eager" decoding="sync">
                         <span class="professional-initials" aria-hidden="true"></span>
@@ -72,8 +76,9 @@
                     <p class="specialty">Dentista</p>
                     <p class="description">Especialista em odontologia estética e implantodontia com 12 anos de
                         experiência.</p>
-                </div>
-                <div class="professional-card">
+                    <span class="professional-card-action">Ver perfil <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></span>
+                </a>
+                <a class="professional-card" href="profissionais/dra-ana-paula.html" aria-label="Ver perfil da Dra. Ana Paula">
                     <div class="professional-avatar" data-name="Dra. Ana Paula">
                         <img src="../assets/profissionais/ana-paula.jpg" alt="Dra. Ana Paula" width="110" height="110" loading="eager" decoding="sync">
                         <span class="professional-initials" aria-hidden="true"></span>
@@ -82,8 +87,9 @@
                     <p class="specialty">Fisioterapeuta</p>
                     <p class="description">Especialista em reabilitação e tratamento de lesões ortopédicas. Atendimento
                         individual e em grupo.</p>
-                </div>
-                <div class="professional-card">
+                    <span class="professional-card-action">Ver perfil <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></span>
+                </a>
+                <a class="professional-card" href="profissionais/dr-roberto-santos.html" aria-label="Ver perfil do Dr. Roberto Santos">
                     <div class="professional-avatar" data-name="Dr. Roberto Santos">
                         <img src="../assets/profissionais/roberto-santos.jpg" alt="Dr. Roberto Santos" width="110" height="110" loading="eager" decoding="sync">
                         <span class="professional-initials" aria-hidden="true"></span>
@@ -92,8 +98,9 @@
                     <p class="specialty">Dermatologista</p>
                     <p class="description">Especialista em dermatologia clínica e estética. Tratamentos personalizados
                         para sua pele.</p>
-                </div>
-                <div class="professional-card">
+                    <span class="professional-card-action">Ver perfil <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></span>
+                </a>
+                <a class="professional-card" href="profissionais/dra-juliana-martins.html" aria-label="Ver perfil da Dra. Juliana Martins">
                     <div class="professional-avatar" data-name="Dra. Juliana Martins">
                         <img src="../assets/profissionais/juliana-martins.jpg" alt="Dra. Juliana Martins" width="110" height="110" loading="eager" decoding="sync">
                         <span class="professional-initials" aria-hidden="true"></span>
@@ -102,7 +109,8 @@
                     <p class="specialty">Nutricionista</p>
                     <p class="description">Nutrição clínica e funcional. Acompanhamento personalizado para reeducação
                         alimentar.</p>
-                </div>
+                    <span class="professional-card-action">Ver perfil <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></span>
+                </a>
             </div>
         </div>
     </section>

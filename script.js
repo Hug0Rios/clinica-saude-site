@@ -176,4 +176,48 @@ document.addEventListener('DOMContentLoaded', () => {
     reveal('.carousel-title', 140);
     reveal('.hero-content h2, .hero-content p, .service-card, .featured-services h2, .location-details, .info-card, .scheduling-form-container .form-fieldset, .resumo-agendamento h3, .info-box, .informacoes-uteis h2', 160, 60);
     reveal('.about-text h3, .about-text p, .diferentials li, .horario-item, .info-box h3, .info-box p', 180, 50);
+
+    const getInitials = (fullName) => {
+        if (!fullName) return '';
+        const cleaned = fullName
+            .replace(/\s+/g, ' ')
+            .trim()
+            .replace(/^Dr\.?\s+/i, '')
+            .replace(/^Dra\.?\s+/i, '');
+
+        const parts = cleaned.split(' ').filter(Boolean);
+        if (parts.length === 0) return '';
+        if (parts.length === 1) return parts[0].slice(0, 2).toUpperCase();
+        return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+    };
+
+    document.querySelectorAll('.professional-avatar').forEach((avatar) => {
+        const name = avatar.getAttribute('data-name') || '';
+        const initialsEl = avatar.querySelector('.professional-initials');
+        const img = avatar.querySelector('img');
+
+        if (initialsEl) initialsEl.textContent = getInitials(name);
+
+        const enableFallback = () => {
+            avatar.classList.add('is-fallback');
+            if (img) img.setAttribute('aria-hidden', 'true');
+        };
+
+        if (!img) {
+            enableFallback();
+            return;
+        }
+
+        // If the image fails to load (file missing), show initials.
+        img.addEventListener('error', enableFallback, { once: true });
+
+        // If it loads successfully, ensure fallback is off.
+        img.addEventListener(
+            'load',
+            () => {
+                avatar.classList.remove('is-fallback');
+            },
+            { once: true }
+        );
+    });
 });

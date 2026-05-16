@@ -82,6 +82,22 @@ clinica-saude-site/
 - Nome, foto (avatar), especialidade e descrição
 - Cards interativos com hover effects
 
+### Fotos dos profissionais (avatars)
+
+A página `paginas/profissionais.html` está preparada para usar **fotos reais** dos profissionais em formato circular.
+
+- **Onde colocar as imagens**: `assets/profissionais/`
+- **Formato recomendado**: `1:1 (quadrado)` em `.jpg` ou `.png`
+- **Se a imagem não existir**: o site mostra automaticamente as **iniciais** no círculo (fallback).
+
+**Nomes de arquivo esperados**:
+- `assets/profissionais/carlos-silva.jpg`
+- `assets/profissionais/marina-costa.jpg`
+- `assets/profissionais/fernando-oliveira.jpg`
+- `assets/profissionais/ana-paula.jpg`
+- `assets/profissionais/roberto-santos.jpg`
+- `assets/profissionais/juliana-martins.jpg`
+
 ### Serviços
 - Listagem de especialidades
 - Descrição detalhada de cada serviço
@@ -196,4 +212,3 @@ cd clinica-saude-site/frontend
 ## Observações
 
 Projeto acadêmico com foco na prática de desenvolvimento web e colaboração em equipe.
->>>>>>> 7f04c4ec63d9d674ce13d21f254bc99dc01eb7e6

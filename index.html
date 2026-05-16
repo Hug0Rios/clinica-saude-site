@@ -10,97 +10,151 @@
 </head>
 
 <body>
-    <!-- Navegação -->
     <nav class="navbar">
         <div class="container">
-            <div class="logo">
-                <h1>🏥Clínica Vitalis</h1>
-            </div>
+            <a href="index.html" class="logo" aria-label="Clínica Vitalis - página inicial">
+                <span class="logo-mark"><i class="fa-solid fa-heart-pulse" aria-hidden="true"></i></span>
+                <span>Clínica Vitalis</span>
+            </a>
             <ul class="nav-menu">
                 <li><a href="index.html" class="nav-link">Home</a></li>
                 <li><a href="paginas/sobre_clinica.html" class="nav-link">Sobre</a></li>
                 <li><a href="paginas/profissionais.html" class="nav-link">Profissionais</a></li>
                 <li><a href="paginas/servicos_especialidades.html" class="nav-link">Serviços</a></li>
-                <li><a href="paginas/agendamento.html" class="nav-link">Agendamento</a></li>
+                <li><a href="paginas/agendamento.html" class="nav-link nav-link-cta">Agendamento</a></li>
             </ul>
-            <div class="hamburger">
+            <button class="hamburger" type="button" aria-label="Abrir menu" aria-expanded="false">
                 <span></span>
                 <span></span>
                 <span></span>
-            </div>
+            </button>
         </div>
     </nav>
 
-    <!-- HOME -->
-    <section id="home" class="hero">
-        <div class="hero-content">
-            <h2>Bem-vindo à Clínica Vitalis</h2>
-            <p>Cuidando da sua saúde com excelência e dedicação</p>
-            <div class="cta-buttons">
-                <a href="paginas/agendamento.html" class="btn btn-primary">Agendar Consulta</a>
-                <a href="paginas/sobre_clinica.html" class="btn btn-secondary">Saiba Mais</a>
-            </div>
-        </div>
-    </section>
-
-    <!-- PRINCIPAIS SERVIÇOS -->
-    <section class="featured-services">
-        <div class="container">
-            <h2>Nossos Principais Serviços</h2>
-            <div class="services-grid">
-                <a href="paginas/servicos_especialidades.html" class="service-card">
-                    <div class="service-icon">🏥</div>
-                    <h3>Clínica Geral</h3>
-                    <p>Atendimento completo para sua saúde</p>
-                </a>
-                <a href="paginas/servicos_especialidades.html" class="service-card">
-                    <div class="service-icon">🦷</div>
-                    <h3>Odontologia</h3>
-                    <p>Cuidados com seu sorriso</p>
-                </a>
-                <a href="paginas/servicos_especialidades.html" class="service-card">
-                    <div class="service-icon">💪</div>
-                    <h3>Fisioterapia</h3>
-                    <p>Reabilitação e bem-estar</p>
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <!-- LOCALIZAÇÃO -->
-    <section class="location">
-        <div class="container">
-            <h2>Nossa Localização</h2>
-            <div class="location-content">
-                <div class="location-info">
-                    <div class="location-details">
-                        <div class="location-icon">📍</div>
-                        <div class="location-text">
-                            <h3>Clínica Vitalis</h3>
-                            <p>Colégio Cristo Redentor</p>
-                            <p>Academia de Comércio</p>
-                            <p>Juiz de Fora - MG</p>
-                            <a href="https://maps.google.com/maps?q=Colegio+Cristo+Redentor+Academia+de+Comercio+Juiz+de+Fora"
-                                target="_blank" class="btn btn-primary">
-                                Ver no Mapa
-                            </a>
+    <main>
+        <section id="home" class="hero">
+            <div class="container hero-layout">
+                <div class="hero-content">
+                    <p class="section-eyebrow">Atendimento em Juiz de Fora</p>
+                    <h1>Cuidado médico claro, humano e sem complicação</h1>
+                    <p>Consultas em clínica geral, odontologia e fisioterapia com uma equipe preparada para acompanhar sua saúde de ponta a ponta.</p>
+                    <div class="cta-buttons">
+                        <a href="paginas/agendamento.html" class="btn btn-primary">Agendar consulta</a>
+                        <a href="paginas/servicos_especialidades.html" class="btn btn-secondary">Ver especialidades</a>
+                    </div>
+                    <div class="hero-highlights" aria-label="Destaques da clínica">
+                        <div>
+                            <strong>6+</strong>
+                            <span>especialistas</span>
+                        </div>
+                        <div>
+                            <strong>3</strong>
+                            <span>áreas principais</span>
+                        </div>
+                        <div>
+                            <strong>Online</strong>
+                            <span>agendamento simples</span>
                         </div>
                     </div>
                 </div>
-                <div class="location-map">
-                    <iframe
-                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3745.5!2d-43.3527!3d-21.7644!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xa3d54d6a7e7e7e7d%3A0x1234567890abcdef!2sCol%C3%A9gio%20Cristo%20Redentor%20Academia%20de%20Com%C3%A9rcio%2C%20Juiz%20de%20Fora%2C%20MG!5e0!3m2!1spt-BR!2sbr!4v1234567890"
-                        width="100%" height="300" style="border:0; border-radius: 10px;" allowfullscreen=""
-                        loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                <aside class="hero-summary" aria-label="Resumo de atendimento">
+                    <span class="summary-icon"><i class="fa-solid fa-calendar-check" aria-hidden="true"></i></span>
+                    <h2>Agende em poucos passos</h2>
+                    <p>Escolha especialidade, profissional e horário disponível.</p>
+                    <a href="paginas/agendamento.html">Começar agora <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
+                </aside>
+            </div>
+        </section>
+
+        <section class="trust-strip" aria-label="Diferenciais da Clínica Vitalis">
+            <div class="container trust-grid">
+                <div>
+                    <i class="fa-solid fa-user-doctor" aria-hidden="true"></i>
+                    <span>Equipe multidisciplinar</span>
+                </div>
+                <div>
+                    <i class="fa-solid fa-shield-heart" aria-hidden="true"></i>
+                    <span>Atendimento preventivo</span>
+                </div>
+                <div>
+                    <i class="fa-solid fa-location-dot" aria-hidden="true"></i>
+                    <span>Localização central</span>
                 </div>
             </div>
-        </div>
-    </section>
-    <!-- RODAPÉ -->
+        </section>
+
+        <section class="featured-services">
+            <div class="container">
+                <div class="section-heading">
+                    <p class="section-eyebrow">Especialidades</p>
+                    <h2>Principais frentes de cuidado</h2>
+                    <p>Serviços organizados para resolver o essencial da sua rotina de saúde com atendimento coordenado.</p>
+                </div>
+                <div class="services-grid">
+                    <a href="paginas/servicos_especialidades.html" class="service-card">
+                        <div class="service-icon"><i class="fa-solid fa-stethoscope" aria-hidden="true"></i></div>
+                        <h3>Clínica Geral</h3>
+                        <p>Avaliação inicial, acompanhamento de rotina e prevenção com visão completa da sua saúde.</p>
+                        <span>Conhecer serviço <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></span>
+                    </a>
+                    <a href="paginas/servicos_especialidades.html" class="service-card">
+                        <div class="service-icon"><i class="fa-solid fa-tooth" aria-hidden="true"></i></div>
+                        <h3>Odontologia</h3>
+                        <p>Cuidados para saúde bucal, estética e prevenção, com foco em conforto e continuidade.</p>
+                        <span>Conhecer serviço <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></span>
+                    </a>
+                    <a href="paginas/servicos_especialidades.html" class="service-card">
+                        <div class="service-icon"><i class="fa-solid fa-dumbbell" aria-hidden="true"></i></div>
+                        <h3>Fisioterapia</h3>
+                        <p>Reabilitação, controle de dor e recuperação funcional para voltar ao movimento com segurança.</p>
+                        <span>Conhecer serviço <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></span>
+                    </a>
+                </div>
+                <div class="section-action">
+                    <a href="paginas/profissionais.html" class="btn btn-secondary">Conhecer profissionais</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="location">
+            <div class="container">
+                <div class="section-heading">
+                    <p class="section-eyebrow">Como chegar</p>
+                    <h2>Nossa localização</h2>
+                    <p>Estamos em uma região de fácil acesso em Juiz de Fora, próxima a pontos de referência conhecidos.</p>
+                </div>
+                <div class="location-content">
+                    <div class="location-info">
+                        <div class="location-details">
+                            <div class="location-icon"><i class="fa-solid fa-location-dot" aria-hidden="true"></i></div>
+                            <div class="location-text">
+                                <h3>Clínica Vitalis</h3>
+                                <p><i class="fa-solid fa-map-location-dot" aria-hidden="true"></i> Colégio Cristo Redentor, Academia de Comércio</p>
+                                <p><i class="fa-solid fa-city" aria-hidden="true"></i> Juiz de Fora - MG</p>
+                                <p><i class="fa-solid fa-clock" aria-hidden="true"></i> Atendimento mediante agendamento</p>
+                                <a href="https://maps.google.com/maps?q=Colegio+Cristo+Redentor+Academia+de+Comercio+Juiz+de+Fora"
+                                    target="_blank" rel="noopener" class="btn btn-primary">
+                                    Abrir no mapa
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="location-map">
+                        <iframe
+                            title="Mapa da Clínica Vitalis"
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3745.5!2d-43.3527!3d-21.7644!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xa3d54d6a7e7e7e7d%3A0x1234567890abcdef!2sCol%C3%A9gio%20Cristo%20Redentor%20Academia%20de%20Com%C3%A9rcio%2C%20Juiz%20de%20Fora%2C%20MG!5e0!3m2!1spt-BR!2sbr!4v1234567890"
+                            width="100%" height="360" style="border:0;" allowfullscreen=""
+                            loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
     <footer>
         <div class="container">
             <p>&copy; 2024 Clínica Vitalis. Todos os direitos reservados.</p>
-            <p>Desenvolvido  usando HTML, CSS e JavaScript</p>
+            <p>Desenvolvido usando HTML, CSS e JavaScript</p>
         </div>
     </footer>
 

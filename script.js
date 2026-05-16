@@ -6,6 +6,7 @@ if (hamburger) {
     hamburger.addEventListener('click', () => {
         hamburger.classList.toggle('active');
         navMenu.classList.toggle('active');
+        hamburger.setAttribute('aria-expanded', hamburger.classList.contains('active'));
     });
 }
 
@@ -15,6 +16,7 @@ navLinks.forEach(link => {
     link.addEventListener('click', () => {
         hamburger.classList.remove('active');
         navMenu.classList.remove('active');
+        hamburger.setAttribute('aria-expanded', 'false');
     });
 });
 
@@ -25,6 +27,7 @@ function scroll_to(section) {
         element.scrollIntoView({ behavior: 'smooth' });
         hamburger.classList.remove('active');
         navMenu.classList.remove('active');
+        hamburger.setAttribute('aria-expanded', 'false');
     }
 }
 

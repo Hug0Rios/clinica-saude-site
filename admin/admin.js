@@ -356,13 +356,19 @@ function viewContato(id) {
    UI HELPERS
 ---------------------------------------------------------------- */
 function showSection(name) {
-  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.section').forEach(s => {
+    s.classList.remove('active');
+    s.classList.add('hidden');
+  });
   document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
 
   const section = document.getElementById('section-' + name);
   const navItem = document.querySelector(`[data-section="${name}"]`);
-  if (section) section.classList.add('active');
-  if (navItem)  navItem.classList.add('active');
+  if (section) {
+    section.classList.remove('hidden');
+    section.classList.add('active');
+  }
+  if (navItem) navItem.classList.add('active');
 
   document.getElementById('page-title').textContent = SECTION_TITLES[name] || name;
   closeSidebar();

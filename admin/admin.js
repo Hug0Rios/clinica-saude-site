@@ -491,6 +491,7 @@ function initLoginForm() {
 }
 
 function showApp() {
+  document.getElementById('login-screen').style.display = 'none';
   document.getElementById('app').classList.remove('hidden');
 
   document.querySelectorAll('.nav-item').forEach(function (item) {

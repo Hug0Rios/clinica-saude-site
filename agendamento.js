@@ -1,352 +1,360 @@
-// ========== DADOS DOS PROFISSIONAIS E HORÁRIOS ==========
+/* ================================================================
+   agendamento.js — Clínica Vitalis
+================================================================ */
 
 const profissionaisData = {
     'clinica-geral': [
-        { id: 'carlos-silva', nome: 'Dr. Carlos Silva', horarios: ['08:00', '09:00', '10:00', '11:00', '13:00', '14:00', '15:00', '16:00'] },
+        { id: 'carlos-silva',     nome: 'Dr. Carlos Silva',       horarios: ['08:00','09:00','10:00','11:00','13:00','14:00','15:00','16:00'] },
     ],
-    'cardiologia': [
-        { id: 'marina-costa', nome: 'Dra. Marina Costa', horarios: ['08:30', '09:30', '10:30', '11:30', '14:00', '15:00', '16:00'] },
+    cardiologia: [
+        { id: 'marina-costa',     nome: 'Dra. Marina Costa',      horarios: ['08:30','09:30','10:30','11:30','14:00','15:00','16:00'] },
     ],
-    'odontologia': [
-        { id: 'fernando-oliveira', nome: 'Dr. Fernando Oliveira', horarios: ['08:00', '09:00', '10:00', '11:00', '13:00', '14:00', '15:00', '16:00', '17:00'] },
+    odontologia: [
+        { id: 'fernando-oliveira',nome: 'Dr. Fernando Oliveira',  horarios: ['08:00','09:00','10:00','11:00','13:00','14:00','15:00','16:00','17:00'] },
     ],
-    'fisioterapia': [
-        { id: 'ana-paula', nome: 'Dra. Ana Paula', horarios: ['08:00', '09:00', '10:00', '11:00', '13:00', '14:00', '15:00', '16:00'] },
+    fisioterapia: [
+        { id: 'ana-paula',        nome: 'Dra. Ana Paula',         horarios: ['08:00','09:00','10:00','11:00','13:00','14:00','15:00','16:00'] },
     ],
-    'dermatologia': [
-        { id: 'roberto-santos', nome: 'Dr. Roberto Santos', horarios: ['08:30', '09:30', '10:30', '11:30', '13:30', '14:30', '15:30', '16:30'] },
+    dermatologia: [
+        { id: 'roberto-santos',   nome: 'Dr. Roberto Santos',     horarios: ['08:30','09:30','10:30','11:30','13:30','14:30','15:30','16:30'] },
     ],
-    'nutricao': [
-        { id: 'juliana-martins', nome: 'Dra. Juliana Martins', horarios: ['08:00', '09:00', '10:00', '11:00', '13:00', '14:00', '15:00', '16:00'] },
-    ]
+    nutricao: [
+        { id: 'juliana-martins',  nome: 'Dra. Juliana Martins',   horarios: ['08:00','09:00','10:00','11:00','13:00','14:00','15:00','16:00'] },
+    ],
 };
 
-// ========== VARIÁVEIS GLOBAIS ==========
-let agendamentosRealizados = {};
-const formulario = document.getElementById('agendamentoForm');
-const servico = document.getElementById('servico');
-const profissional = document.getElementById('profissional');
-const data = document.getElementById('data');
-const horariosContainer = document.getElementById('horariosContainer');
-const horarioSelecionado = document.getElementById('horarioSelecionado');
-const mensagemAgendamento = document.getElementById('mensagemAgendamento');
-const resumoAgendamento = document.getElementById('resumoAgendamento');
-const resumoConteudo = document.getElementById('resumoConteudo');
+/* ---- DOM ---- */
+const formulario          = document.getElementById('agendamentoForm');
+const selectServico       = document.getElementById('servico');
+const selectProfissional  = document.getElementById('profissional');
+const inputData           = document.getElementById('data');
+const horariosContainer   = document.getElementById('horariosContainer');
+const inputHorario        = document.getElementById('horarioSelecionado');
+const msgContainer        = document.getElementById('mensagemAgendamento');
+const resumoAgendamento   = document.getElementById('resumoAgendamento');
+const resumoConteudo      = document.getElementById('resumoConteudo');
+const agendamentoContexto = document.getElementById('agendamentoContexto');
 
-// ========== CARREGAMENTO DO LOCALSTORAGE ==========
-function carregarAgendamentos() {
-    const dados = localStorage.getItem('agendamentosClinica');
-    agendamentosRealizados = dados ? JSON.parse(dados) : {};
+/* ---- Helpers de data ---- */
+function isWeekend(dateStr) {
+    const [y, m, d] = dateStr.split('-').map(Number);
+    const dow = new Date(y, m - 1, d).getDay();
+    return dow === 0 || dow === 6;
 }
 
-function salvarAgendamentos() {
-    localStorage.setItem('agendamentosClinica', JSON.stringify(agendamentosRealizados));
+function proximoDiaUtil(date) {
+    const d = new Date(date);
+    while ([0, 6].includes(d.getDay())) d.setDate(d.getDate() + 1);
+    return d.toISOString().split('T')[0];
 }
 
-// ========== ATUALIZAR LISTA DE PROFISSIONAIS ==========
-function atualizarProfissionais() {
-    const servicoSelecionado = servico.value;
-    profissional.innerHTML = '<option value="">Selecione um profissional</option>';
-    
-    if (!servicoSelecionado) {
-        profissional.disabled = true;
-        horariosContainer.innerHTML = '<p class="horario-placeholder">Selecione uma especialidade</p>';
-        horarioSelecionado.value = '';
-        return;
-    }
-    
-    profissional.disabled = false;
-    const profissionais = profissionaisData[servicoSelecionado] || [];
-    
-    profissionais.forEach(prof => {
-        const option = document.createElement('option');
-        option.value = prof.id;
-        option.textContent = prof.nome;
-        profissional.appendChild(option);
-    });
-    
-    // Resetar horários
-    horariosContainer.innerHTML = '<p class="horario-placeholder">Selecione um profissional</p>';
-    horarioSelecionado.value = '';
-}
-
-// ========== CALCULAR DATA MÍNIMA (AMANHÃ) ==========
-function obterDataMinima() {
+function dataMinima() {
     const amanha = new Date();
     amanha.setDate(amanha.getDate() + 1);
-    return amanha.toISOString().split('T')[0];
+    amanha.setHours(0, 0, 0, 0);
+    return proximoDiaUtil(amanha);
 }
 
-// ========== ATUALIZAR DATAS DISPONÍVEIS ==========
+function dataMaxima() {
+    const d = new Date();
+    d.setDate(d.getDate() + 90);
+    return d.toISOString().split('T')[0];
+}
+
+function horarioJaPassou(dateStr, horario) {
+    const [h, min] = horario.split(':').map(Number);
+    const agora = new Date();
+    const consulta = new Date(dateStr);
+    consulta.setHours(h, min, 0, 0);
+    return consulta <= agora;
+}
+
+function formatarData(str) {
+    const [y, m, d] = str.split('-');
+    return `${d}/${m}/${y}`;
+}
+
+function formatarTelefone(tel) {
+    const digits = tel.replace(/\D/g, '');
+    if (digits.length === 11) return `(${digits.slice(0,2)}) ${digits.slice(2,7)}-${digits.slice(7)}`;
+    if (digits.length === 10) return `(${digits.slice(0,2)}) ${digits.slice(2,6)}-${digits.slice(6)}`;
+    return tel;
+}
+
+function esc(str) {
+    return String(str ?? '').replace(/[&<>"']/g, c =>
+        ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[c])
+    );
+}
+
+/* ---- Buscar slots ocupados no Supabase ---- */
+async function buscarHorariosOcupados(nomeProf, dateStr) {
+    if (!window.VITALIS_DB) return [];
+    try {
+        const rows = await window.VITALIS_DB.select(
+            'agendamentos',
+            `select=horario&profissional=eq.${encodeURIComponent(nomeProf)}&data_consulta=eq.${dateStr}&status=neq.cancelado`
+        );
+        return Array.isArray(rows) ? rows.map(r => String(r.horario).slice(0, 5)) : [];
+    } catch {
+        return [];
+    }
+}
+
+/* ---- UI: profissionais ---- */
+function atualizarProfissionais() {
+    const svc = selectServico.value;
+    selectProfissional.innerHTML = '<option value="">Selecione um profissional</option>';
+    inputData.value   = '';
+    inputHorario.value = '';
+    horariosContainer.innerHTML = '<p class="horario-placeholder">Selecione um profissional e uma data</p>';
+    msgContainer.innerHTML = '';
+    msgContainer.className = 'mensagem-agendamento';
+
+    if (!svc) {
+        selectProfissional.disabled = true;
+        return;
+    }
+
+    selectProfissional.disabled = false;
+    (profissionaisData[svc] || []).forEach(p => {
+        const opt = document.createElement('option');
+        opt.value = p.id;
+        opt.textContent = p.nome;
+        selectProfissional.appendChild(opt);
+    });
+}
+
+/* ---- UI: datas ---- */
 function atualizarDatasDisponíveis() {
-    const dataMinima = obterDataMinima();
-    data.setAttribute('min', dataMinima);
-    data.value = '';
-    
+    inputData.setAttribute('min', dataMinima());
+    inputData.setAttribute('max', dataMaxima());
+    inputData.value    = '';
+    inputHorario.value = '';
     horariosContainer.innerHTML = '<p class="horario-placeholder">Selecione uma data</p>';
-    horarioSelecionado.value = '';
+    msgContainer.innerHTML = '';
+    msgContainer.className = 'mensagem-agendamento';
 }
 
-// ========== VERIFICAR SE HORÁRIO ESTÁ OCUPADO ==========
-function horarioOcupado(profissionalId, dataConsulta, horario) {
-    const chave = `${profissionalId}_${dataConsulta}`;
-    return agendamentosRealizados[chave] && agendamentosRealizados[chave].includes(horario);
-}
+/* ---- UI: horários ---- */
+async function atualizarHorarios() {
+    const dateStr = inputData.value;
+    const profId  = selectProfissional.value;
 
-// ========== VERIFICAR SE HORÁRIO JÁ PASSOU ==========
-function horarioJaPassou(dataConsulta, horario) {
-    const hoje = new Date();
-    const dataAtual = hoje.toISOString().split('T')[0];
-    
-    if (dataConsulta > dataAtual) {
-        return false; // Data futura, horário não passou
+    inputHorario.value     = '';
+    msgContainer.innerHTML = '';
+    msgContainer.className = 'mensagem-agendamento';
+
+    if (!dateStr || !profId) {
+        horariosContainer.innerHTML = '<p class="horario-placeholder">Selecione profissional e data</p>';
+        return;
     }
-    
-    if (dataConsulta === dataAtual) {
-        const [horas, minutos] = horario.split(':');
-        const horaAtual = hoje.getHours();
-        const minutosAtuais = hoje.getMinutes();
-        
-        const horarioHoras = parseInt(horas);
-        const horarioMinutos = parseInt(minutos);
-        
-        if (horarioHoras < horaAtual) return true;
-        if (horarioHoras === horaAtual && horarioMinutos <= minutosAtuais) return true;
-    }
-    
-    return false;
-}
 
-// ========== ATUALIZAR HORÁRIOS DISPONÍVEIS ==========
-function atualizarHorarios() {
-    const dataSelecionada = data.value;
-    const profissionalId = profissional.value;
-    
-    horariosContainer.innerHTML = '';
-    horarioSelecionado.value = '';
-    mensagemAgendamento.innerHTML = '';
-    
-    if (!dataSelecionada) {
+    if (isWeekend(dateStr)) {
+        inputData.value = '';
         horariosContainer.innerHTML = '<p class="horario-placeholder">Selecione uma data</p>';
+        showMsg('A clínica não atende nos fins de semana. Escolha uma data de segunda a sexta-feira.', 'aviso');
         return;
     }
-    
-    if (!profissionalId) {
-        horariosContainer.innerHTML = '<p class="horario-placeholder">Selecione um profissional</p>';
-        return;
-    }
-    
-    const servicoSelecionado = servico.value;
-    const profissionaisList = profissionaisData[servicoSelecionado];
-    const profissionalSelecionado = profissionaisList.find(p => p.id === profissionalId);
-    
-    if (!profissionalSelecionado) {
-        horariosContainer.innerHTML = '<p class="horario-placeholder">Profissional não encontrado</p>';
-        return;
-    }
-    
-    const horariosDisponíveis = profissionalSelecionado.horarios;
-    let temHorarioDisponivel = false;
-    
-    horariosDisponíveis.forEach(horario => {
-        const div = document.createElement('div');
-        div.classList.add('horario-item');
-        div.textContent = horario;
-        
-        const ocupado = horarioOcupado(profissionalId, dataSelecionada, horario);
-        const passado = horarioJaPassou(dataSelecionada, horario);
-        
-        if (ocupado) {
-            div.classList.add('ocupado');
-            div.title = 'Este horário já está agendado';
-        } else if (passado) {
-            div.classList.add('passado');
-            div.title = 'Este horário já passou';
+
+    const svc      = selectServico.value;
+    const profInfo = (profissionaisData[svc] || []).find(p => p.id === profId);
+    if (!profInfo) return;
+
+    horariosContainer.innerHTML = `
+        <p class="horario-placeholder">
+            <i class="fa-solid fa-spinner fa-spin" aria-hidden="true"></i> Verificando disponibilidade…
+        </p>`;
+
+    const ocupados = await buscarHorariosOcupados(profInfo.nome, dateStr);
+
+    horariosContainer.innerHTML = '';
+    let algumDisponivel = false;
+
+    profInfo.horarios.forEach(horario => {
+        const btn    = document.createElement('button');
+        btn.type     = 'button';
+        btn.className = 'horario-item';
+        btn.textContent = horario;
+
+        const passado = horarioJaPassou(dateStr, horario);
+        const ocupado = ocupados.includes(horario);
+
+        if (passado) {
+            btn.classList.add('passado');
+            btn.disabled = true;
+            btn.setAttribute('aria-label', `${horario} — horário passado`);
+        } else if (ocupado) {
+            btn.classList.add('ocupado');
+            btn.disabled = true;
+            btn.setAttribute('aria-label', `${horario} — horário ocupado`);
         } else {
-            temHorarioDisponivel = true;
-            div.classList.add('disponivel');
-            div.addEventListener('click', () => selecionarHorario(horario, div));
+            btn.classList.add('disponivel');
+            algumDisponivel = true;
+            btn.setAttribute('aria-label', `Selecionar horário ${horario}`);
+            btn.addEventListener('click', () => selecionarHorario(horario, btn));
         }
-        
-        horariosContainer.appendChild(div);
+
+        horariosContainer.appendChild(btn);
     });
-    
-    if (!temHorarioDisponivel) {
-        mensagemAgendamento.innerHTML = '<p class="aviso">⚠️ Nenhum horário disponível para esta data. Tente selecionar outra data.</p>';
-        mensagemAgendamento.classList.add('aviso-box');
+
+    if (!algumDisponivel) {
+        showMsg('Não há horários disponíveis nesta data. Por favor, escolha outra data.', 'aviso');
     }
 }
 
-// ========== SELECIONAR HORÁRIO ==========
-function selecionarHorario(horario, element) {
-    // Remover seleção anterior
-    document.querySelectorAll('.horario-item.selecionado').forEach(el => {
-        el.classList.remove('selecionado');
+function selecionarHorario(horario, btn) {
+    document.querySelectorAll('.horario-item.selecionado').forEach(el => el.classList.remove('selecionado'));
+    btn.classList.add('selecionado');
+    inputHorario.value = horario;
+    showMsg(`Horário ${horario} selecionado com sucesso.`, 'sucesso');
+}
+
+function showMsg(text, type) {
+    msgContainer.innerHTML = `<p>${esc(text)}</p>`;
+    msgContainer.className = `mensagem-agendamento ${type === 'sucesso' ? 'sucesso-box' : 'aviso-box'}`;
+}
+
+/* ---- Envio para o banco ---- */
+async function enviarAgendamento(dados) {
+    if (!window.VITALIS_DB) return false;
+    return window.VITALIS_DB.insert('agendamentos', {
+        nome:          dados.nome,
+        email:         dados.email,
+        telefone:      dados.telefone,
+        servico:       dados.servico,
+        profissional:  dados.profissional,
+        data_consulta: dados.dataISO,
+        horario:       dados.horario,
+        motivo:        dados.motivo || null,
+        status:        'pendente',
     });
-    
-    // Adicionar seleção ao clicado
-    element.classList.add('selecionado');
-    horarioSelecionado.value = horario;
-    
-    // Mostrar mensagem de confirmação
-    mensagemAgendamento.innerHTML = `<p class="sucesso">✅ Horário ${horario} selecionado com sucesso!</p>`;
-    mensagemAgendamento.classList.add('sucesso-box');
 }
 
-// ========== FORMATAR DATA ==========
-function formatarData(dataString) {
-    const [ano, mes, dia] = dataString.split('-');
-    return `${dia}/${mes}/${ano}`;
-}
-
-// ========== FORMATAR TELEFONE ==========
-function formatarTelefone(telefone) {
-    return telefone.replace(/(\d{2})(\d{4,5})(\d{4})/, '($1) $2-$3');
-}
-
-// ========== SUBMISSÃO DO FORMULÁRIO ==========
-formulario.addEventListener('submit', (e) => {
+/* ---- Submit ---- */
+formulario.addEventListener('submit', async e => {
     e.preventDefault();
-    
-    // Validação dos campos obrigatórios
-    if (!horarioSelecionado.value) {
-        alert('⚠️ Por favor, selecione um horário disponível!');
+
+    if (!inputHorario.value) {
+        showMsg('Selecione um horário disponível antes de confirmar.', 'aviso');
         return;
     }
-    
-    const nomeValue = document.getElementById('nome').value.trim();
-    const emailValue = document.getElementById('email').value.trim();
-    const telefoneValue = document.getElementById('telefone').value.trim();
-    const dataSelecionada = data.value;
-    const horario = horarioSelecionado.value;
-    const profissionalId = profissional.value;
-    const servicoSelecionado = servico.value;
-    const motivo = document.getElementById('motivo').value.trim();
-    
-    // Obter dados do profissional
-    const profissionaisList = profissionaisData[servicoSelecionado];
-    const profissionalInfo = profissionaisList.find(p => p.id === profissionalId);
-    
-    // Salvar agendamento no localStorage
-    const chave = `${profissionalId}_${dataSelecionada}`;
-    if (!agendamentosRealizados[chave]) {
-        agendamentosRealizados[chave] = [];
-    }
-    agendamentosRealizados[chave].push(horario);
-    salvarAgendamentos();
-    
-    // Preparar dados do agendamento
+
+    const svc      = selectServico.value;
+    const profId   = selectProfissional.value;
+    const profInfo = (profissionaisData[svc] || []).find(p => p.id === profId);
+    const dateStr  = inputData.value;
+
     const dados = {
-        nome: nomeValue,
-        email: emailValue,
-        telefone: formatarTelefone(telefoneValue),
-        data: formatarData(dataSelecionada),
-        horario: horario,
-        profissional: profissionalInfo.nome,
-        especialidade: document.querySelector(`#servico option[value="${servicoSelecionado}"]`).textContent,
-        motivo: motivo || 'Consulta geral',
-        timestamp: new Date().toLocaleString('pt-BR')
+        nome:         document.getElementById('nome').value.trim(),
+        email:        document.getElementById('email').value.trim(),
+        telefone:     formatarTelefone(document.getElementById('telefone').value.trim()),
+        servico:      document.querySelector(`#servico option[value="${svc}"]`)?.textContent || svc,
+        profissional: profInfo?.nome || '',
+        dataISO:      dateStr,
+        data:         formatarData(dateStr),
+        horario:      inputHorario.value,
+        motivo:       document.getElementById('motivo').value.trim(),
     };
-    
-    // Mostrar resumo
-    exibirResumo(dados);
-    
-    // Log para debug
-    console.log('Agendamento realizado:', dados);
+
+    const submitBtn = formulario.querySelector('[type="submit"]');
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin" aria-hidden="true"></i> Enviando…';
+
+    const ok = await enviarAgendamento(dados);
+
+    submitBtn.disabled = false;
+    submitBtn.innerHTML = '<i class="fas fa-check" aria-hidden="true"></i> Confirmar Agendamento';
+
+    if (ok) {
+        exibirResumo(dados);
+        formulario.reset();
+        selectProfissional.disabled = true;
+        inputHorario.value = '';
+        horariosContainer.innerHTML = '<p class="horario-placeholder">Selecione uma data</p>';
+        msgContainer.innerHTML = '';
+        msgContainer.className = 'mensagem-agendamento';
+    } else {
+        showMsg('Não foi possível enviar o agendamento. Verifique sua conexão e tente novamente, ou ligue para a clínica.', 'aviso');
+    }
 });
 
-// ========== EXIBIR RESUMO DO AGENDAMENTO ==========
+/* ---- Resumo ---- */
 function exibirResumo(dados) {
+    const motivo = dados.motivo
+        ? `<div class="resumo-item"><span class="label">Motivo</span><span class="valor">${esc(dados.motivo)}</span></div>`
+        : '';
+
     resumoConteudo.innerHTML = `
-        <div class="resumo-item">
-            <span class="label">👤 Paciente:</span>
-            <span class="valor">${dados.nome}</span>
-        </div>
-        <div class="resumo-item">
-            <span class="label">📧 Email:</span>
-            <span class="valor">${dados.email}</span>
-        </div>
-        <div class="resumo-item">
-            <span class="label">📱 Telefone:</span>
-            <span class="valor">${dados.telefone}</span>
-        </div>
-        <div class="resumo-item">
-            <span class="label">🏥 Especialidade:</span>
-            <span class="valor">${dados.especialidade}</span>
-        </div>
-        <div class="resumo-item">
-            <span class="label">👨‍⚕️ Profissional:</span>
-            <span class="valor">${dados.profissional}</span>
-        </div>
-        <div class="resumo-item">
-            <span class="label">📅 Data:</span>
-            <span class="valor">${dados.data}</span>
-        </div>
-        <div class="resumo-item">
-            <span class="label">🕐 Horário:</span>
-            <span class="valor">${dados.horario}</span>
-        </div>
-        <div class="resumo-item">
-            <span class="label">📝 Motivo:</span>
-            <span class="valor">${dados.motivo}</span>
-        </div>
+        <div class="resumo-item"><span class="label">Paciente</span><span class="valor">${esc(dados.nome)}</span></div>
+        <div class="resumo-item"><span class="label">E-mail</span><span class="valor">${esc(dados.email)}</span></div>
+        <div class="resumo-item"><span class="label">Telefone</span><span class="valor">${esc(dados.telefone)}</span></div>
+        <div class="resumo-item"><span class="label">Especialidade</span><span class="valor">${esc(dados.servico)}</span></div>
+        <div class="resumo-item"><span class="label">Profissional</span><span class="valor">${esc(dados.profissional)}</span></div>
+        <div class="resumo-item"><span class="label">Data</span><span class="valor">${esc(dados.data)}</span></div>
+        <div class="resumo-item"><span class="label">Horário</span><span class="valor">${esc(dados.horario)}</span></div>
+        ${motivo}
         <div class="resumo-rodape">
-            <p>✅ <strong>Agendamento realizado com sucesso!</strong></p>
-            <p>Um email de confirmação foi enviado para <strong>${dados.email}</strong></p>
-            <p>Você será contatado para confirmar o agendamento em breve.</p>
-            <p class="timestamp">Agendado em: ${dados.timestamp}</p>
+            <p><strong>Agendamento realizado com sucesso!</strong></p>
+            <p>Nossa equipe entrará em contato para confirmar. Fique atento ao seu e-mail e telefone.</p>
         </div>
     `;
-    
+
     resumoAgendamento.classList.remove('hidden');
-    
-    // Scroll para o resumo
-    setTimeout(() => {
-        resumoAgendamento.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    }, 300);
-    
-    // Mostrar modal de confirmação
+    setTimeout(() => resumoAgendamento.scrollIntoView({ behavior: 'smooth', block: 'center' }), 200);
     exibirModalConfirmacao(dados);
-    
-    // Limpar formulário e resetar
-    formulario.reset();
-    horarioSelecionado.value = '';
-    horariosContainer.innerHTML = '<p class="horario-placeholder">Selecione uma data</p>';
-    mensagemAgendamento.innerHTML = '';
 }
 
-// ========== MODAL DE CONFIRMAÇÃO ==========
+/* ---- Modal ---- */
 function exibirModalConfirmacao(dados) {
     const modal = document.getElementById('modalConfirmacao');
+    if (!modal) return;
     document.getElementById('modalProfissional').textContent = dados.profissional;
-    document.getElementById('modalDataHora').textContent = `${dados.data} às ${dados.horario}`;
-    document.getElementById('modalEmail').textContent = dados.email;
-    
+    document.getElementById('modalDataHora').textContent    = `${dados.data} às ${dados.horario}`;
+    document.getElementById('modalEmail').textContent       = dados.email;
     modal.classList.remove('hidden');
-    
-    // Fechar modal automaticamente após 8 segundos
-    setTimeout(() => {
-        fecharModalConfirmacao();
-    }, 8000);
+    setTimeout(fecharModalConfirmacao, 8000);
 }
 
-// ========== FECHAR MODAL ==========
 function fecharModalConfirmacao() {
-    const modal = document.getElementById('modalConfirmacao');
-    modal.classList.add('hidden');
+    document.getElementById('modalConfirmacao')?.classList.add('hidden');
 }
 
-// ========== INICIALIZAÇÃO ==========
+/* ---- URL params ---- */
+function aplicarParametrosDaUrl() {
+    const params    = new URLSearchParams(window.location.search);
+    const svcParam  = params.get('servico');
+    const profParam = params.get('profissional');
+
+    if (!svcParam || !profissionaisData[svcParam]) return;
+
+    selectServico.value = svcParam;
+    atualizarProfissionais();
+
+    const profExiste = (profissionaisData[svcParam] || []).some(p => p.id === profParam);
+    if (profParam && profExiste) {
+        selectProfissional.value = profParam;
+        atualizarDatasDisponíveis();
+    }
+
+    const profSel = (profissionaisData[svcParam] || []).find(p => p.id === selectProfissional.value);
+    if (agendamentoContexto && profSel) {
+        agendamentoContexto.classList.remove('hidden');
+        const svcNome = document.querySelector(`#servico option[value="${svcParam}"]`)?.textContent || '';
+        agendamentoContexto.innerHTML = `
+            <i class="fa-solid fa-circle-check" aria-hidden="true"></i>
+            <div>
+                <strong>Atendimento selecionado</strong>
+                <span>${esc(svcNome)} com ${esc(profSel.nome)}</span>
+            </div>
+        `;
+    }
+}
+
+/* ---- Init ---- */
 document.addEventListener('DOMContentLoaded', () => {
-    carregarAgendamentos();
-    
-    // Configurar data mínima
-    const dataMinima = obterDataMinima();
-    data.setAttribute('min', dataMinima);
-    
-    // Desabilitar profissional inicialmente
-    profissional.disabled = true;
-    
-    console.log('Sistema de agendamento inicializado');
-    console.log('Agendamentos carregados:', agendamentosRealizados);
+    inputData.setAttribute('min', dataMinima());
+    inputData.setAttribute('max', dataMaxima());
+    selectProfissional.disabled = true;
+    aplicarParametrosDaUrl();
 });

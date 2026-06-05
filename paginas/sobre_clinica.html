@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,8 +9,16 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="../style.css">
 </head>
+
 <body>
-    <!-- Navegação -->
+    <div class="topbar">
+        <div class="container topbar-content">
+            <span><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Centro - Juiz de Fora - MG</span>
+            <span><i class="fa-solid fa-phone" aria-hidden="true"></i> (32) 2102-7700</span>
+            <span><i class="fa-solid fa-envelope" aria-hidden="true"></i> contato@clinicavitalis.com.br</span>
+        </div>
+    </div>
+
     <nav class="navbar">
         <div class="container">
             <a href="../index.html" class="logo" aria-label="Clínica Vitalis - página inicial">
@@ -31,61 +40,318 @@
         </div>
     </nav>
 
-    <!-- SOBRE A CLÍNICA - Título e Carrossel -->
-    <section id="sobre" class="about-hero">
-        <div class="container">
-            <div class="carousel">
-                <div class="carousel-container">
-                    <h2 class="carousel-title">Sobre a Clínica Vitalis</h2>
-                    <div class="carousel-track">
-                        <img src="../img/clinica_saude.jpg" alt="Clínica Saúde">
-                        <img src="../img/clinica_fisio.jpg" alt="Clínica Fisioterapia">
-                        <img src="../img/clinica_dent.jpg" alt="Clínica Odontologia">
+    <main>
+        <section class="page-heading">
+            <div class="container">
+                <nav class="breadcrumb" aria-label="Caminho da página">
+                    <a href="../index.html">Home</a>
+                    <span>/</span>
+                    <span>Empresa</span>
+                </nav>
+                <h1>Quem Somos</h1>
+            </div>
+        </section>
+
+        <section class="company-about-block">
+            <div class="container company-about-layout">
+                <div class="company-about-text">
+                    <h2>Clínica Vitalis</h2>
+                    <p>Atendemos pacientes em Juiz de Fora com uma proposta prática: centralizar profissionais de confiança, facilitar a escolha do atendimento e reduzir dúvidas antes da consulta.</p>
+                    <p>A Clínica Vitalis reúne atendimento clínico, odontológico, fisioterapêutico e outras especialidades em um fluxo simples: escolha a área, confira o profissional responsável e agende o melhor horário.</p>
+                    <p>Nosso objetivo é oferecer uma experiência humanizada, organizada e acessível, com informações claras antes, durante e depois da consulta.</p>
+                </div>
+                <div class="company-about-image">
+                    <img src="../img/clinica_saude.jpg" alt="Profissional de saúde preenchendo ficha de atendimento">
+                </div>
+            </div>
+        </section>
+
+        <section class="values-section">
+            <div class="container values-grid">
+                <article class="value-card">
+                    <span><i class="fa-solid fa-bullseye" aria-hidden="true"></i></span>
+                    <h3>Missão</h3>
+                    <p>Oferecer atendimento acessível, acolhedor e resolutivo, conectando pacientes aos profissionais certos com segurança e clareza.</p>
+                </article>
+                <article class="value-card">
+                    <span><i class="fa-solid fa-eye" aria-hidden="true"></i></span>
+                    <h3>Visão</h3>
+                    <p>Ser uma clínica reconhecida pela experiência simples, pela confiança da equipe e pela continuidade do cuidado.</p>
+                </article>
+                <article class="value-card">
+                    <span><i class="fa-solid fa-heart" aria-hidden="true"></i></span>
+                    <h3>Valores</h3>
+                    <p>Ética, empatia, organização, respeito ao paciente, pontualidade e melhoria contínua no atendimento.</p>
+                </article>
+            </div>
+        </section>
+
+        <section id="patientTestimonials" class="testimonials-section hidden">
+            <div class="container">
+                <div class="section-heading">
+                    <h2>O que nossos pacientes estão dizendo:</h2>
+                </div>
+                <div id="patientTestimonialsGrid" class="testimonials-grid"></div>
+            </div>
+        </section>
+
+        <section id="avaliacao-clinica" class="clinic-rating-section">
+            <div class="container rating-layout">
+                <div class="rating-summary">
+                    <p class="section-eyebrow">Avaliação da clínica</p>
+                    <h2>Atendimento avaliado pela experiência completa</h2>
+                    <div class="rating-score" aria-label="Avaliação média 4.9 de 5">
+                        <strong>4,9</strong>
+                        <div>
+                            <span class="rating-stars">
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                            </span>
+                            <small>média entre pacientes atendidos</small>
+                        </div>
+                    </div>
+                    <p>As avaliações consideram acolhimento, clareza das orientações, organização do agendamento, pontualidade e estrutura da clínica.</p>
+                    <a href="agendamento.html" class="btn btn-primary">Agendar minha consulta</a>
+                </div>
+
+                <div class="rating-cards">
+                    <article class="rating-card">
+                        <span><i class="fa-solid fa-user-check" aria-hidden="true"></i></span>
+                        <strong>Atendimento</strong>
+                        <p>Equipe atenciosa, explicações claras e acompanhamento desde a chegada até a finalização da consulta.</p>
+                    </article>
+                    <article class="rating-card">
+                        <span><i class="fa-solid fa-calendar-check" aria-hidden="true"></i></span>
+                        <strong>Agendamento</strong>
+                        <p>Fluxo online simples para escolher especialidade, profissional, data e horário disponível.</p>
+                    </article>
+                    <article class="rating-card">
+                        <span><i class="fa-solid fa-house-medical-circle-check" aria-hidden="true"></i></span>
+                        <strong>Estrutura</strong>
+                        <p>Ambientes preparados para atendimento clínico, odontológico e fisioterapêutico com conforto.</p>
+                    </article>
+                    <article class="rating-card">
+                        <span><i class="fa-solid fa-heart-circle-check" aria-hidden="true"></i></span>
+                        <strong>Confiança</strong>
+                        <p>Profissionais identificados por área, com perfil, foto e especialidade antes do agendamento.</p>
+                    </article>
+                </div>
+            </div>
+
+            <div class="container review-panel">
+                <form id="reviewForm" class="review-form">
+                    <div>
+                        <p class="section-eyebrow">Sua opinião</p>
+                        <h3>Deixe sua avaliação sobre a Clínica Vitalis</h3>
+                        <p>Seu comentário ajuda outros pacientes a escolherem o atendimento com mais segurança.</p>
+                    </div>
+                    <div class="review-form-grid">
+                        <div class="form-group">
+                            <label for="reviewName">Nome</label>
+                            <input type="text" id="reviewName" name="reviewName" placeholder="Seu nome" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="reviewRating">Nota</label>
+                            <div class="interactive-rating" role="radiogroup" aria-label="Nota da avaliação">
+                                <button type="button" class="rating-star-btn" data-rating="1" aria-label="1 estrela"><i class="fa-regular fa-star" aria-hidden="true"></i></button>
+                                <button type="button" class="rating-star-btn" data-rating="2" aria-label="2 estrelas"><i class="fa-regular fa-star" aria-hidden="true"></i></button>
+                                <button type="button" class="rating-star-btn" data-rating="3" aria-label="3 estrelas"><i class="fa-regular fa-star" aria-hidden="true"></i></button>
+                                <button type="button" class="rating-star-btn" data-rating="4" aria-label="4 estrelas"><i class="fa-regular fa-star" aria-hidden="true"></i></button>
+                                <button type="button" class="rating-star-btn" data-rating="5" aria-label="5 estrelas"><i class="fa-regular fa-star" aria-hidden="true"></i></button>
+                            </div>
+                            <small id="ratingHelp" class="rating-help">Selecione uma nota</small>
+                            <select id="reviewRating" name="reviewRating" class="sr-only" required tabindex="-1" aria-hidden="true">
+                                <option value="">Selecione</option>
+                                <option value="5">5 estrelas</option>
+                                <option value="4">4 estrelas</option>
+                                <option value="3">3 estrelas</option>
+                                <option value="2">2 estrelas</option>
+                                <option value="1">1 estrela</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="reviewText">Comentário</label>
+                        <textarea id="reviewText" name="reviewText" rows="4" placeholder="Conte como foi sua experiência..." required></textarea>
+                    </div>
+                    <div class="review-submit-row">
+                        <button type="submit" class="btn btn-primary">Enviar avaliação</button>
+                        <p id="reviewFeedback" class="review-feedback" aria-live="polite"></p>
+                    </div>
+                </form>
+
+                <div class="user-reviews">
+                    <div class="user-reviews-header">
+                        <h3>Avaliações enviadas por pacientes</h3>
+                    </div>
+                    <div id="userReviewsList" class="user-reviews-list">
+                        <p class="empty-reviews">Nenhuma avaliação enviada ainda.</p>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- SOBRE A CLÍNICA - Conteúdo -->
-    <section class="about">
-        <div class="container">
-            <div class="about-content">
-                <div class="about-text">
-                    <h3>Nossa Apresentação</h3>
-                    <p>A Clínica Vitalis é uma instituição de saúde moderna, comprometida em oferecer atendimento de qualidade com profissionais especializados e equipamentos de última geração.</p>
-                    
-                    <h3>Missão</h3>
-                    <p>Proporcionar cuidados de saúde integrais, acessíveis e humanizados, contribuindo para o bem-estar e qualidade de vida de nossos pacientes.</p>
-                    
-                    <h3>Nossos Diferenciais</h3>
-                    <ul class="diferentials">
-                        <li>✓ Profissionais altamente qualificados</li>
-                        <li>✓ Atendimento humanizado e personalizado</li>
-                        <li>✓ Infraestrutura moderna</li>
-                        <li>✓ Agende suas consultas online</li>
-                        <li>✓ Aceita diversos planos de saúde</li>
-                    </ul>
+        <!-- ===== SEÇÃO DE CONTATO ===== -->
+        <section id="contato" class="contact-section">
+            <div class="container">
+                <div class="section-heading">
+                    <p class="section-eyebrow">Fale conosco</p>
+                    <h2>Entre em contato com a Clínica Vitalis</h2>
+                    <p>Tire suas dúvidas, solicite informações ou deixe uma mensagem. Respondemos em até 24&nbsp;horas em dias úteis.</p>
+                </div>
+
+                <div class="contact-section-layout">
+
+                    <!-- Painel de informações -->
+                    <div class="contact-info-panel">
+                        <div class="contact-info-panel-body">
+                            <div class="contact-info-item">
+                                <span class="contact-info-icon" aria-hidden="true">
+                                    <i class="fa-solid fa-location-dot"></i>
+                                </span>
+                                <div>
+                                    <strong>Endereço</strong>
+                                    <p>Centro &mdash; Juiz de Fora, MG</p>
+                                </div>
+                            </div>
+                            <div class="contact-info-item">
+                                <span class="contact-info-icon" aria-hidden="true">
+                                    <i class="fa-solid fa-phone"></i>
+                                </span>
+                                <div>
+                                    <strong>Telefone</strong>
+                                    <p><a href="tel:+553221027700">(32) 2102-7700</a></p>
+                                </div>
+                            </div>
+                            <div class="contact-info-item">
+                                <span class="contact-info-icon" aria-hidden="true">
+                                    <i class="fa-solid fa-envelope"></i>
+                                </span>
+                                <div>
+                                    <strong>E-mail</strong>
+                                    <p><a href="mailto:contato@clinicavitalis.com.br">contato@clinicavitalis.com.br</a></p>
+                                </div>
+                            </div>
+                            <div class="contact-info-item">
+                                <span class="contact-info-icon" aria-hidden="true">
+                                    <i class="fa-solid fa-clock"></i>
+                                </span>
+                                <div>
+                                    <strong>Horário de atendimento</strong>
+                                    <p>Segunda a sexta, mediante agendamento</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="contact-info-cta">
+                            <a href="agendamento.html" class="btn btn-primary">
+                                <i class="fa-solid fa-calendar-check" aria-hidden="true"></i>
+                                Agendar consulta
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Formulário de contato -->
+                    <form id="contatoForm" class="contact-form-panel" novalidate>
+                        <div class="contact-form-inner">
+                            <h3>Envie uma mensagem</h3>
+                            <p class="contact-form-subtitle">Preencha o formulário e nossa equipe entrará em contato em breve.</p>
+                            <div class="contact-form-grid">
+                                <div class="form-group">
+                                    <label for="contatoNome">
+                                        Nome completo
+                                        <span class="required-mark" aria-hidden="true">*</span>
+                                    </label>
+                                    <input type="text" id="contatoNome" name="nome"
+                                        placeholder="Seu nome completo" required autocomplete="name">
+                                </div>
+                                <div class="form-group">
+                                    <label for="contatoEmail">
+                                        E-mail
+                                        <span class="required-mark" aria-hidden="true">*</span>
+                                    </label>
+                                    <input type="email" id="contatoEmail" name="email"
+                                        placeholder="seu@email.com" required autocomplete="email">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="contatoTelefone">
+                                    Telefone
+                                    <span class="field-optional">(opcional)</span>
+                                </label>
+                                <input type="tel" id="contatoTelefone" name="telefone"
+                                    placeholder="(32) 99999-9999" autocomplete="tel">
+                            </div>
+                            <div class="form-group">
+                                <label for="contatoMensagem">
+                                    Mensagem
+                                    <span class="required-mark" aria-hidden="true">*</span>
+                                </label>
+                                <textarea id="contatoMensagem" name="mensagem" rows="5"
+                                    placeholder="Como podemos ajudar? Descreva sua dúvida ou solicitação." required></textarea>
+                            </div>
+                            <div class="contact-submit-row">
+                                <button type="submit" class="btn btn-primary" id="contatoSubmitBtn">
+                                    <i class="fa-solid fa-paper-plane" aria-hidden="true"></i>
+                                    Enviar mensagem
+                                </button>
+                                <p id="contatoFeedback" class="review-feedback" aria-live="polite"></p>
+                            </div>
+                        </div>
+                    </form>
+
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- VOLTAR À PÁGINA INICIAL -->
-    <section class="back-to-home">
-        <div class="container">
-            <button class="btn btn-primary" onclick="window.location.href='../index.html'">Voltar à Página Inicial</button>
-        </div>
-    </section>
+        <section class="company-map" aria-label="Mapa da Clínica Vitalis">
+            <iframe
+                title="Mapa da Clínica Vitalis"
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3745.5!2d-43.3527!3d-21.7644!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xa3d54d6a7e7e7e7d%3A0x1234567890abcdef!2sCol%C3%A9gio%20Cristo%20Redentor%20Academia%20de%20Com%C3%A9rcio%2C%20Juiz%20de%20Fora%2C%20MG!5e0!3m2!1spt-BR!2sbr!4v1234567890"
+                width="100%" height="360" style="border:0;" allowfullscreen=""
+                loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </section>
+    </main>
 
-    <!-- RODAPÉ -->
-    <footer>
-        <div class="container">
+    <footer class="site-footer">
+        <div class="container footer-grid">
+            <div class="footer-brand">
+                <a href="../index.html" class="logo" aria-label="Clínica Vitalis - página inicial">
+                    <span class="logo-mark"><i class="fa-solid fa-heart-pulse" aria-hidden="true"></i></span>
+                    <span>Clínica Vitalis</span>
+                </a>
+            </div>
+            <div>
+                <h3>Endereço</h3>
+                <p>Centro - Juiz de Fora - MG</p>
+                <h3>Horário de atendimento</h3>
+                <p>Segunda a sexta, mediante agendamento</p>
+            </div>
+            <div>
+                <h3>Contato</h3>
+                <p>(32) 2102-7700</p>
+                <p>contato@clinicavitalis.com.br</p>
+                <h3>Siga-nos</h3>
+                <p><i class="fa-brands fa-instagram" aria-hidden="true"></i> @clinicavitalis</p>
+            </div>
+            <div>
+                <h3>Menu</h3>
+                <a href="../index.html">Home</a>
+                <a href="sobre_clinica.html">Empresa</a>
+                <a href="servicos_especialidades.html">Especialidades</a>
+                <a href="profissionais.html">Profissionais</a>
+                <a href="agendamento.html">Agendamento</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
             <p>&copy; 2024 Clínica Vitalis. Todos os direitos reservados.</p>
-            <p>Desenvolvido com ❤️ usando HTML, CSS e JavaScript</p>
         </div>
     </footer>
 
+    <script src="../vitalis-db.js"></script>
     <script src="../script.js"></script>
 </body>
+
 </html>

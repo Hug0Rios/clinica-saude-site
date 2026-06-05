@@ -11,7 +11,6 @@
 </head>
 
 <body>
-    <!-- Navegação -->
     <nav class="navbar">
         <div class="container">
             <a href="../index.html" class="logo" aria-label="Clínica Vitalis - página inicial">
@@ -33,70 +32,163 @@
         </div>
     </nav>
 
-    <!-- SERVIÇOS - Título e Destaque -->
-    <section class="services-hero">
-        <div class="container">
-            <h2>Serviços e Especialidades</h2>
-            <p>Conheça todos os serviços e especialidades oferecidos pela Clínica Vitalis</p>
-        </div>
-    </section>
+    <main>
+        <section class="services-hero">
+            <div class="container">
+                <h2>Serviços e Especialidades</h2>
+                <p>Escolha uma área e veja o profissional responsável, a foto e os principais cuidados oferecidos.</p>
+            </div>
+        </section>
 
-    <!-- SERVIÇOS/ESPECIALIDADES -->
-    <section id="servicos" class="services">
-        <div class="container">
-            <div class="services-list">
-                <div class="service-item">
-                    <div class="service-image">🩺</div>
-                    <h3>Clínica Geral</h3>
-                    <p>Atendimento completo com diagnóstico e tratamento de doenças diversas. Consultas de rotina e
-                        acompanhamento de crônicos.</p>
+        <section id="servicos" class="services">
+            <div class="container">
+                <div class="service-detail-list">
+                    <article id="clinica-geral" class="service-detail">
+                        <div class="service-detail-media">
+                            <img src="../assets/profissionais/carlos-silva.jpg" alt="Dr. Carlos Silva, responsável por Clínica Geral">
+                        </div>
+                        <div class="service-detail-content">
+                            <p class="section-eyebrow">Clínica Geral</p>
+                            <h3>Avaliação completa para cuidar da saúde no dia a dia</h3>
+                            <p>Consultas de rotina, diagnóstico inicial, acompanhamento de doenças crônicas e orientações preventivas com uma visão ampla do paciente.</p>
+                            <div class="service-doctor">
+                                <span>Profissional responsável</span>
+                                <strong>Dr. Carlos Silva</strong>
+                                <small>Clínico Geral</small>
+                            </div>
+                            <ul class="service-benefits">
+                                <li>Check-up e prevenção</li>
+                                <li>Acompanhamento clínico contínuo</li>
+                                <li>Encaminhamento para especialistas quando necessário</li>
+                            </ul>
+                            <div class="service-detail-actions">
+                                <a href="agendamento.html?servico=clinica-geral&profissional=carlos-silva" class="btn btn-primary">Agendar com Dr. Carlos</a>
+                                <a href="profissionais/dr-carlos-silva.html" class="btn btn-outline">Ver perfil</a>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article id="odontologia" class="service-detail">
+                        <div class="service-detail-media">
+                            <img src="../assets/profissionais/fernando-oliveira.jpg" alt="Dr. Fernando Oliveira, responsável por Odontologia">
+                        </div>
+                        <div class="service-detail-content">
+                            <p class="section-eyebrow">Odontologia</p>
+                            <h3>Saúde bucal, estética e prevenção com conforto</h3>
+                            <p>Atendimento odontológico para limpeza, restaurações, avaliação estética, implantes e prevenção, com planejamento claro para cada caso.</p>
+                            <div class="service-doctor">
+                                <span>Profissional responsável</span>
+                                <strong>Dr. Fernando Oliveira</strong>
+                                <small>Dentista</small>
+                            </div>
+                            <ul class="service-benefits">
+                                <li>Limpeza, restauração e prevenção</li>
+                                <li>Odontologia estética</li>
+                                <li>Planejamento para implantes</li>
+                            </ul>
+                            <div class="service-detail-actions">
+                                <a href="agendamento.html?servico=odontologia&profissional=fernando-oliveira" class="btn btn-primary">Agendar com Dr. Fernando</a>
+                                <a href="profissionais/dr-fernando-oliveira.html" class="btn btn-outline">Ver perfil</a>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article id="fisioterapia" class="service-detail">
+                        <div class="service-detail-media">
+                            <img src="../assets/profissionais/ana-paula.jpg" alt="Dra. Ana Paula, responsável por Fisioterapia">
+                        </div>
+                        <div class="service-detail-content">
+                            <p class="section-eyebrow">Fisioterapia</p>
+                            <h3>Reabilitação, controle de dor e retomada do movimento</h3>
+                            <p>Planos individuais para tratar dores, lesões ortopédicas, limitações funcionais e postura, sempre respeitando o ritmo de recuperação do paciente.</p>
+                            <div class="service-doctor">
+                                <span>Profissional responsável</span>
+                                <strong>Dra. Ana Paula</strong>
+                                <small>Fisioterapeuta</small>
+                            </div>
+                            <ul class="service-benefits">
+                                <li>Reabilitação ortopédica</li>
+                                <li>Controle de dor e postura</li>
+                                <li>Exercícios terapêuticos guiados</li>
+                            </ul>
+                            <div class="service-detail-actions">
+                                <a href="agendamento.html?servico=fisioterapia&profissional=ana-paula" class="btn btn-primary">Agendar com Dra. Ana</a>
+                                <a href="profissionais/dra-ana-paula.html" class="btn btn-outline">Ver perfil</a>
+                            </div>
+                        </div>
+                    </article>
                 </div>
-                <div class="service-item">
-                    <div class="service-image">❤️</div>
-                    <h3>Cardiologia</h3>
-                    <p>Avaliação cardiovascular, tratamento de hipertensão, arritmias e doenças do coração.
-                        Eletrocardiograma disponível.</p>
+
+                <div class="section-heading services-secondary-heading">
+                    <p class="section-eyebrow">Mais especialidades</p>
+                    <h2>Outros profissionais disponíveis para agendamento</h2>
+                    <p>Além das áreas principais, a Clínica Vitalis também atende cardiologia, dermatologia e nutrição.</p>
                 </div>
-                <div class="service-item">
-                    <div class="service-image">🦷</div>
-                    <h3>Odontologia</h3>
-                    <p>Limpeza, restauração, implantes, tratamento de cárie e estética dental. Ambiente acolhedor e
-                        equipamento moderno.</p>
-                </div>
-                <div class="service-item">
-                    <div class="service-image">💪</div>
-                    <h3>Fisioterapia</h3>
-                    <p>Reabilitação de lesões, RPG, reeducação postural e alongamento. Tratamento de dores musculares e
-                        articulares.</p>
-                </div>
-                <div class="service-item">
-                    <div class="service-image">🧴</div>
-                    <h3>Dermatologia</h3>
-                    <p>Tratamento de acne, manchas, rugas e outras condições de pele. Procedimentos estéticos seguros e
-                        eficazes.</p>
-                </div>
-                <div class="service-item">
-                    <div class="service-image">🥗</div>
-                    <h3>Nutrição</h3>
-                    <p>Acompanhamento nutricional personalizado para emagrecimento, ganho de massa e reeducação
-                        alimentar.</p>
+
+                <div class="services-list services-list-secondary" aria-label="Outras especialidades">
+                    <div id="cardiologia" class="service-item">
+                        <div class="service-image"><i class="fa-solid fa-heart-pulse" aria-hidden="true"></i></div>
+                        <h3>Cardiologia</h3>
+                        <p>Avaliação cardiovascular, tratamento de hipertensão, arritmias e doenças do coração. Eletrocardiograma disponível.</p>
+                        <div class="service-mini-doctor">
+                            <img src="../assets/profissionais/marina-costa.jpg" alt="Dra. Marina Costa">
+                            <div>
+                                <strong>Dra. Marina Costa</strong>
+                                <small>Cardiologista</small>
+                            </div>
+                        </div>
+                        <div class="service-mini-actions">
+                            <a href="agendamento.html?servico=cardiologia&profissional=marina-costa" class="btn btn-primary">Agendar</a>
+                            <a href="profissionais/dra-marina-costa.html" class="btn btn-outline">Perfil</a>
+                        </div>
+                    </div>
+                    <div id="dermatologia" class="service-item">
+                        <div class="service-image"><i class="fa-solid fa-hand-sparkles" aria-hidden="true"></i></div>
+                        <h3>Dermatologia</h3>
+                        <p>Tratamento de acne, manchas, rugas e outras condições de pele. Procedimentos estéticos seguros e eficazes.</p>
+                        <div class="service-mini-doctor">
+                            <img src="../assets/profissionais/roberto-santos.jpg" alt="Dr. Roberto Santos">
+                            <div>
+                                <strong>Dr. Roberto Santos</strong>
+                                <small>Dermatologista</small>
+                            </div>
+                        </div>
+                        <div class="service-mini-actions">
+                            <a href="agendamento.html?servico=dermatologia&profissional=roberto-santos" class="btn btn-primary">Agendar</a>
+                            <a href="profissionais/dr-roberto-santos.html" class="btn btn-outline">Perfil</a>
+                        </div>
+                    </div>
+                    <div id="nutricao" class="service-item">
+                        <div class="service-image"><i class="fa-solid fa-apple-whole" aria-hidden="true"></i></div>
+                        <h3>Nutrição</h3>
+                        <p>Acompanhamento nutricional personalizado para emagrecimento, ganho de massa e reeducação alimentar.</p>
+                        <div class="service-mini-doctor">
+                            <img src="../assets/profissionais/juliana-martins.jpg" alt="Dra. Juliana Martins">
+                            <div>
+                                <strong>Dra. Juliana Martins</strong>
+                                <small>Nutricionista</small>
+                            </div>
+                        </div>
+                        <div class="service-mini-actions">
+                            <a href="agendamento.html?servico=nutricao&profissional=juliana-martins" class="btn btn-primary">Agendar</a>
+                            <a href="profissionais/dra-juliana-martins.html" class="btn btn-outline">Perfil</a>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- VOLTAR À PÁGINA INICIAL -->
-    <section class="back-to-home">
-        <div class="container">
-            <button class="btn btn-primary" onclick="window.location.href='../index.html'">Voltar à Página Inicial</button>
-        </div>
-    </section>
+        <section class="back-to-home">
+            <div class="container">
+                <a class="btn btn-primary" href="../index.html">Voltar à Página Inicial</a>
+            </div>
+        </section>
+    </main>
 
-    <!-- RODAPÉ -->
     <footer>
         <div class="container">
             <p>&copy; 2024 Clínica Vitalis. Todos os direitos reservados.</p>
-            <p>Desenvolvido com ❤️ usando HTML, CSS e JavaScript</p>
+            <p>Desenvolvido com HTML, CSS e JavaScript</p>
         </div>
     </footer>
 

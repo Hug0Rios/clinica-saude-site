@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: clinica-vitalis
+    runtime: php
+    rootDir: backend
+    startCommand: php -S 0.0.0.0:$PORT index.php
+    plan: free
+    envVars:
+      - key: FRONTEND_URL
+        value: https://hug0rios.github.io
+      - key: SUPABASE_URL
+        sync: false
+      - key: SUPABASE_KEY
+        sync: false
+      - key: N8N_WEBHOOK
+        sync: false

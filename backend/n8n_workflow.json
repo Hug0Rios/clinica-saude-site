@@ -1,0 +1,96 @@
+{
+  "name": "Vitalis — Confirmação de Consulta",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "vitalis-confirmacao",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "webhook-trigger",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [240, 300]
+    },
+    {
+      "parameters": {
+        "rules": {
+          "rules": [
+            {
+              "value1": "={{ $json.body.telefone }}",
+              "operation": "isNotEmpty",
+              "output": 0
+            }
+          ]
+        },
+        "fallbackOutput": 1
+      },
+      "id": "switch-canal",
+      "name": "Tem telefone?",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 1,
+      "position": [460, 300]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.whatsapp.com/send",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            { "name": "phone", "value": "={{ $json.body.telefone.replace(/\\D/g,'') }}" },
+            { "name": "text",  "value": "=Olá {{ $json.body.paciente }}! Sua consulta com {{ $json.body.profissional }} ({{ $json.body.especialidade }}) está confirmada para {{ $json.body.data }} às {{ $json.body.horario }}. Clínica Vitalis — R. Halfeld, 1179, JF/MG." }
+          ]
+        }
+      },
+      "id": "whatsapp",
+      "name": "WhatsApp",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 3,
+      "position": [680, 200],
+      "notes": "Substitua pela integração real de WhatsApp (Evolution API, Z-API, etc.)"
+    },
+    {
+      "parameters": {
+        "fromEmail": "noreply@clinicavitalis.com.br",
+        "toEmail": "={{ $json.body.email }}",
+        "subject": "Consulta confirmada — Clínica Vitalis",
+        "text": "=Olá {{ $json.body.paciente }},\n\nSua consulta está confirmada!\n\nProfissional:  {{ $json.body.profissional }}\nEspecialidade: {{ $json.body.especialidade }}\nData:          {{ $json.body.data }}\nHorário:       {{ $json.body.horario }}\n\nEndereço: R. Halfeld, 1179 — Juiz de Fora/MG\n\nClínica Vitalis"
+      },
+      "id": "send-email",
+      "name": "Enviar E-mail",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2,
+      "position": [680, 400],
+      "notes": "Configure as credenciais SMTP em Credentials antes de ativar."
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={ \"enviado\": true }"
+      },
+      "id": "respond",
+      "name": "Responder",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [900, 300]
+    }
+  ],
+  "connections": {
+    "Webhook": {
+      "main": [[{ "node": "Tem telefone?", "type": "main", "index": 0 }]]
+    },
+    "Tem telefone?": {
+      "main": [
+        [{ "node": "WhatsApp",    "type": "main", "index": 0 }],
+        [{ "node": "Enviar E-mail","type": "main", "index": 0 }]
+      ]
+    },
+    "WhatsApp":     { "main": [[{ "node": "Responder", "type": "main", "index": 0 }]] },
+    "Enviar E-mail":{ "main": [[{ "node": "Responder", "type": "main", "index": 0 }]] }
+  },
+  "active": false,
+  "settings": { "executionOrder": "v1" }
+}

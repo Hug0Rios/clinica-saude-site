@@ -292,6 +292,7 @@
 <!-- Toasts -->
 <div class="toasts-container" id="toasts"></div>
 
+<script src="../config.js"></script>
 <script src="../vitalis-db.js"></script>
 <script>
 (function () {
@@ -327,6 +328,34 @@ const ESP_NOMES = {
   'clinica-geral': 'Clínica Geral', cardiologia: 'Cardiologia', odontologia: 'Odontologia',
   fisioterapia: 'Fisioterapia', dermatologia: 'Dermatologia', nutricao: 'Nutrição',
 };
+
+/* ---- Carrega profissionais da API (enriquece PROFS com UUIDs) ---- */
+(async function () {
+  try {
+    const lista = await window.getProfissionais();
+    if (!Array.isArray(lista) || lista.length === 0) return;
+
+    const mapa = {};
+    lista.forEach(function (p) {
+      const slug = p.especialidades && p.especialidades.slug;
+      if (!slug) return;
+      if (!mapa[slug]) mapa[slug] = [];
+      const fallback = (PROFS[slug] || []).find(function (f) { return f.nome === p.nome; });
+      mapa[slug].push({
+        id:               p.id,
+        uuid:             p.id,
+        especialidade_id: p.especialidade_id,
+        nome:             p.nome,
+        horarios:         fallback ? fallback.horarios : ['08:00','09:00','10:00','11:00','13:00','14:00','15:00','16:00'],
+      });
+    });
+
+    Object.assign(PROFS, mapa);
+
+    // Atualiza dropdown se especialidade já estiver selecionada
+    if (selEsp.value) selEsp.dispatchEvent(new Event('change'));
+  } catch (e) { /* usa PROFS estático como fallback */ }
+})();
 
 /* ---- Estado ---- */
 const state = {
@@ -449,12 +478,14 @@ async function loadTimes(dateStr) {
   timeWrap.innerHTML = '<p style="font-size:13px;color:var(--text-muted)">Verificando disponibilidade...</p>';
 
   let ocupados = [];
-  if (window.VITALIS_DB) {
-    try {
+  try {
+    if (prof.uuid && window.getHorariosDisponiveis) {
+      ocupados = await window.getHorariosDisponiveis(prof.uuid, dateStr);
+    } else if (window.VITALIS_DB) {
       const rows = await window.VITALIS_DB.rpc('verificar_horarios_ocupados', { p_profissional: prof.nome, p_data: dateStr });
       if (Array.isArray(rows)) ocupados = rows.map(function (r) { return String(r.horario).slice(0,5); });
-    } catch (e) {}
-  }
+    }
+  } catch (e) {}
 
   renderTimes(prof.horarios, dateStr, ocupados);
 }
@@ -579,35 +610,72 @@ document.getElementById('btn-editar').addEventListener('click',  function () { g
 document.getElementById('btn-back-3').addEventListener('click', function () { goTo(2); });
 
 document.getElementById('btn-confirmar').addEventListener('click', async function () {
-  this.disabled    = true;
-  this.textContent = 'Confirmando...';
+  const btn = this;
+  btn.disabled    = true;
+  btn.textContent = 'Confirmando...';
 
+  const prof = state.profissional;
+
+  /* --- Railway API (quando profissional tem UUID do backend) --- */
+  if (prof && prof.uuid && window.cadastrarPaciente) {
+    try {
+      const pacRes = await window.cadastrarPaciente({
+        nome_completo: state.nome,
+        email:         state.email,
+        telefone:      state.telefone,
+        cpf:           state.cpf || '',
+        primeira_vez:  state.primeiraConsulta,
+      });
+
+      if (!pacRes.sucesso) throw new Error(pacRes.erro || 'Erro ao cadastrar paciente');
+
+      const agRes = await window.criarAgendamento({
+        paciente_id:      pacRes.paciente_id,
+        profissional_id:  prof.uuid,
+        especialidade_id: prof.especialidade_id,
+        data_consulta:    state.data,
+        horario:          state.horario,
+        motivo:           state.motivo || null,
+      });
+
+      if (!agRes.sucesso) throw new Error(agRes.erro || 'Erro ao criar agendamento');
+
+      const proto = 'VT' + String(agRes.id || Date.now()).slice(-8).toUpperCase();
+      document.getElementById('protocol-num').textContent = proto;
+      goTo(0);
+    } catch (e) {
+      toast(e.message || 'Não foi possível confirmar. Tente novamente.', 'error');
+      btn.disabled    = false;
+      btn.textContent = 'Confirmar agendamento';
+    }
+    return;
+  }
+
+  /* --- Fallback: localStorage + Supabase direto --- */
   const payload = {
     nome:          state.nome,
     email:         state.email,
     telefone:      state.telefone,
     servico:       ESP_NOMES[state.especialidade] || state.especialidade,
-    profissional:  state.profissional ? state.profissional.nome : '',
+    profissional:  prof ? prof.nome : '',
     data_consulta: state.data,
     horario:       state.horario,
     motivo:        state.motivo || null,
     status:        'pendente',
   };
 
-  /* Salva no localStorage */
-  const lsKey = 'vitalis_agendamentos';
-  const lista = JSON.parse(localStorage.getItem(lsKey) || '[]');
+  const lsKey  = 'vitalis_agendamentos';
+  const lista  = JSON.parse(localStorage.getItem(lsKey) || '[]');
   const protocol = 'VT' + Date.now();
   lista.push(Object.assign({}, payload, { protocol: protocol, criado_em: new Date().toISOString() }));
   localStorage.setItem(lsKey, JSON.stringify(lista));
 
-  /* Tenta salvar no Supabase (silencioso se falhar) */
   if (window.VITALIS_DB) {
     try { await window.VITALIS_DB.insert('agendamentos', payload); } catch (e) {}
   }
 
   document.getElementById('protocol-num').textContent = protocol;
-  goTo(0); /* sucesso */
+  goTo(0);
 });
 
 /* ---- URL params ---- */

@@ -1,0 +1,21 @@
+# Bloqueia acesso direto a arquivos sensíveis
+<Files ".env">
+    Require all denied
+</Files>
+
+<Files ".env.example">
+    Require all denied
+</Files>
+
+# Bloqueia download de arquivos SQL (schema do banco)
+<FilesMatch "\.sql$">
+    Require all denied
+</FilesMatch>
+
+# Bloqueia acesso direto à pasta de configurações e helpers
+# (esses arquivos só devem ser incluídos via require_once, nunca acessados pelo navegador)
+<FilesMatch "^(database|env|email)\.php$">
+    <If "%{THE_REQUEST} =~ m#/backend/config/#">
+        Require all denied
+    </If>
+</FilesMatch>

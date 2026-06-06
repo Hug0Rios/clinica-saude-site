@@ -1,0 +1,16 @@
+<?php
+
+require_once __DIR__ . '/../controllers/AgendamentoController.php';
+
+try {
+    if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+        jsonResponse(['success' => false, 'message' => 'Método não permitido.'], 405);
+    }
+
+    $result = criarAgendamento(requestJson());
+    jsonResponse(['success' => true, 'message' => 'Agendamento recebido com sucesso.', 'data' => $result], 201);
+} catch (InvalidArgumentException $e) {
+    jsonResponse(['success' => false, 'message' => $e->getMessage()], 422);
+} catch (Throwable $e) {
+    jsonResponse(['success' => false, 'message' => 'Erro ao processar agendamento.'], 500);
+}

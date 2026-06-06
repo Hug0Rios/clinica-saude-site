@@ -1,258 +1,557 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-BR" data-theme="light">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Admin — Clínica Vitalis</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="admin.css">
+  <link rel="stylesheet" href="../assets/css/vitalis.css">
+  <style>
+    /* ---- Login ---- */
+    #login-screen {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--bg-page);
+      padding: 24px;
+    }
+    .login-box {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: var(--r-lg);
+      padding: 36px 32px;
+      width: 100%;
+      max-width: 380px;
+      box-shadow: var(--shadow-md);
+    }
+    .login-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 28px;
+    }
+    .login-brand-icon {
+      width: 36px; height: 36px;
+      border-radius: 9px;
+      background: var(--accent-tint);
+      color: var(--accent);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .login-brand-text h1 {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text-primary);
+      line-height: 1.2;
+    }
+    .login-brand-text p {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+    .login-error {
+      background: var(--red-tint);
+      color: #991B1B;
+      border: 1px solid rgba(220,38,38,.15);
+      border-radius: var(--r-sm);
+      padding: 10px 14px;
+      font-size: 13px;
+      margin-bottom: 14px;
+    }
+    .pw-wrap { position: relative; }
+    .pw-wrap input { padding-right: 42px; }
+    .pw-toggle {
+      position: absolute; right: 10px; top: 50%; transform: translateY(-50%);
+      color: var(--text-muted); cursor: pointer; background: none; border: none;
+      padding: 4px; display: flex; align-items: center; transition: color .15s;
+    }
+    .pw-toggle:hover { color: var(--text-primary); }
+
+    /* ---- Inline form (modal profissional) ---- */
+    #modal-overlay {
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,.40);
+      z-index: 600;
+      display: flex; align-items: center; justify-content: center;
+      padding: 24px;
+      backdrop-filter: blur(2px);
+    }
+  </style>
 </head>
 <body>
 
-  <!-- ===== LOGIN ===== -->
-  <div id="login-screen">
-    <div class="login-card">
-      <div class="login-logo">
-        <div class="login-icon">&#9829;</div>
-        <h1>Clínica Vitalis</h1>
-        <p>Painel Administrativo</p>
+<!-- ===== LOGIN ===== -->
+<div id="login-screen">
+  <div class="login-box">
+    <div class="login-brand">
+      <div class="login-brand-icon">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
       </div>
-      <form id="login-form" autocomplete="off">
-        <div class="field">
-          <label for="login-email">E-mail</label>
-          <input type="email" id="login-email" placeholder="seu@email.com" required>
-        </div>
-        <div class="field">
-          <label for="login-password">Senha</label>
-          <div class="password-wrap">
-            <input type="password" id="login-password" placeholder="••••••••" required>
-            <button type="button" id="toggle-password" class="toggle-password" aria-label="Mostrar senha">
-              <svg id="icon-eye" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-              <svg id="icon-eye-off" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="hidden"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"/><path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
-            </button>
-          </div>
-        </div>
-        <div id="login-error" class="login-error hidden"></div>
-        <button type="submit" id="login-btn" class="btn-primary btn-full">Entrar</button>
-      </form>
+      <div class="login-brand-text">
+        <h1>Vitalis Admin</h1>
+        <p>Painel administrativo</p>
+      </div>
     </div>
-  </div>
 
-  <!-- ===== APP ===== -->
-  <div id="app" class="hidden">
-
-    <!-- Backdrop mobile -->
-    <div class="sidebar-backdrop" id="sidebar-backdrop"></div>
-
-    <!-- Sidebar -->
-    <aside class="sidebar" id="sidebar">
-      <div class="sidebar-top">
-        <div class="sidebar-brand">
-          <span class="brand-icon">&#9829;</span>
-          <span class="brand-name">Vitalis</span>
+    <form id="login-form">
+      <div class="field" style="margin-bottom:14px">
+        <label class="field-label" for="l-email">E-mail</label>
+        <input class="field-input" type="email" id="l-email" placeholder="admin@clinicavitalis.com.br" required>
+      </div>
+      <div class="field" style="margin-bottom:14px">
+        <label class="field-label" for="l-senha">Senha</label>
+        <div class="pw-wrap">
+          <input class="field-input" type="password" id="l-senha" placeholder="••••••••" required>
+          <button type="button" class="pw-toggle" id="pw-toggle" aria-label="Mostrar senha">
+            <svg id="eye-show" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+            <svg id="eye-hide" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="hidden"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
+          </button>
         </div>
-        <button class="sidebar-close" id="sidebar-close">&#10005;</button>
       </div>
+      <div id="login-error" class="login-error hidden"></div>
+      <button type="submit" id="login-btn" class="btn btn-primary btn-full">Entrar</button>
+    </form>
+  </div>
+</div>
 
-      <nav class="sidebar-nav">
-        <span class="nav-group-label">Geral</span>
-        <a href="#" class="nav-item active" data-section="overview">
-          <span class="nav-icon">&#9635;</span> Visão Geral
-        </a>
+<!-- ===== APP ===== -->
+<div id="app" class="hidden">
 
-        <span class="nav-group-label">Clínica</span>
-        <a href="#" class="nav-item" data-section="agendamentos">
-          <span class="nav-icon">&#128197;</span> Agendamentos
-          <span class="nav-badge hidden" id="badge-pendentes"></span>
-        </a>
-        <a href="#" class="nav-item" data-section="avaliacoes">
-          <span class="nav-icon">&#11088;</span> Avaliações
-        </a>
-        <a href="#" class="nav-item" data-section="contatos">
-          <span class="nav-icon">&#9993;</span> Mensagens
-          <span class="nav-badge hidden" id="badge-contatos"></span>
-        </a>
-      </nav>
+  <div class="sidebar-backdrop" id="sidebar-backdrop"></div>
 
-      <div class="sidebar-bottom">
-        <a href="../index.html" class="btn-logout">&#8592; Voltar ao site</a>
-        <button id="logout-btn" class="btn-logout">&#8594; Sair</button>
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-dot"></div>
+      <span class="sidebar-brand-text">Vitalis Admin</span>
+      <button class="sidebar-close-btn" id="sidebar-close" aria-label="Fechar menu">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+
+    <div class="sidebar-body">
+      <div class="sidebar-group">Geral</div>
+
+      <button class="sidebar-nav-item active" data-section="dashboard">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+        Dashboard
+      </button>
+
+      <button class="sidebar-nav-item" data-section="agenda">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        Agenda
+        <span class="sidebar-count hidden" id="count-agenda">0</span>
+      </button>
+
+      <button class="sidebar-nav-item" data-section="pacientes">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        Pacientes
+      </button>
+
+      <div class="sidebar-group">Clínica</div>
+
+      <button class="sidebar-nav-item" data-section="profissionais">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        Profissionais
+      </button>
+
+      <button class="sidebar-nav-item" data-section="especialidades">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+        Especialidades
+      </button>
+
+      <button class="sidebar-nav-item" data-section="avaliacoes">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        Avaliações
+        <span class="sidebar-count hidden" id="count-aval">0</span>
+      </button>
+
+      <div class="sidebar-group">Sistema</div>
+
+      <button class="sidebar-nav-item" data-section="configuracoes">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+        Configurações
+      </button>
+
+      <a href="../index.html" class="sidebar-nav-item" style="color:var(--text-muted)">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        Voltar ao site
+      </a>
+    </div>
+
+    <div class="sidebar-footer">
+      <!-- Theme toggle -->
+      <button class="sidebar-nav-item" id="admin-theme-toggle" style="justify-content:space-between">
+        <span class="flex items-center gap-8">
+          <svg id="adm-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+          <svg id="adm-sun"  width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+          <span id="adm-theme-label">Modo escuro</span>
+        </span>
+      </button>
+
+      <!-- User row -->
+      <div class="sidebar-user-row">
+        <div class="avatar avatar-sm">AD</div>
+        <div class="sidebar-user-info">
+          <div class="sidebar-user-name">Administrador</div>
+          <div class="sidebar-user-role">Clínica Vitalis</div>
+        </div>
+        <button class="btn-icon" id="logout-btn" title="Sair" aria-label="Sair">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+        </button>
       </div>
-    </aside>
+    </div>
+  </aside>
 
-    <!-- Main -->
-    <div class="main-wrap">
-      <header class="topbar">
-        <button class="menu-btn" id="menu-btn">&#9776;</button>
-        <h2 id="page-title">Visão Geral</h2>
-        <span class="topbar-user">&#128100; Admin</span>
-      </header>
+  <!-- MAIN -->
+  <div class="admin-main">
+    <header class="topbar">
+      <button class="topbar-menu-btn" id="menu-btn" aria-label="Abrir menu">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+      <h2 class="topbar-title" id="topbar-title">Dashboard</h2>
+      <div class="topbar-actions">
+        <button class="btn btn-primary btn-sm" id="btn-refresh">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+          Atualizar
+        </button>
+      </div>
+    </header>
 
-      <main class="main">
+    <div class="admin-content">
 
-        <!-- OVERVIEW -->
-        <section id="section-overview" class="section active">
-          <div class="stats-grid" id="stats-grid">
-            <div class="stat-card stat-blue">
-              <div class="stat-label">
-                <span class="stat-icon">&#128197;</span>
-                Agendamentos Hoje
+      <!-- ======= DASHBOARD ======= -->
+      <section class="admin-section active" id="section-dashboard">
+
+        <div class="kpi-grid">
+          <div class="kpi-card">
+            <div class="kpi-top">
+              <div class="kpi-icon kpi-icon-blue">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
               </div>
-              <div class="stat-value" id="stat-hoje">—</div>
+              <span class="kpi-delta kpi-delta-up" id="kpi-delta-mes">—</span>
             </div>
-            <div class="stat-card stat-orange">
-              <div class="stat-label">
-                <span class="stat-icon">&#9200;</span>
-                Pendentes de Confirmação
-              </div>
-              <div class="stat-value" id="stat-pendentes">—</div>
-            </div>
-            <div class="stat-card stat-green">
-              <div class="stat-label">
-                <span class="stat-icon">&#11088;</span>
-                Total de Avaliações
-              </div>
-              <div class="stat-value" id="stat-avaliacoes">— <small id="stat-nota"></small></div>
-            </div>
-            <div class="stat-card stat-purple">
-              <div class="stat-label">
-                <span class="stat-icon">&#9993;</span>
-                Mensagens Novas
-              </div>
-              <div class="stat-value" id="stat-contatos">—</div>
-            </div>
+            <div class="kpi-value" id="kpi-mes">—</div>
+            <div class="kpi-label">Consultas do mês</div>
           </div>
 
-          <div class="card">
-            <div class="card-header">
-              <h3>Próximos Agendamentos</h3>
+          <div class="kpi-card">
+            <div class="kpi-top">
+              <div class="kpi-icon kpi-icon-green">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+              </div>
+              <span class="kpi-delta kpi-delta-up">Ativo</span>
+            </div>
+            <div class="kpi-value" id="kpi-pacientes">—</div>
+            <div class="kpi-label">Pacientes ativos</div>
+          </div>
+
+          <div class="kpi-card">
+            <div class="kpi-top">
+              <div class="kpi-icon kpi-icon-amber">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              </div>
+              <span class="kpi-delta kpi-delta-up" id="kpi-delta-hoje">hoje</span>
+            </div>
+            <div class="kpi-value" id="kpi-hoje">—</div>
+            <div class="kpi-label">Consultas hoje</div>
+          </div>
+
+          <div class="kpi-card">
+            <div class="kpi-top">
+              <div class="kpi-icon kpi-icon-purple">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              </div>
+              <span class="kpi-delta kpi-delta-up" id="kpi-delta-nota">★</span>
+            </div>
+            <div class="kpi-value" id="kpi-nota">—</div>
+            <div class="kpi-label">Avaliação média</div>
+          </div>
+        </div>
+
+        <div class="dashboard-grid">
+          <!-- Tabela principal -->
+          <div class="card" style="padding:0">
+            <div class="card-header" style="padding:16px 20px">
+              <span class="card-title">Agendamentos do dia</span>
+              <span class="badge badge-accent" id="dash-hoje-count">0</span>
             </div>
             <div class="table-wrap">
-              <table id="table-proximos">
+              <table class="table">
                 <thead>
                   <tr>
                     <th>Paciente</th>
                     <th>Especialidade</th>
                     <th>Profissional</th>
-                    <th>Data</th>
                     <th>Horário</th>
                     <th>Status</th>
                   </tr>
                 </thead>
-                <tbody id="tbody-proximos">
-                  <tr><td colspan="6" class="empty">Carregando...</td></tr>
+                <tbody id="dash-table-body">
+                  <tr><td colspan="5" class="table-empty">Carregando...</td></tr>
                 </tbody>
               </table>
             </div>
           </div>
-        </section>
 
-        <!-- AGENDAMENTOS -->
-        <section id="section-agendamentos" class="section hidden">
-          <div class="filters-bar">
-            <input type="text" id="filter-search" placeholder="Buscar por nome, e-mail ou telefone..." class="filter-input">
-            <select id="filter-status" class="filter-select">
-              <option value="">Todos os status</option>
-              <option value="pendente">Pendente</option>
-              <option value="confirmado">Confirmado</option>
-              <option value="cancelado">Cancelado</option>
-            </select>
-            <button class="btn-secondary" id="btn-filtrar">Filtrar</button>
+          <!-- Lateral -->
+          <div style="display:flex;flex-direction:column;gap:16px">
+            <!-- Profissionais hoje -->
+            <div class="card" style="padding:0">
+              <div class="card-header" style="padding:14px 18px;margin-bottom:0;border-bottom:1px solid var(--border)">
+                <span class="card-title">Profissionais hoje</span>
+              </div>
+              <div style="padding:14px 18px">
+                <div class="mini-list" id="profs-hoje"></div>
+              </div>
+            </div>
+            <!-- Avaliações recentes -->
+            <div class="card" style="padding:0">
+              <div class="card-header" style="padding:14px 18px;margin-bottom:0;border-bottom:1px solid var(--border)">
+                <span class="card-title">Avaliações recentes</span>
+              </div>
+              <div style="padding:14px 18px">
+                <div class="mini-list" id="aval-recentes"></div>
+              </div>
+            </div>
           </div>
+        </div>
+      </section>
+
+      <!-- ======= AGENDA ======= -->
+      <section class="admin-section" id="section-agenda">
+        <div class="flex items-center justify-between mb-16">
+          <h3 class="section-title" style="font-size:16px">Agenda de consultas</h3>
+        </div>
+
+        <div class="flex gap-12 mb-16" style="flex-wrap:wrap">
+          <div class="field" style="flex:1;min-width:140px">
+            <label class="field-label">Data</label>
+            <input class="field-input" type="date" id="ag-filter-data">
+          </div>
+          <div class="field" style="flex:1;min-width:160px">
+            <label class="field-label">Profissional</label>
+            <div class="select-wrap">
+              <select class="field-select" id="ag-filter-prof">
+                <option value="">Todos</option>
+                <option>Dr. Carlos Silva</option>
+                <option>Dra. Marina Costa</option>
+                <option>Dr. Fernando Oliveira</option>
+                <option>Dra. Ana Paula</option>
+                <option>Dr. Roberto Santos</option>
+                <option>Dra. Juliana Martins</option>
+              </select>
+            </div>
+          </div>
+          <div class="field" style="flex:1;min-width:140px">
+            <label class="field-label">Status</label>
+            <div class="select-wrap">
+              <select class="field-select" id="ag-filter-status">
+                <option value="">Todos</option>
+                <option value="pendente">Pendente</option>
+                <option value="confirmado">Confirmado</option>
+                <option value="cancelado">Cancelado</option>
+              </select>
+            </div>
+          </div>
+          <div class="field" style="align-self:flex-end">
+            <button class="btn btn-ghost" id="ag-filter-btn">Filtrar</button>
+          </div>
+        </div>
+
+        <div class="card" style="padding:0">
+          <div class="table-wrap">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Horário</th>
+                  <th>Paciente</th>
+                  <th>Especialidade</th>
+                  <th>Profissional</th>
+                  <th>Status</th>
+                  <th>Ações</th>
+                </tr>
+              </thead>
+              <tbody id="ag-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ======= PACIENTES ======= -->
+      <section class="admin-section" id="section-pacientes">
+        <div class="flex items-center justify-between mb-16">
+          <h3 class="section-title" style="font-size:16px">Pacientes</h3>
+        </div>
+        <div class="flex gap-12 mb-16">
+          <input class="field-input" type="text" id="pac-search" placeholder="Buscar por nome ou CPF..." style="max-width:360px">
+          <button class="btn btn-ghost" id="pac-search-btn">Buscar</button>
+        </div>
+        <div class="card" style="padding:0">
+          <div class="table-wrap">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Paciente</th>
+                  <th>Contato</th>
+                  <th>Última consulta</th>
+                  <th>Especialidade</th>
+                  <th>Status</th>
+                  <th>Ações</th>
+                </tr>
+              </thead>
+              <tbody id="pac-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ======= PROFISSIONAIS ======= -->
+      <section class="admin-section" id="section-profissionais">
+        <div class="flex items-center justify-between mb-16">
+          <h3 class="section-title" style="font-size:16px">Profissionais</h3>
+          <button class="btn btn-primary btn-sm" id="btn-add-prof">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            Adicionar profissional
+          </button>
+        </div>
+        <div class="card" style="padding:0">
+          <div class="table-wrap">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Nome</th>
+                  <th>Especialidade</th>
+                  <th>Registro</th>
+                  <th>Consultas no mês</th>
+                  <th>Status</th>
+                  <th>Ações</th>
+                </tr>
+              </thead>
+              <tbody id="prof-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ======= ESPECIALIDADES ======= -->
+      <section class="admin-section" id="section-especialidades">
+        <div class="flex items-center justify-between mb-16">
+          <h3 class="section-title" style="font-size:16px">Especialidades</h3>
+        </div>
+        <div class="card" style="padding:0">
+          <div class="table-wrap">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Especialidade</th>
+                  <th>Profissional responsável</th>
+                  <th>Consultas no mês</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody id="esp-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ======= AVALIAÇÕES ======= -->
+      <section class="admin-section" id="section-avaliacoes">
+        <div class="kpi-grid" style="grid-template-columns:repeat(3,1fr);margin-bottom:20px">
+          <div class="kpi-card">
+            <div class="kpi-top">
+              <div class="kpi-icon kpi-icon-amber">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              </div>
+            </div>
+            <div class="kpi-value" id="av-kpi-media">—</div>
+            <div class="kpi-label">Média geral</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-top">
+              <div class="kpi-icon kpi-icon-blue">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+              </div>
+            </div>
+            <div class="kpi-value" id="av-kpi-total">—</div>
+            <div class="kpi-label">Total de avaliações</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-top">
+              <div class="kpi-icon kpi-icon-green">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+              </div>
+            </div>
+            <div class="kpi-value" id="av-kpi-semana">—</div>
+            <div class="kpi-label">Novas esta semana</div>
+          </div>
+        </div>
+
+        <div class="card" style="padding:0">
+          <div class="table-wrap">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Paciente</th>
+                  <th>Nota</th>
+                  <th>Comentário</th>
+                  <th>Data</th>
+                  <th>Status</th>
+                  <th>Ações</th>
+                </tr>
+              </thead>
+              <tbody id="av-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ======= CONFIGURAÇÕES ======= -->
+      <section class="admin-section" id="section-configuracoes">
+        <div class="flex items-center justify-between mb-16">
+          <h3 class="section-title" style="font-size:16px">Configurações</h3>
+        </div>
+        <div class="grid-2" style="gap:24px;align-items:start">
+
           <div class="card">
-            <div class="table-wrap">
-              <table>
-                <thead>
-                  <tr>
-                    <th>Paciente</th>
-                    <th>Especialidade</th>
-                    <th>Profissional</th>
-                    <th>Data / Hora</th>
-                    <th>Telefone</th>
-                    <th>Status</th>
-                    <th>Ações</th>
-                  </tr>
-                </thead>
-                <tbody id="tbody-agendamentos">
-                  <tr><td colspan="7" class="empty">Carregando...</td></tr>
-                </tbody>
-              </table>
+            <div class="card-header"><span class="card-title">Dados da clínica</span></div>
+            <div class="form-grid" style="gap:16px">
+              <div class="field"><label class="field-label">Nome da clínica</label><input class="field-input" type="text" id="cfg-nome" value="Clínica Vitalis"></div>
+              <div class="field"><label class="field-label">Telefone</label><input class="field-input" type="text" id="cfg-tel" value="(11) 3456-7890"></div>
+              <div class="field"><label class="field-label">E-mail</label><input class="field-input" type="email" id="cfg-email" value="contato@clinicavitalis.com.br"></div>
+              <div class="field"><label class="field-label">Endereço</label><input class="field-input" type="text" id="cfg-end" value="Av. Paulista, 1000 — São Paulo, SP"></div>
+              <button class="btn btn-primary" id="cfg-save-btn">Salvar alterações</button>
             </div>
           </div>
-        </section>
 
-        <!-- AVALIAÇÕES -->
-        <section id="section-avaliacoes" class="section hidden">
           <div class="card">
-            <div class="table-wrap">
-              <table>
-                <thead>
-                  <tr>
-                    <th>Nome</th>
-                    <th>Nota</th>
-                    <th>Comentário</th>
-                    <th>Data</th>
-                    <th>Status</th>
-                    <th>Ações</th>
-                  </tr>
-                </thead>
-                <tbody id="tbody-avaliacoes">
-                  <tr><td colspan="6" class="empty">Carregando...</td></tr>
-                </tbody>
-              </table>
-            </div>
+            <div class="card-header"><span class="card-title">Horários de funcionamento</span></div>
+            <div id="horarios-wrap"></div>
           </div>
-        </section>
 
-        <!-- MENSAGENS / CONTATOS -->
-        <section id="section-contatos" class="section hidden">
-          <div class="filters-bar">
-            <select id="filter-lido" class="filter-select">
-              <option value="">Todas as mensagens</option>
-              <option value="0">Não lidas</option>
-              <option value="1">Lidas</option>
-            </select>
-          </div>
-          <div class="card">
-            <div class="table-wrap">
-              <table>
-                <thead>
-                  <tr>
-                    <th>Nome</th>
-                    <th>E-mail</th>
-                    <th>Telefone</th>
-                    <th>Mensagem</th>
-                    <th>Data</th>
-                    <th>Status</th>
-                    <th>Ações</th>
-                  </tr>
-                </thead>
-                <tbody id="tbody-contatos">
-                  <tr><td colspan="7" class="empty">Carregando...</td></tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </section>
+        </div>
+      </section>
 
-      </main>
+    </div><!-- /admin-content -->
+  </div><!-- /admin-main -->
+</div><!-- /app -->
+
+<!-- MODAL -->
+<div id="modal-overlay" class="hidden">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="modal-title" id="modal-title">Modal</span>
+      <button class="modal-close" id="modal-close">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
     </div>
+    <div id="modal-body"></div>
   </div>
+</div>
 
-  <!-- ===== MODAL ===== -->
-  <div id="modal" class="modal-overlay hidden">
-    <div class="modal-box">
-      <button class="modal-close" id="modal-close">&#10005;</button>
-      <div id="modal-body"></div>
-    </div>
-  </div>
+<!-- Toasts -->
+<div class="toasts-container" id="toasts"></div>
 
-  <!-- ===== TOASTS ===== -->
-  <div id="toasts"></div>
-
-  <script src="../vitalis-db.js"></script>
-  <script src="admin.js"></script>
+<script src="../vitalis-db.js"></script>
+<script src="vitalis-admin.js"></script>
 </body>
 </html>

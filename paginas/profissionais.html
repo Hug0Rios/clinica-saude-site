@@ -1,153 +1,188 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
-
+<html lang="pt-BR" data-theme="light">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Profissionais - Clínica Vitalis</title>
-    <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="../style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Profissionais — Clínica Vitalis</title>
+  <link rel="stylesheet" href="../assets/css/vitalis.css">
 </head>
-
 <body>
-    <nav class="navbar">
-        <div class="container">
-            <a href="../index.html" class="logo" aria-label="Clínica Vitalis - página inicial">
-                <span class="logo-mark"><i class="fa-solid fa-heart-pulse" aria-hidden="true"></i></span>
-                <span>Clínica Vitalis</span>
-            </a>
-            <ul class="nav-menu">
-                <li><a href="../index.html" class="nav-link">Home</a></li>
-                <li><a href="sobre_clinica.html" class="nav-link">Sobre</a></li>
-                <li><a href="profissionais.html" class="nav-link">Profissionais</a></li>
-                <li><a href="servicos_especialidades.html" class="nav-link">Serviços</a></li>
-                <li><a href="agendamento.html" class="nav-link nav-link-cta">Agendamento</a></li>
-            </ul>
-            <button class="hamburger" type="button" aria-label="Abrir menu" aria-expanded="false">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
-        </div>
-    </nav>
 
-    <main>
-        <section class="professionals-hero">
-            <div class="container">
-                <h2>Nossos Profissionais</h2>
-                <p>Escolha um profissional para ver o perfil ou agendar diretamente.</p>
-            </div>
-        </section>
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="../index.html" class="nav-logo">
+      <span class="nav-logo-icon">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+      </span>
+      Clínica Vitalis
+    </a>
+    <div class="nav-links">
+      <a href="../index.html" class="nav-link">Home</a>
+      <a href="sobre_clinica.html" class="nav-link">Empresa</a>
+      <a href="profissionais.html" class="nav-link active">Profissionais</a>
+      <a href="servicos_especialidades.html" class="nav-link">Serviços</a>
+    </div>
+    <div class="nav-actions">
+      <button class="theme-toggle" id="theme-toggle" aria-label="Alternar tema">
+        <svg id="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        <svg id="icon-sun"  width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+      </button>
+      <a href="agendamento.html" class="btn btn-primary">Agendar consulta</a>
+    </div>
+  </div>
+</nav>
 
-        <section id="profissionais" class="professionals">
-            <div class="container">
-                <div class="professionals-grid">
-                    <article class="professional-card">
-                        <div class="professional-avatar" data-name="Dr. Carlos Silva">
-                            <img src="../assets/profissionais/carlos-silva.jpg" alt="Dr. Carlos Silva" width="110" height="110" loading="eager" decoding="sync">
-                            <span class="professional-initials" aria-hidden="true"></span>
-                        </div>
-                        <h3>Dr. Carlos Silva</h3>
-                        <p class="specialty">Clínico Geral</p>
-                        <p class="description">Formado há 15 anos, especialista em atendimento clínico com experiência em medicina preventiva.</p>
-                        <div class="professional-actions">
-                            <a href="profissionais/dr-carlos-silva.html" class="btn btn-outline">Ver perfil</a>
-                            <a href="agendamento.html?servico=clinica-geral&profissional=carlos-silva" class="btn btn-primary">Agendar</a>
-                        </div>
-                    </article>
+<!-- Cabeçalho da página -->
+<div style="background:var(--bg-surface);border-bottom:1px solid var(--border);padding:48px 0 40px">
+  <div class="container">
+    <p style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--accent);margin-bottom:10px">Nossa equipe</p>
+    <h1 class="page-title">Profissionais especializados</h1>
+    <p style="font-size:15px;color:var(--text-muted);margin-top:10px;max-width:520px">
+      Uma equipe dedicada com anos de experiência para cuidar de você e da sua família com excelência e cuidado.
+    </p>
+  </div>
+</div>
 
-                    <article class="professional-card">
-                        <div class="professional-avatar" data-name="Dra. Marina Costa">
-                            <img src="../assets/profissionais/marina-costa.jpg" alt="Dra. Marina Costa" width="110" height="110" loading="eager" decoding="sync">
-                            <span class="professional-initials" aria-hidden="true"></span>
-                        </div>
-                        <h3>Dra. Marina Costa</h3>
-                        <p class="specialty">Cardiologista</p>
-                        <p class="description">Especialista em cardiologia com pós-graduação em hemodinâmica. Atende consultas e realiza procedimentos.</p>
-                        <div class="professional-actions">
-                            <a href="profissionais/dra-marina-costa.html" class="btn btn-outline">Ver perfil</a>
-                            <a href="agendamento.html?servico=cardiologia&profissional=marina-costa" class="btn btn-primary">Agendar</a>
-                        </div>
-                    </article>
+<div class="container" style="padding-top:48px;padding-bottom:80px">
+  <div class="prof-grid" id="prof-grid">
+    <!-- Preenchido via JS -->
+  </div>
+</div>
 
-                    <article class="professional-card">
-                        <div class="professional-avatar" data-name="Dr. Fernando Oliveira">
-                            <img src="../assets/profissionais/fernando-oliveira.jpg" alt="Dr. Fernando Oliveira" width="110" height="110" loading="eager" decoding="sync">
-                            <span class="professional-initials" aria-hidden="true"></span>
-                        </div>
-                        <h3>Dr. Fernando Oliveira</h3>
-                        <p class="specialty">Dentista</p>
-                        <p class="description">Especialista em odontologia estética e implantodontia com 12 anos de experiência.</p>
-                        <div class="professional-actions">
-                            <a href="profissionais/dr-fernando-oliveira.html" class="btn btn-outline">Ver perfil</a>
-                            <a href="agendamento.html?servico=odontologia&profissional=fernando-oliveira" class="btn btn-primary">Agendar</a>
-                        </div>
-                    </article>
+<!-- Modal de agenda -->
+<div id="modal-overlay" class="modal-overlay hidden">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="modal-title" id="modal-title">Horários disponíveis</span>
+      <button class="modal-close" id="modal-close">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div id="modal-body"></div>
+  </div>
+</div>
 
-                    <article class="professional-card">
-                        <div class="professional-avatar" data-name="Dra. Ana Paula">
-                            <img src="../assets/profissionais/ana-paula.jpg" alt="Dra. Ana Paula" width="110" height="110" loading="eager" decoding="sync">
-                            <span class="professional-initials" aria-hidden="true"></span>
-                        </div>
-                        <h3>Dra. Ana Paula</h3>
-                        <p class="specialty">Fisioterapeuta</p>
-                        <p class="description">Especialista em reabilitação e tratamento de lesões ortopédicas. Atendimento individual e em grupo.</p>
-                        <div class="professional-actions">
-                            <a href="profissionais/dra-ana-paula.html" class="btn btn-outline">Ver perfil</a>
-                            <a href="agendamento.html?servico=fisioterapia&profissional=ana-paula" class="btn btn-primary">Agendar</a>
-                        </div>
-                    </article>
+<footer class="footer">
+  <div class="container">
+    <div class="footer-bottom" style="border-top:none;padding-top:0">
+      <span>&copy; 2026 Clínica Vitalis. Todos os direitos reservados.</span>
+      <a href="../index.html" style="color:var(--text-muted);font-size:14px">Voltar ao início</a>
+    </div>
+  </div>
+</footer>
 
-                    <article class="professional-card">
-                        <div class="professional-avatar" data-name="Dr. Roberto Santos">
-                            <img src="../assets/profissionais/roberto-santos.jpg" alt="Dr. Roberto Santos" width="110" height="110" loading="eager" decoding="sync">
-                            <span class="professional-initials" aria-hidden="true"></span>
-                        </div>
-                        <h3>Dr. Roberto Santos</h3>
-                        <p class="specialty">Dermatologista</p>
-                        <p class="description">Especialista em dermatologia clínica e estética. Tratamentos personalizados para sua pele.</p>
-                        <div class="professional-actions">
-                            <a href="profissionais/dr-roberto-santos.html" class="btn btn-outline">Ver perfil</a>
-                            <a href="agendamento.html?servico=dermatologia&profissional=roberto-santos" class="btn btn-primary">Agendar</a>
-                        </div>
-                    </article>
+<script>
+(function () {
+  /* Theme */
+  const html  = document.documentElement;
+  const saved = localStorage.getItem('vt_theme') || 'light';
+  html.setAttribute('data-theme', saved);
+  syncIcons(saved);
+  document.getElementById('theme-toggle').addEventListener('click', function () {
+    const next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    html.setAttribute('data-theme', next); localStorage.setItem('vt_theme', next); syncIcons(next);
+  });
+  function syncIcons(t) {
+    document.getElementById('icon-moon').style.display = t === 'dark' ? 'none' : 'block';
+    document.getElementById('icon-sun').style.display  = t === 'dark' ? 'block' : 'none';
+  }
 
-                    <article class="professional-card">
-                        <div class="professional-avatar" data-name="Dra. Juliana Martins">
-                            <img src="../assets/profissionais/juliana-martins.jpg" alt="Dra. Juliana Martins" width="110" height="110" loading="eager" decoding="sync">
-                            <span class="professional-initials" aria-hidden="true"></span>
-                        </div>
-                        <h3>Dra. Juliana Martins</h3>
-                        <p class="specialty">Nutricionista</p>
-                        <p class="description">Nutrição clínica e funcional. Acompanhamento personalizado para reeducação alimentar.</p>
-                        <div class="professional-actions">
-                            <a href="profissionais/dra-juliana-martins.html" class="btn btn-outline">Ver perfil</a>
-                            <a href="agendamento.html?servico=nutricao&profissional=juliana-martins" class="btn btn-primary">Agendar</a>
-                        </div>
-                    </article>
-                </div>
-            </div>
-        </section>
+  /* Dados */
+  const PROFS = [
+    {
+      id: 'carlos-silva', nome: 'Dr. Carlos Silva', esp: 'Clínica Geral',
+      crm: 'CRM/SP 12345',
+      bio: 'Clínico geral com 15 anos de experiência, especialista em medicina preventiva e acompanhamento de doenças crônicas.',
+      horarios: ['08:00','09:00','10:00','11:00','13:00','14:00','15:00','16:00'],
+    },
+    {
+      id: 'marina-costa', nome: 'Dra. Marina Costa', esp: 'Cardiologia',
+      crm: 'CRM/SP 23456',
+      bio: 'Cardiologista especializada em diagnóstico e tratamento de doenças cardiovasculares, com fellowships em São Paulo e Europa.',
+      horarios: ['08:30','09:30','10:30','11:30','14:00','15:00','16:00'],
+    },
+    {
+      id: 'fernando-oliveira', nome: 'Dr. Fernando Oliveira', esp: 'Odontologia',
+      crm: 'CRO/SP 34567',
+      bio: 'Odontologista com pós-graduação em implantodontia e odontologia estética. Referência em reabilitação oral completa.',
+      horarios: ['08:00','09:00','10:00','11:00','13:00','14:00','15:00','16:00','17:00'],
+    },
+    {
+      id: 'ana-paula', nome: 'Dra. Ana Paula', esp: 'Fisioterapia',
+      crm: 'CREFITO 4567',
+      bio: 'Fisioterapeuta especializada em reabilitação ortopédica e neurológica, com abordagem humanizada e personalizada.',
+      horarios: ['08:00','09:00','10:00','11:00','13:00','14:00','15:00','16:00'],
+    },
+    {
+      id: 'roberto-santos', nome: 'Dr. Roberto Santos', esp: 'Dermatologia',
+      crm: 'CRM/SP 56789',
+      bio: 'Dermatologista com especialização em dermatologia clínica, cirúrgica e estética. Membro da Sociedade Brasileira de Dermatologia.',
+      horarios: ['08:30','09:30','10:30','11:30','13:30','14:30','15:30','16:30'],
+    },
+    {
+      id: 'juliana-martins', nome: 'Dra. Juliana Martins', esp: 'Nutrição',
+      crm: 'CRN/SP 67890',
+      bio: 'Nutricionista clínica com abordagem funcional. Especialista em emagrecimento, distúrbios metabólicos e nutrição esportiva.',
+      horarios: ['08:00','09:00','10:00','11:00','13:00','14:00','15:00','16:00'],
+    },
+  ];
 
-        <section class="back-to-home">
-            <div class="container">
-                <a class="btn btn-primary" href="../index.html">Voltar à Página Inicial</a>
-            </div>
-        </section>
-    </main>
+  function initials(nome) {
+    const parts = nome.replace(/^(Dr\.|Dra\.)\s*/i, '').trim().split(' ');
+    return (parts[0][0] + (parts[1] ? parts[1][0] : '')).toUpperCase();
+  }
 
-    <footer>
-        <div class="container">
-            <p>&copy; 2024 Clínica Vitalis. Todos os direitos reservados.</p>
-            <p>Desenvolvido com HTML, CSS e JavaScript</p>
-        </div>
-    </footer>
+  /* Renderiza grid */
+  const grid = document.getElementById('prof-grid');
+  grid.innerHTML = PROFS.map(function (p) {
+    return '<div class="prof-card">' +
+      '<div class="prof-card-top">' +
+        '<div class="avatar avatar-lg">' + initials(p.nome) + '</div>' +
+        '<div class="prof-card-info">' +
+          '<div class="prof-card-name">' + p.nome + '</div>' +
+          '<div style="margin-top:4px"><span class="badge badge-accent">' + p.esp + '</span></div>' +
+          '<div class="prof-crm">' + p.crm + '</div>' +
+        '</div>' +
+      '</div>' +
+      '<p class="prof-desc">' + p.bio + '</p>' +
+      '<div class="prof-actions">' +
+        '<button class="btn btn-ghost btn-sm" onclick="verAgenda(\'' + p.id + '\')">Ver agenda</button>' +
+        '<a href="agendamento.html?especialidade=' + encodeURIComponent(espId(p.esp)) + '&profissional=' + p.id + '" class="btn btn-primary btn-sm">Agendar</a>' +
+      '</div>' +
+    '</div>';
+  }).join('');
 
-    <script src="../script.js"></script>
+  function espId(nome) {
+    const m = { 'Clínica Geral': 'clinica-geral', 'Cardiologia': 'cardiologia', 'Odontologia': 'odontologia', 'Fisioterapia': 'fisioterapia', 'Dermatologia': 'dermatologia', 'Nutrição': 'nutricao' };
+    return m[nome] || nome.toLowerCase();
+  }
+
+  window.verAgenda = function (id) {
+    const p = PROFS.find(function (x) { return x.id === id; });
+    if (!p) return;
+    document.getElementById('modal-title').textContent = 'Agenda — ' + p.nome;
+    document.getElementById('modal-body').innerHTML =
+      '<p style="font-size:13px;color:var(--text-muted);margin-bottom:16px">' + p.esp + ' · ' + p.crm + '</p>' +
+      '<p class="field-label" style="margin-bottom:10px">Horários disponíveis (Seg–Sex)</p>' +
+      '<div class="time-grid">' +
+        p.horarios.map(function (h) {
+          return '<a href="agendamento.html?especialidade=' + encodeURIComponent(espId(p.esp)) + '&profissional=' + p.id + '" class="time-btn" style="text-decoration:none">' + h + '</a>';
+        }).join('') +
+      '</div>' +
+      '<div style="margin-top:20px">' +
+        '<a href="agendamento.html?especialidade=' + encodeURIComponent(espId(p.esp)) + '&profissional=' + p.id + '" class="btn btn-primary btn-full">Agendar com ' + p.nome.split(' ')[0] + ' ' + p.nome.split(' ')[1] + '</a>' +
+      '</div>';
+    document.getElementById('modal-overlay').classList.remove('hidden');
+  };
+
+  document.getElementById('modal-close').addEventListener('click', function () {
+    document.getElementById('modal-overlay').classList.add('hidden');
+  });
+  document.getElementById('modal-overlay').addEventListener('click', function (e) {
+    if (e.target === document.getElementById('modal-overlay'))
+      document.getElementById('modal-overlay').classList.add('hidden');
+  });
+})();
+</script>
 </body>
-
 </html>

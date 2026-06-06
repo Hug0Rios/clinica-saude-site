@@ -1,231 +1,647 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
-
+<html lang="pt-BR" data-theme="light">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Agendamento - Clínica Vitalis</title>
-    <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="../style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Agendar Consulta — Clínica Vitalis</title>
+  <link rel="stylesheet" href="../assets/css/vitalis.css">
+  <style>
+    .booking-wrap {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 40px 24px 80px;
+    }
+    .step-panel { display: none; }
+    .step-panel.active { display: block; }
+
+    .success-screen {
+      text-align: center;
+      padding: 60px 24px;
+      max-width: 520px;
+      margin: 0 auto;
+    }
+    .success-icon {
+      width: 64px; height: 64px;
+      border-radius: 50%;
+      background: var(--green-tint);
+      color: var(--green);
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 20px;
+    }
+    .protocol-box {
+      background: var(--bg-subtle);
+      border: 1px solid var(--border);
+      border-radius: var(--r-card);
+      padding: 16px 24px;
+      margin: 20px 0;
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+    .protocol-num {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text-primary);
+      letter-spacing: .05em;
+      margin-top: 4px;
+    }
+    .resumo-card {
+      background: var(--bg-subtle);
+      border: 1px solid var(--border);
+      border-radius: var(--r-card);
+      padding: 20px;
+      margin-bottom: 24px;
+    }
+    .resumo-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 14px;
+    }
+    .resumo-row:last-child { border-bottom: none; }
+    .resumo-key { color: var(--text-muted); font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: .05em; }
+    .resumo-val { color: var(--text-primary); font-weight: 600; text-align: right; }
+  </style>
 </head>
-
 <body>
-    <!-- Navegação -->
-    <nav class="navbar">
-        <div class="container">
-            <a href="../index.html" class="logo" aria-label="Clínica Vitalis - página inicial">
-                <span class="logo-mark"><i class="fa-solid fa-heart-pulse" aria-hidden="true"></i></span>
-                <span>Clínica Vitalis</span>
-            </a>
-            <ul class="nav-menu">
-                <li><a href="../index.html" class="nav-link">Home</a></li>
-                <li><a href="sobre_clinica.html" class="nav-link">Sobre</a></li>
-                <li><a href="profissionais.html" class="nav-link">Profissionais</a></li>
-                <li><a href="servicos_especialidades.html" class="nav-link">Serviços</a></li>
-                <li><a href="agendamento.html" class="nav-link nav-link-cta">Agendamento</a></li>
-            </ul>
-            <button class="hamburger" type="button" aria-label="Abrir menu" aria-expanded="false">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
-        </div>
-    </nav>
 
-    <!-- HERO AGENDAMENTO -->
-    <section class="hero-agendamento">
-        <div class="container">
-            <h1>Agende sua Consulta</h1>
-            <p>Escolha o profissional, data e horário que melhor se adequam a você</p>
-        </div>
-    </section>
-
-    <!-- FORMULÁRIO DE AGENDAMENTO -->
-    <section class="scheduling-section">
-        <div class="container">
-            <div class="scheduling-container scheduling-form-container">
-                <div id="agendamentoContexto" class="scheduling-context hidden"></div>
-                <form id="agendamentoForm" class="agendamento-form">
-                    <!-- DADOS PESSOAIS -->
-                    <fieldset class="form-fieldset">
-                        <legend>Seus Dados</legend>
-
-                        <div class="form-group">
-                            <label for="nome">Nome Completo *</label>
-                            <input type="text" id="nome" name="nome" placeholder="João Silva" required>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="email">Email *</label>
-                            <input type="email" id="email" name="email" placeholder="seu@email.com" required>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="telefone">Telefone *</label>
-                            <input type="tel" id="telefone" name="telefone" placeholder="(32) 9999-9999" required>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="cpf">CPF</label>
-                            <input type="text" id="cpf" name="cpf" placeholder="000.000.000-00" maxlength="14">
-                        </div>
-                    </fieldset>
-
-                    <!-- SELEÇÃO DE SERVIÇO -->
-                    <fieldset class="form-fieldset">
-                        <legend>Escolha o Serviço</legend>
-
-                        <div class="form-group">
-                            <label for="servico">Especialidade *</label>
-                            <select id="servico" name="servico" required onchange="atualizarProfissionais()">
-                                <option value="">Selecione um serviço</option>
-                                <option value="clinica-geral">Clínica Geral</option>
-                                <option value="cardiologia">Cardiologia</option>
-                                <option value="odontologia">Odontologia</option>
-                                <option value="fisioterapia">Fisioterapia</option>
-                                <option value="dermatologia">Dermatologia</option>
-                                <option value="nutricao">Nutrição</option>
-                            </select>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="profissional">Profissional *</label>
-                            <select id="profissional" name="profissional" required
-                                onchange="atualizarDatasDisponíveis()">
-                                <option value="">Selecione um profissional</option>
-                            </select>
-                        </div>
-                    </fieldset>
-
-                    <!-- DATA E HORÁRIO -->
-                    <fieldset class="form-fieldset">
-                        <legend>Data e Horário</legend>
-
-                        <div class="form-group">
-                            <label for="data">Data da Consulta *</label>
-                            <input type="date" id="data" name="data" required onchange="atualizarHorarios()">
-                            <small class="text-muted">Agendamentos a partir de amanhã</small>
-                        </div>
-
-                        <div class="form-group">
-                            <label>Horários Disponíveis *</label>
-                            <div id="horariosContainer" class="horarios-grid">
-                                <p class="horario-placeholder">Selecione uma data acima</p>
-                            </div>
-                            <input type="hidden" id="horarioSelecionado" name="horarioSelecionado" required>
-                        </div>
-
-                        <div id="mensagemAgendamento" class="mensagem-agendamento"></div>
-                    </fieldset>
-
-                    <!-- INFORMAÇÕES ADICIONAIS -->
-                    <fieldset class="form-fieldset">
-                        <legend>Informações Adicionais</legend>
-
-                        <div class="form-group">
-                            <label for="motivo">Motivo da Consulta</label>
-                            <textarea id="motivo" name="motivo" placeholder="Descreva o motivo da sua consulta..."
-                                rows="4"></textarea>
-                        </div>
-
-                        <div class="form-group checkbox-group">
-                            <label>
-                                <input type="checkbox" id="primeiraVez" name="primeiraVez">
-                                Essa é minha primeira vez na clínica
-                            </label>
-                        </div>
-                    </fieldset>
-
-                    <!-- BOTÕES -->
-                    <div class="form-actions">
-                        <button type="submit" class="btn btn-primary btn-lg">
-                            <i class="fas fa-check"></i> Confirmar Agendamento
-                        </button>
-                        <button type="reset" class="btn btn-secondary btn-lg">
-                            <i class="fas fa-redo"></i> Limpar Formulário
-                        </button>
-                        <a href="../index.html" class="btn btn-outline btn-lg">
-                            <i class="fas fa-arrow-left"></i> Voltar
-                        </a>
-                    </div>
-                </form>
-
-                <!-- RESUMO DO AGENDAMENTO -->
-                <div id="resumoAgendamento" class="resumo-agendamento hidden">
-                    <h3>Resumo do Agendamento</h3>
-                    <div id="resumoConteudo"></div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- MODAL DE CONFIRMAÇÃO -->
-    <div id="modalConfirmacao" class="modal hidden">
-        <div class="modal-overlay"></div>
-        <div class="modal-content">
-            <div class="modal-header">
-                <i class="fas fa-check-circle modal-icon"></i>
-            </div>
-            <h2>Consulta agendada com sucesso!</h2>
-            <div class="modal-body">
-                <div class="modal-info">
-                    <p><strong id="modalProfissional"></strong></p>
-                    <p id="modalDataHora" class="data-hora"></p>
-                </div>
-                <div class="modal-message">
-                    <p>Um email de confirmação foi enviado para <strong id="modalEmail"></strong></p>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-primary" onclick="fecharModalConfirmacao()">OK</button>
-            </div>
-        </div>
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="../index.html" class="nav-logo">
+      <span class="nav-logo-icon">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+      </span>
+      Clínica Vitalis
+    </a>
+    <div class="nav-links">
+      <a href="../index.html" class="nav-link">Home</a>
+      <a href="sobre_clinica.html" class="nav-link">Empresa</a>
+      <a href="profissionais.html" class="nav-link">Profissionais</a>
+      <a href="servicos_especialidades.html" class="nav-link">Serviços</a>
     </div>
+    <div class="nav-actions">
+      <button class="theme-toggle" id="theme-toggle" aria-label="Alternar tema">
+        <svg id="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        <svg id="icon-sun"  width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+      </button>
+    </div>
+  </div>
+</nav>
 
-    <!-- INFORMAÇÕES ÚTEIS -->
-    <section class="informacoes-uteis">
-        <div class="container">
-            <h2>Informações Úteis</h2>
-            <div class="info-grid">
-                <div class="info-box">
-                    <i class="fas fa-map-marker-alt"></i>
-                    <h3>Localização</h3>
-                    <p>R. Halfeld, 1179 - Centro<br>Juiz de Fora - MG, 36015-360</p>
-                </div>
-                <div class="info-box">
-                    <i class="fas fa-phone"></i>
-                    <h3>Contato</h3>
-                    <p>Telefone: (32) 2102-7700<br>WhatsApp: (32) 99136-2745</p>
-                </div>
-                <div class="info-box">
-                    <i class="fas fa-clock"></i>
-                    <h3>Horário</h3>
-                    <p>Segunda a Sexta: 08:00 - 18:00<br>Sábado: 08:00 - 12:00</p>
-                </div>
-                <div class="info-box">
-                    <i class="fas fa-file-alt"></i>
-                    <h3>Documentos</h3>
-                    <p>Leve seu CPF, RG ou CNH<br>e cartão do convênio se houver</p>
-                </div>
-            </div>
+<!-- BOOKING -->
+<div class="booking-wrap">
+
+  <!-- Cabeçalho -->
+  <div style="margin-bottom:32px">
+    <h1 class="page-title">Agendar consulta</h1>
+    <p style="font-size:15px;color:var(--text-muted);margin-top:6px">Preencha as etapas abaixo para confirmar seu atendimento.</p>
+  </div>
+
+  <!-- Stepper -->
+  <div class="stepper" id="stepper">
+    <div class="stepper-step active" id="step-ind-1">
+      <div class="step-circle">1</div>
+      <div class="step-info">
+        <div class="step-num">Etapa 1</div>
+        <div class="step-name">Escolha</div>
+      </div>
+    </div>
+    <div class="stepper-line" id="line-1"></div>
+    <div class="stepper-step" id="step-ind-2">
+      <div class="step-circle">2</div>
+      <div class="step-info">
+        <div class="step-num">Etapa 2</div>
+        <div class="step-name">Seus dados</div>
+      </div>
+    </div>
+    <div class="stepper-line" id="line-2"></div>
+    <div class="stepper-step" id="step-ind-3">
+      <div class="step-circle">3</div>
+      <div class="step-info">
+        <div class="step-num">Etapa 3</div>
+        <div class="step-name">Confirmação</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== ETAPA 1: Escolha ===== -->
+  <div class="step-panel active" id="panel-1">
+    <div class="card">
+
+      <!-- Especialidade + Profissional -->
+      <div class="form-grid form-grid-2" style="margin-bottom:28px">
+        <div class="field">
+          <label class="field-label" for="esp-select">Especialidade</label>
+          <div class="select-wrap">
+            <select class="field-select" id="esp-select">
+              <option value="">Selecione</option>
+              <option value="clinica-geral">Clínica Geral</option>
+              <option value="cardiologia">Cardiologia</option>
+              <option value="odontologia">Odontologia</option>
+              <option value="fisioterapia">Fisioterapia</option>
+              <option value="dermatologia">Dermatologia</option>
+              <option value="nutricao">Nutrição</option>
+            </select>
+          </div>
         </div>
-    </section>
-
-    <!-- RODAPÉ -->
-    <footer>
-        <div class="container">
-            <p>&copy; 2024 Clínica Vitalis. Todos os direitos reservados.</p>
-            <p>Desenvolvido com ❤️ usando HTML, CSS e JavaScript</p>
+        <div class="field">
+          <label class="field-label" for="prof-select">Profissional</label>
+          <div class="select-wrap">
+            <select class="field-select" id="prof-select" disabled>
+              <option value="">Selecione a especialidade</option>
+            </select>
+          </div>
         </div>
-    </footer>
+      </div>
 
-    <script src="../vitalis-db.js"></script>
-    <script src="../script.js"></script>
-    <script src="../agendamento.js"></script>
+      <!-- Grade de datas -->
+      <div style="margin-bottom:24px">
+        <p class="field-label" style="margin-bottom:12px">Data da consulta</p>
+        <div class="date-grid" id="date-grid">
+          <p style="font-size:13px;color:var(--text-muted);grid-column:1/-1">Selecione uma especialidade e profissional para ver as datas.</p>
+        </div>
+      </div>
+
+      <!-- Grade de horários -->
+      <div>
+        <p class="field-label" style="margin-bottom:12px">Horário disponível</p>
+        <div id="time-wrap">
+          <p style="font-size:13px;color:var(--text-muted)">Selecione uma data para ver os horários.</p>
+        </div>
+      </div>
+
+      <div style="margin-top:28px;display:flex;justify-content:flex-end">
+        <button class="btn btn-primary" id="btn-next-1" disabled>
+          Continuar
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== ETAPA 2: Dados pessoais ===== -->
+  <div class="step-panel" id="panel-2">
+    <div class="card">
+      <div class="form-grid">
+
+        <div class="form-grid form-grid-2">
+          <div class="field">
+            <label class="field-label" for="p-nome">Nome completo</label>
+            <input class="field-input" type="text" id="p-nome" placeholder="João da Silva" required>
+          </div>
+          <div class="field">
+            <label class="field-label" for="p-cpf">CPF</label>
+            <input class="field-input" type="text" id="p-cpf" placeholder="000.000.000-00" maxlength="14">
+          </div>
+        </div>
+
+        <div class="form-grid form-grid-2">
+          <div class="field">
+            <label class="field-label" for="p-email">E-mail</label>
+            <input class="field-input" type="email" id="p-email" placeholder="seu@email.com" required>
+          </div>
+          <div class="field">
+            <label class="field-label" for="p-tel">Telefone / WhatsApp</label>
+            <input class="field-input" type="tel" id="p-tel" placeholder="(11) 99999-9999" maxlength="15">
+          </div>
+        </div>
+
+        <label class="checkbox-wrap">
+          <input type="checkbox" id="p-primeira">
+          <span class="checkbox-label">Esta é minha primeira consulta na Clínica Vitalis</span>
+        </label>
+
+        <div class="field">
+          <label class="field-label" for="p-motivo">Motivo / observações (opcional)</label>
+          <textarea class="field-textarea" id="p-motivo" placeholder="Descreva brevemente o motivo da consulta ou alguma observação importante..." style="min-height:90px"></textarea>
+        </div>
+
+      </div>
+
+      <div style="margin-top:24px;display:flex;gap:12px;justify-content:space-between">
+        <button class="btn btn-ghost" id="btn-back-2">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+          Voltar
+        </button>
+        <button class="btn btn-primary" id="btn-next-2">
+          Revisar agendamento
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== ETAPA 3: Confirmação ===== -->
+  <div class="step-panel" id="panel-3">
+    <div class="card">
+      <div class="card-header">
+        <span class="card-title">Resumo do agendamento</span>
+        <button class="btn btn-ghost btn-sm" id="btn-editar">Editar</button>
+      </div>
+
+      <div class="resumo-card" id="resumo-content">
+        <!-- preenchido via JS -->
+      </div>
+
+      <p style="font-size:13px;color:var(--text-muted);margin-bottom:20px">
+        Ao confirmar, você concorda com nossa política de agendamento. Nossa equipe entrará em contato para confirmar o horário.
+      </p>
+
+      <div style="display:flex;gap:12px;justify-content:space-between">
+        <button class="btn btn-ghost" id="btn-back-3">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+          Voltar
+        </button>
+        <button class="btn btn-primary btn-lg" id="btn-confirmar">
+          Confirmar agendamento
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== TELA DE SUCESSO ===== -->
+  <div class="step-panel" id="panel-sucesso">
+    <div class="success-screen">
+      <div class="success-icon">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="20 6 9 17 4 12"/>
+        </svg>
+      </div>
+      <h2 class="section-title" style="margin-bottom:10px">Agendamento confirmado!</h2>
+      <p style="color:var(--text-muted);font-size:15px;line-height:1.6;margin-bottom:20px">
+        Seu agendamento foi registrado com sucesso. Nossa equipe entrará em contato para confirmar o horário pelo telefone ou e-mail informado.
+      </p>
+      <div class="protocol-box">
+        <div>Número de protocolo</div>
+        <div class="protocol-num" id="protocol-num">—</div>
+      </div>
+      <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:24px">
+        <button class="btn btn-ghost" onclick="window.print()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+          Baixar comprovante
+        </button>
+        <a href="../index.html" class="btn btn-primary">Voltar ao início</a>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /booking-wrap -->
+
+<!-- Toasts -->
+<div class="toasts-container" id="toasts"></div>
+
+<script src="../vitalis-db.js"></script>
+<script>
+(function () {
+/* ---- Theme ---- */
+const html  = document.documentElement;
+const saved = localStorage.getItem('vt_theme') || 'light';
+html.setAttribute('data-theme', saved);
+syncThemeIcons(saved);
+
+document.getElementById('theme-toggle').addEventListener('click', function () {
+  const next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+  html.setAttribute('data-theme', next);
+  localStorage.setItem('vt_theme', next);
+  syncThemeIcons(next);
+});
+
+function syncThemeIcons(t) {
+  document.getElementById('icon-moon').style.display = t === 'dark' ? 'none'  : 'block';
+  document.getElementById('icon-sun').style.display  = t === 'dark' ? 'block' : 'none';
+}
+
+/* ---- Dados dos profissionais ---- */
+const PROFS = {
+  'clinica-geral': [{ id: 'carlos-silva',      nome: 'Dr. Carlos Silva',      horarios: ['08:00','09:00','10:00','11:00','13:00','14:00','15:00','16:00'] }],
+  'cardiologia':   [{ id: 'marina-costa',      nome: 'Dra. Marina Costa',     horarios: ['08:30','09:30','10:30','11:30','14:00','15:00','16:00'] }],
+  'odontologia':   [{ id: 'fernando-oliveira', nome: 'Dr. Fernando Oliveira', horarios: ['08:00','09:00','10:00','11:00','13:00','14:00','15:00','16:00','17:00'] }],
+  'fisioterapia':  [{ id: 'ana-paula',         nome: 'Dra. Ana Paula',        horarios: ['08:00','09:00','10:00','11:00','13:00','14:00','15:00','16:00'] }],
+  'dermatologia':  [{ id: 'roberto-santos',    nome: 'Dr. Roberto Santos',    horarios: ['08:30','09:30','10:30','11:30','13:30','14:30','15:30','16:30'] }],
+  'nutricao':      [{ id: 'juliana-martins',   nome: 'Dra. Juliana Martins',  horarios: ['08:00','09:00','10:00','11:00','13:00','14:00','15:00','16:00'] }],
+};
+
+const ESP_NOMES = {
+  'clinica-geral': 'Clínica Geral', cardiologia: 'Cardiologia', odontologia: 'Odontologia',
+  fisioterapia: 'Fisioterapia', dermatologia: 'Dermatologia', nutricao: 'Nutrição',
+};
+
+/* ---- Estado ---- */
+const state = {
+  especialidade: '', profissional: null, data: '', horario: '',
+  nome: '', email: '', telefone: '', cpf: '', primeiraConsulta: false, motivo: '',
+};
+
+/* ---- Stepper ---- */
+let currentStep = 1;
+
+function goTo(step) {
+  document.querySelectorAll('.step-panel').forEach(function (p) { p.classList.remove('active'); });
+  document.getElementById('panel-' + (step === 0 ? 'sucesso' : step)).classList.add('active');
+  currentStep = step;
+  updateStepper();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function updateStepper() {
+  [1,2,3].forEach(function (n) {
+    const ind = document.getElementById('step-ind-' + n);
+    ind.classList.remove('active', 'done');
+    if (n < currentStep) ind.classList.add('done');
+    else if (n === currentStep) ind.classList.add('active');
+
+    const circ = ind.querySelector('.step-circle');
+    if (n < currentStep) {
+      circ.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>';
+    } else {
+      circ.textContent = n;
+    }
+  });
+
+  [1,2].forEach(function (n) {
+    const line = document.getElementById('line-' + n);
+    if (n < currentStep) line.classList.add('done');
+    else line.classList.remove('done');
+  });
+}
+
+/* ---- Etapa 1: seleções ---- */
+const selEsp  = document.getElementById('esp-select');
+const selProf = document.getElementById('prof-select');
+const dateGrid = document.getElementById('date-grid');
+const timeWrap = document.getElementById('time-wrap');
+const btnNext1 = document.getElementById('btn-next-1');
+
+selEsp.addEventListener('change', function () {
+  state.especialidade = this.value;
+  state.profissional  = null;
+  state.data          = '';
+  state.horario       = '';
+
+  const profs = PROFS[this.value] || [];
+  selProf.innerHTML = '<option value="">Selecione um profissional</option>';
+  profs.forEach(function (p) {
+    const o = document.createElement('option');
+    o.value = p.id; o.textContent = p.nome;
+    selProf.appendChild(o);
+  });
+  selProf.disabled = profs.length === 0;
+  renderDates();
+  renderTimes([]);
+  checkNext1();
+});
+
+selProf.addEventListener('change', function () {
+  const profs = PROFS[state.especialidade] || [];
+  state.profissional = profs.find(function (p) { return p.id === selProf.value; }) || null;
+  state.data   = '';
+  state.horario = '';
+  renderDates();
+  renderTimes([]);
+  checkNext1();
+});
+
+function renderDates() {
+  if (!state.profissional) {
+    dateGrid.innerHTML = '<p style="font-size:13px;color:var(--text-muted);grid-column:1/-1">Selecione uma especialidade e profissional.</p>';
+    return;
+  }
+
+  const today = new Date();
+  today.setHours(0,0,0,0);
+  dateGrid.innerHTML = '';
+
+  for (let i = 1; i <= 14; i++) {
+    const d = new Date(today);
+    d.setDate(today.getDate() + i);
+    const dow = d.getDay();
+    const isWeekend = dow === 0 || dow === 6;
+    const iso = d.toISOString().split('T')[0];
+    const dows = ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'];
+
+    const btn = document.createElement('button');
+    btn.className = 'date-btn' + (iso === state.data ? ' selected' : '');
+    btn.disabled = isWeekend;
+    btn.innerHTML =
+      '<span class="date-dow">' + dows[dow] + '</span>' +
+      '<span class="date-num">' + d.getDate() + '</span>';
+
+    if (!isWeekend) {
+      btn.addEventListener('click', function () {
+        state.data   = iso;
+        state.horario = '';
+        document.querySelectorAll('.date-btn').forEach(function (b) { b.classList.remove('selected'); });
+        btn.classList.add('selected');
+        loadTimes(iso);
+        checkNext1();
+      });
+    }
+    dateGrid.appendChild(btn);
+  }
+}
+
+async function loadTimes(dateStr) {
+  const prof = state.profissional;
+  if (!prof) return;
+
+  timeWrap.innerHTML = '<p style="font-size:13px;color:var(--text-muted)">Verificando disponibilidade...</p>';
+
+  let ocupados = [];
+  if (window.VITALIS_DB) {
+    try {
+      const rows = await window.VITALIS_DB.rpc('verificar_horarios_ocupados', { p_profissional: prof.nome, p_data: dateStr });
+      if (Array.isArray(rows)) ocupados = rows.map(function (r) { return String(r.horario).slice(0,5); });
+    } catch (e) {}
+  }
+
+  renderTimes(prof.horarios, dateStr, ocupados);
+}
+
+function renderTimes(horarios, dateStr, ocupados) {
+  if (!horarios || horarios.length === 0) {
+    timeWrap.innerHTML = '<p style="font-size:13px;color:var(--text-muted)">Selecione uma data.</p>';
+    return;
+  }
+  ocupados = ocupados || [];
+
+  const grid = document.createElement('div');
+  grid.className = 'time-grid';
+
+  horarios.forEach(function (h) {
+    const btn = document.createElement('button');
+    const ocp = ocupados.includes(h);
+
+    let passado = false;
+    if (dateStr) {
+      const agora = new Date();
+      const [hh, mm] = h.split(':').map(Number);
+      const dt = new Date(dateStr);
+      dt.setHours(hh, mm, 0, 0);
+      passado = dt <= agora;
+    }
+
+    if (ocp || passado) {
+      btn.className = 'time-btn ocupado';
+      btn.textContent = h;
+      btn.disabled = true;
+    } else {
+      btn.className = 'time-btn' + (h === state.horario ? ' selected' : '');
+      btn.textContent = h;
+      btn.addEventListener('click', function () {
+        state.horario = h;
+        grid.querySelectorAll('.time-btn').forEach(function (b) { b.classList.remove('selected'); });
+        btn.classList.add('selected');
+        checkNext1();
+      });
+    }
+
+    grid.appendChild(btn);
+  });
+
+  timeWrap.innerHTML = '';
+  timeWrap.appendChild(grid);
+}
+
+function checkNext1() {
+  btnNext1.disabled = !(state.especialidade && state.profissional && state.data && state.horario);
+}
+
+document.getElementById('btn-next-1').addEventListener('click', function () {
+  goTo(2);
+});
+
+/* ---- Etapa 2: dados pessoais ---- */
+function mascaraCPF(v) {
+  return v.replace(/\D/g,'').replace(/(\d{3})(\d)/,'$1.$2').replace(/(\d{3})(\d)/,'$1.$2').replace(/(\d{3})(\d{1,2})$/,'$1-$2');
+}
+function mascaraTel(v) {
+  const d = v.replace(/\D/g,'');
+  if (d.length <= 10) return d.replace(/(\d{2})(\d{4})(\d*)/, '($1) $2-$3');
+  return d.replace(/(\d{2})(\d{5})(\d*)/, '($1) $2-$3');
+}
+
+document.getElementById('p-cpf').addEventListener('input', function () { this.value = mascaraCPF(this.value); });
+document.getElementById('p-tel').addEventListener('input', function () { this.value = mascaraTel(this.value); });
+
+document.getElementById('btn-back-2').addEventListener('click', function () { goTo(1); });
+
+document.getElementById('btn-next-2').addEventListener('click', function () {
+  const nome  = document.getElementById('p-nome').value.trim();
+  const email = document.getElementById('p-email').value.trim();
+  const tel   = document.getElementById('p-tel').value.trim();
+
+  if (!nome || !email || !tel) {
+    toast('Preencha nome, e-mail e telefone.', 'error');
+    return;
+  }
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    toast('Informe um e-mail válido.', 'error');
+    return;
+  }
+
+  state.nome              = nome;
+  state.email             = email;
+  state.telefone          = tel;
+  state.cpf               = document.getElementById('p-cpf').value.trim();
+  state.primeiraConsulta  = document.getElementById('p-primeira').checked;
+  state.motivo            = document.getElementById('p-motivo').value.trim();
+
+  buildResumo();
+  goTo(3);
+});
+
+/* ---- Etapa 3: revisão ---- */
+function buildResumo() {
+  const dataFmt = state.data ? state.data.split('-').reverse().join('/') : '—';
+
+  const rows = [
+    ['Especialidade', ESP_NOMES[state.especialidade] || state.especialidade],
+    ['Profissional',  state.profissional ? state.profissional.nome : '—'],
+    ['Data',          dataFmt],
+    ['Horário',       state.horario],
+    ['Paciente',      state.nome],
+    ['E-mail',        state.email],
+    ['Telefone',      state.telefone],
+  ];
+
+  if (state.cpf)    rows.push(['CPF', state.cpf]);
+  if (state.motivo) rows.push(['Motivo', state.motivo]);
+  if (state.primeiraConsulta) rows.push(['Obs.', 'Primeira consulta']);
+
+  document.getElementById('resumo-content').innerHTML = rows.map(function (r) {
+    return '<div class="resumo-row"><span class="resumo-key">' + esc(r[0]) + '</span><span class="resumo-val">' + esc(r[1]) + '</span></div>';
+  }).join('');
+}
+
+document.getElementById('btn-editar').addEventListener('click',  function () { goTo(2); });
+document.getElementById('btn-back-3').addEventListener('click', function () { goTo(2); });
+
+document.getElementById('btn-confirmar').addEventListener('click', async function () {
+  this.disabled    = true;
+  this.textContent = 'Confirmando...';
+
+  const payload = {
+    nome:          state.nome,
+    email:         state.email,
+    telefone:      state.telefone,
+    servico:       ESP_NOMES[state.especialidade] || state.especialidade,
+    profissional:  state.profissional ? state.profissional.nome : '',
+    data_consulta: state.data,
+    horario:       state.horario,
+    motivo:        state.motivo || null,
+    status:        'pendente',
+  };
+
+  /* Salva no localStorage */
+  const lsKey = 'vitalis_agendamentos';
+  const lista = JSON.parse(localStorage.getItem(lsKey) || '[]');
+  const protocol = 'VT' + Date.now();
+  lista.push(Object.assign({}, payload, { protocol: protocol, criado_em: new Date().toISOString() }));
+  localStorage.setItem(lsKey, JSON.stringify(lista));
+
+  /* Tenta salvar no Supabase (silencioso se falhar) */
+  if (window.VITALIS_DB) {
+    try { await window.VITALIS_DB.insert('agendamentos', payload); } catch (e) {}
+  }
+
+  document.getElementById('protocol-num').textContent = protocol;
+  goTo(0); /* sucesso */
+});
+
+/* ---- URL params ---- */
+(function applyParams() {
+  const params = new URLSearchParams(window.location.search);
+  const esp  = params.get('especialidade');
+  const prof = params.get('profissional');
+  if (!esp || !PROFS[esp]) return;
+
+  selEsp.value = esp;
+  selEsp.dispatchEvent(new Event('change'));
+
+  if (prof) {
+    selProf.value = prof;
+    selProf.dispatchEvent(new Event('change'));
+  }
+})();
+
+/* ---- Helpers ---- */
+function esc(s) {
+  return String(s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function toast(msg, type) {
+  type = type || 'info';
+  const t = document.createElement('div');
+  t.className = 'toast toast-' + type;
+  t.textContent = msg;
+  document.getElementById('toasts').appendChild(t);
+  requestAnimationFrame(function () { requestAnimationFrame(function () { t.classList.add('show'); }); });
+  setTimeout(function () { t.classList.remove('show'); setTimeout(function () { t.remove(); }, 300); }, 3500);
+}
+
+})();
+</script>
 </body>
-
 </html>

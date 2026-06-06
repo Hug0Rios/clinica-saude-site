@@ -1,360 +1,405 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
-
+<html lang="pt-BR" data-theme="light">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sobre a Clínica - Clínica Vitalis</title>
-    <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="../style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sobre a Clínica — Clínica Vitalis</title>
+  <link rel="stylesheet" href="../assets/css/vitalis.css">
 </head>
-
 <body>
-    <div class="topbar">
-        <div class="container topbar-content">
-            <span><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Centro - Juiz de Fora - MG</span>
-            <span><i class="fa-solid fa-phone" aria-hidden="true"></i> (32) 2102-7700</span>
-            <span><i class="fa-solid fa-envelope" aria-hidden="true"></i> contato@clinicavitalis.com.br</span>
-        </div>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="../index.html" class="nav-logo">
+      <span class="nav-logo-icon">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+      </span>
+      Clínica Vitalis
+    </a>
+    <div class="nav-links">
+      <a href="../index.html" class="nav-link">Home</a>
+      <a href="sobre_clinica.html" class="nav-link active">Empresa</a>
+      <a href="profissionais.html" class="nav-link">Profissionais</a>
+      <a href="servicos_especialidades.html" class="nav-link">Serviços</a>
+    </div>
+    <div class="nav-actions">
+      <button class="theme-toggle" id="theme-toggle" aria-label="Alternar tema">
+        <svg id="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        <svg id="icon-sun"  width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+      </button>
+      <a href="agendamento.html" class="btn btn-primary">Agendar consulta</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO SOBRE -->
+<section style="background:var(--bg-surface);border-bottom:1px solid var(--border);padding:64px 0">
+  <div class="container">
+    <div class="about-hero-grid">
+      <!-- Texto -->
+      <div>
+        <p style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--accent);margin-bottom:12px">Sobre nós</p>
+        <h1 class="page-title" style="margin-bottom:20px">Saúde com propósito,<br>cuidado com humanidade</h1>
+        <p class="body-text" style="margin-bottom:16px">
+          Fundada em 2012, a Clínica Vitalis nasceu com a missão de democratizar o acesso à saúde de qualidade.
+          Ao longo de mais de 12 anos, construímos um legado de confiança, inovação e cuidado genuíno com cada paciente.
+        </p>
+        <p class="body-text">
+          Nossa equipe multidisciplinar de especialistas trabalha de forma integrada, garantindo que cada paciente receba
+          atenção completa — do diagnóstico ao acompanhamento contínuo.
+        </p>
+        <a href="agendamento.html" class="btn btn-primary" style="margin-top:28px">Agendar consulta</a>
+      </div>
+      <!-- Imagem placeholder -->
+      <div class="about-img-placeholder">
+        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+        <span style="font-size:13px">Foto da clínica</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MISSÃO / VISÃO / VALORES -->
+<section style="padding:64px 0">
+  <div class="container">
+    <div class="text-center" style="margin-bottom:40px">
+      <h2 class="section-title">Nossos princípios</h2>
+    </div>
+    <div class="mvv-grid">
+      <div class="mvv-card">
+        <div class="mvv-card-title">Missão</div>
+        <div class="mvv-card-text">Oferecer atendimento médico de excelência, acessível e humanizado, promovendo a saúde e o bem-estar de cada paciente com responsabilidade e ética.</div>
+      </div>
+      <div class="mvv-card">
+        <div class="mvv-card-title">Visão</div>
+        <div class="mvv-card-text">Ser referência em saúde multidisciplinar na região, reconhecidos pela qualidade do cuidado, inovação e pela confiança que inspiramos em nossos pacientes.</div>
+      </div>
+      <div class="mvv-card">
+        <div class="mvv-card-title">Valores</div>
+        <div class="mvv-card-text">Humanidade, ética profissional, excelência técnica, inovação contínua e respeito à individualidade de cada paciente que passa por nossa clínica.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- AVALIAÇÕES -->
+<section style="padding:64px 0;background:var(--bg-subtle);border-top:1px solid var(--border);border-bottom:1px solid var(--border)">
+  <div class="container">
+    <div class="text-center" style="margin-bottom:48px">
+      <h2 class="section-title">O que nossos pacientes dizem</h2>
     </div>
 
-    <nav class="navbar">
-        <div class="container">
-            <a href="../index.html" class="logo" aria-label="Clínica Vitalis - página inicial">
-                <span class="logo-mark"><i class="fa-solid fa-heart-pulse" aria-hidden="true"></i></span>
-                <span>Clínica Vitalis</span>
-            </a>
-            <ul class="nav-menu">
-                <li><a href="../index.html" class="nav-link">Home</a></li>
-                <li><a href="sobre_clinica.html" class="nav-link">Sobre</a></li>
-                <li><a href="profissionais.html" class="nav-link">Profissionais</a></li>
-                <li><a href="servicos_especialidades.html" class="nav-link">Serviços</a></li>
-                <li><a href="agendamento.html" class="nav-link nav-link-cta">Agendamento</a></li>
-            </ul>
-            <button class="hamburger" type="button" aria-label="Abrir menu" aria-expanded="false">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
+    <div style="display:grid;grid-template-columns:200px 1fr;gap:48px;align-items:start;max-width:900px;margin:0 auto">
+      <!-- Nota geral -->
+      <div class="card" style="text-align:center">
+        <div class="rating-big" id="rating-avg">4,9</div>
+        <div id="rating-stars" style="justify-content:center;margin:8px 0"></div>
+        <div style="font-size:13px;color:var(--text-muted)" id="rating-total">0 avaliações</div>
+      </div>
+
+      <!-- Avaliações recentes -->
+      <div class="flex flex-col gap-16" id="aval-list">
+        <p style="font-size:14px;color:var(--text-muted)">Carregando avaliações...</p>
+      </div>
+    </div>
+
+    <!-- Formulário de avaliação -->
+    <div class="card" style="max-width:600px;margin:48px auto 0">
+      <div class="card-header"><span class="card-title">Deixe sua avaliação</span></div>
+      <form id="aval-form" class="form-grid" style="gap:14px">
+        <div class="field">
+          <label class="field-label" for="av-nome">Seu nome</label>
+          <input class="field-input" type="text" id="av-nome" placeholder="João da Silva" required>
         </div>
-    </nav>
+        <div class="field">
+          <label class="field-label">Nota</label>
+          <div style="display:flex;gap:8px;align-items:center" id="star-picker">
+            <!-- Estrelas preenchidas via JS -->
+          </div>
+          <input type="hidden" id="av-nota" value="0">
+        </div>
+        <div class="field">
+          <label class="field-label" for="av-comentario">Comentário</label>
+          <textarea class="field-textarea" id="av-comentario" placeholder="Conte sua experiência..." style="min-height:80px" required></textarea>
+        </div>
+        <div id="aval-msg" class="hidden" style="background:var(--green-tint);color:#065F46;padding:10px 14px;border-radius:var(--r-sm);font-size:13px"></div>
+        <button type="submit" class="btn btn-primary">Enviar avaliação</button>
+      </form>
+    </div>
+  </div>
+</section>
 
-    <main>
-        <section class="page-heading">
-            <div class="container">
-                <nav class="breadcrumb" aria-label="Caminho da página">
-                    <a href="../index.html">Home</a>
-                    <span>/</span>
-                    <span>Empresa</span>
-                </nav>
-                <h1>Quem Somos</h1>
-            </div>
-        </section>
+<!-- 4 PILARES -->
+<section style="padding:64px 0">
+  <div class="container">
+    <div class="text-center" style="margin-bottom:40px">
+      <h2 class="section-title">Por que escolher a Vitalis?</h2>
+    </div>
+    <div class="pillars-grid">
+      <div class="pillar-card">
+        <div class="pillar-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+        </div>
+        <div class="pillar-title">Qualidade comprovada</div>
+        <div class="pillar-desc">Profissionais certificados com formação nas melhores instituições do país.</div>
+      </div>
+      <div class="pillar-card">
+        <div class="pillar-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        </div>
+        <div class="pillar-title">Pontualidade</div>
+        <div class="pillar-desc">Respeitamos o seu tempo. Agenda organizada e sem longas esperas.</div>
+      </div>
+      <div class="pillar-card">
+        <div class="pillar-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        </div>
+        <div class="pillar-title">Cuidado humanizado</div>
+        <div class="pillar-desc">Cada paciente é único. Tratamos com atenção, empatia e respeito.</div>
+      </div>
+      <div class="pillar-card">
+        <div class="pillar-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        </div>
+        <div class="pillar-title">Tecnologia avançada</div>
+        <div class="pillar-desc">Equipamentos modernos para diagnósticos precisos e tratamentos eficazes.</div>
+      </div>
+    </div>
+  </div>
+</section>
 
-        <section class="company-about-block">
-            <div class="container company-about-layout">
-                <div class="company-about-text">
-                    <h2>Clínica Vitalis</h2>
-                    <p>Atendemos pacientes em Juiz de Fora com uma proposta prática: centralizar profissionais de confiança, facilitar a escolha do atendimento e reduzir dúvidas antes da consulta.</p>
-                    <p>A Clínica Vitalis reúne atendimento clínico, odontológico, fisioterapêutico e outras especialidades em um fluxo simples: escolha a área, confira o profissional responsável e agende o melhor horário.</p>
-                    <p>Nosso objetivo é oferecer uma experiência humanizada, organizada e acessível, com informações claras antes, durante e depois da consulta.</p>
-                </div>
-                <div class="company-about-image">
-                    <img src="../img/clinica_saude.jpg" alt="Profissional de saúde preenchendo ficha de atendimento">
-                </div>
-            </div>
-        </section>
-
-        <section class="values-section">
-            <div class="container values-grid">
-                <article class="value-card">
-                    <span><i class="fa-solid fa-bullseye" aria-hidden="true"></i></span>
-                    <h3>Missão</h3>
-                    <p>Oferecer atendimento acessível, acolhedor e resolutivo, conectando pacientes aos profissionais certos com segurança e clareza.</p>
-                </article>
-                <article class="value-card">
-                    <span><i class="fa-solid fa-eye" aria-hidden="true"></i></span>
-                    <h3>Visão</h3>
-                    <p>Ser uma clínica reconhecida pela experiência simples, pela confiança da equipe e pela continuidade do cuidado.</p>
-                </article>
-                <article class="value-card">
-                    <span><i class="fa-solid fa-heart" aria-hidden="true"></i></span>
-                    <h3>Valores</h3>
-                    <p>Ética, empatia, organização, respeito ao paciente, pontualidade e melhoria contínua no atendimento.</p>
-                </article>
-            </div>
-        </section>
-
-        <section id="patientTestimonials" class="testimonials-section hidden">
-            <div class="container">
-                <div class="section-heading">
-                    <h2>O que nossos pacientes estão dizendo:</h2>
-                </div>
-                <div id="patientTestimonialsGrid" class="testimonials-grid"></div>
-            </div>
-        </section>
-
-        <section id="avaliacao-clinica" class="clinic-rating-section">
-            <div class="container rating-layout">
-                <div class="rating-summary">
-                    <p class="section-eyebrow">Avaliação da clínica</p>
-                    <h2>Atendimento avaliado pela experiência completa</h2>
-                    <div class="rating-score" aria-label="Avaliação média 4.9 de 5">
-                        <strong>4,9</strong>
-                        <div>
-                            <span class="rating-stars">
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                                <i class="fa-solid fa-star"></i>
-                            </span>
-                            <small>média entre pacientes atendidos</small>
-                        </div>
-                    </div>
-                    <p>As avaliações consideram acolhimento, clareza das orientações, organização do agendamento, pontualidade e estrutura da clínica.</p>
-                    <a href="agendamento.html" class="btn btn-primary">Agendar minha consulta</a>
-                </div>
-
-                <div class="rating-cards">
-                    <article class="rating-card">
-                        <span><i class="fa-solid fa-user-check" aria-hidden="true"></i></span>
-                        <strong>Atendimento</strong>
-                        <p>Equipe atenciosa, explicações claras e acompanhamento desde a chegada até a finalização da consulta.</p>
-                    </article>
-                    <article class="rating-card">
-                        <span><i class="fa-solid fa-calendar-check" aria-hidden="true"></i></span>
-                        <strong>Agendamento</strong>
-                        <p>Fluxo online simples para escolher especialidade, profissional, data e horário disponível.</p>
-                    </article>
-                    <article class="rating-card">
-                        <span><i class="fa-solid fa-house-medical-circle-check" aria-hidden="true"></i></span>
-                        <strong>Estrutura</strong>
-                        <p>Ambientes preparados para atendimento clínico, odontológico e fisioterapêutico com conforto.</p>
-                    </article>
-                    <article class="rating-card">
-                        <span><i class="fa-solid fa-heart-circle-check" aria-hidden="true"></i></span>
-                        <strong>Confiança</strong>
-                        <p>Profissionais identificados por área, com perfil, foto e especialidade antes do agendamento.</p>
-                    </article>
-                </div>
-            </div>
-
-            <div class="container review-panel">
-                <form id="reviewForm" class="review-form">
-                    <div>
-                        <p class="section-eyebrow">Sua opinião</p>
-                        <h3>Deixe sua avaliação sobre a Clínica Vitalis</h3>
-                        <p>Seu comentário ajuda outros pacientes a escolherem o atendimento com mais segurança.</p>
-                    </div>
-                    <div class="review-form-grid">
-                        <div class="form-group">
-                            <label for="reviewName">Nome</label>
-                            <input type="text" id="reviewName" name="reviewName" placeholder="Seu nome" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="reviewRating">Nota</label>
-                            <div class="interactive-rating" role="radiogroup" aria-label="Nota da avaliação">
-                                <button type="button" class="rating-star-btn" data-rating="1" aria-label="1 estrela"><i class="fa-regular fa-star" aria-hidden="true"></i></button>
-                                <button type="button" class="rating-star-btn" data-rating="2" aria-label="2 estrelas"><i class="fa-regular fa-star" aria-hidden="true"></i></button>
-                                <button type="button" class="rating-star-btn" data-rating="3" aria-label="3 estrelas"><i class="fa-regular fa-star" aria-hidden="true"></i></button>
-                                <button type="button" class="rating-star-btn" data-rating="4" aria-label="4 estrelas"><i class="fa-regular fa-star" aria-hidden="true"></i></button>
-                                <button type="button" class="rating-star-btn" data-rating="5" aria-label="5 estrelas"><i class="fa-regular fa-star" aria-hidden="true"></i></button>
-                            </div>
-                            <small id="ratingHelp" class="rating-help">Selecione uma nota</small>
-                            <select id="reviewRating" name="reviewRating" class="sr-only" required tabindex="-1" aria-hidden="true">
-                                <option value="">Selecione</option>
-                                <option value="5">5 estrelas</option>
-                                <option value="4">4 estrelas</option>
-                                <option value="3">3 estrelas</option>
-                                <option value="2">2 estrelas</option>
-                                <option value="1">1 estrela</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="reviewText">Comentário</label>
-                        <textarea id="reviewText" name="reviewText" rows="4" placeholder="Conte como foi sua experiência..." required></textarea>
-                    </div>
-                    <div class="review-submit-row">
-                        <button type="submit" class="btn btn-primary">Enviar avaliação</button>
-                        <p id="reviewFeedback" class="review-feedback" aria-live="polite"></p>
-                    </div>
-                </form>
-
-                <div class="user-reviews">
-                    <div class="user-reviews-header">
-                        <h3>Avaliações enviadas por pacientes</h3>
-                    </div>
-                    <div id="userReviewsList" class="user-reviews-list">
-                        <p class="empty-reviews">Nenhuma avaliação enviada ainda.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- ===== SEÇÃO DE CONTATO ===== -->
-        <section id="contato" class="contact-section">
-            <div class="container">
-                <div class="section-heading">
-                    <p class="section-eyebrow">Fale conosco</p>
-                    <h2>Entre em contato com a Clínica Vitalis</h2>
-                    <p>Tire suas dúvidas, solicite informações ou deixe uma mensagem. Respondemos em até 24&nbsp;horas em dias úteis.</p>
-                </div>
-
-                <div class="contact-section-layout">
-
-                    <!-- Painel de informações -->
-                    <div class="contact-info-panel">
-                        <div class="contact-info-panel-body">
-                            <div class="contact-info-item">
-                                <span class="contact-info-icon" aria-hidden="true">
-                                    <i class="fa-solid fa-location-dot"></i>
-                                </span>
-                                <div>
-                                    <strong>Endereço</strong>
-                                    <p>Centro &mdash; Juiz de Fora, MG</p>
-                                </div>
-                            </div>
-                            <div class="contact-info-item">
-                                <span class="contact-info-icon" aria-hidden="true">
-                                    <i class="fa-solid fa-phone"></i>
-                                </span>
-                                <div>
-                                    <strong>Telefone</strong>
-                                    <p><a href="tel:+553221027700">(32) 2102-7700</a></p>
-                                </div>
-                            </div>
-                            <div class="contact-info-item">
-                                <span class="contact-info-icon" aria-hidden="true">
-                                    <i class="fa-solid fa-envelope"></i>
-                                </span>
-                                <div>
-                                    <strong>E-mail</strong>
-                                    <p><a href="mailto:contato@clinicavitalis.com.br">contato@clinicavitalis.com.br</a></p>
-                                </div>
-                            </div>
-                            <div class="contact-info-item">
-                                <span class="contact-info-icon" aria-hidden="true">
-                                    <i class="fa-solid fa-clock"></i>
-                                </span>
-                                <div>
-                                    <strong>Horário de atendimento</strong>
-                                    <p>Segunda a sexta, mediante agendamento</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="contact-info-cta">
-                            <a href="agendamento.html" class="btn btn-primary">
-                                <i class="fa-solid fa-calendar-check" aria-hidden="true"></i>
-                                Agendar consulta
-                            </a>
-                        </div>
-                    </div>
-
-                    <!-- Formulário de contato -->
-                    <form id="contatoForm" class="contact-form-panel" novalidate>
-                        <div class="contact-form-inner">
-                            <h3>Envie uma mensagem</h3>
-                            <p class="contact-form-subtitle">Preencha o formulário e nossa equipe entrará em contato em breve.</p>
-                            <div class="contact-form-grid">
-                                <div class="form-group">
-                                    <label for="contatoNome">
-                                        Nome completo
-                                        <span class="required-mark" aria-hidden="true">*</span>
-                                    </label>
-                                    <input type="text" id="contatoNome" name="nome"
-                                        placeholder="Seu nome completo" required autocomplete="name">
-                                </div>
-                                <div class="form-group">
-                                    <label for="contatoEmail">
-                                        E-mail
-                                        <span class="required-mark" aria-hidden="true">*</span>
-                                    </label>
-                                    <input type="email" id="contatoEmail" name="email"
-                                        placeholder="seu@email.com" required autocomplete="email">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="contatoTelefone">
-                                    Telefone
-                                    <span class="field-optional">(opcional)</span>
-                                </label>
-                                <input type="tel" id="contatoTelefone" name="telefone"
-                                    placeholder="(32) 99999-9999" autocomplete="tel">
-                            </div>
-                            <div class="form-group">
-                                <label for="contatoMensagem">
-                                    Mensagem
-                                    <span class="required-mark" aria-hidden="true">*</span>
-                                </label>
-                                <textarea id="contatoMensagem" name="mensagem" rows="5"
-                                    placeholder="Como podemos ajudar? Descreva sua dúvida ou solicitação." required></textarea>
-                            </div>
-                            <div class="contact-submit-row">
-                                <button type="submit" class="btn btn-primary" id="contatoSubmitBtn">
-                                    <i class="fa-solid fa-paper-plane" aria-hidden="true"></i>
-                                    Enviar mensagem
-                                </button>
-                                <p id="contatoFeedback" class="review-feedback" aria-live="polite"></p>
-                            </div>
-                        </div>
-                    </form>
-
-                </div>
-            </div>
-        </section>
-
-        <section class="company-map" aria-label="Mapa da Clínica Vitalis">
-            <iframe
-                title="Mapa da Clínica Vitalis"
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3745.5!2d-43.3527!3d-21.7644!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xa3d54d6a7e7e7e7d%3A0x1234567890abcdef!2sCol%C3%A9gio%20Cristo%20Redentor%20Academia%20de%20Com%C3%A9rcio%2C%20Juiz%20de%20Fora%2C%20MG!5e0!3m2!1spt-BR!2sbr!4v1234567890"
-                width="100%" height="360" style="border:0;" allowfullscreen=""
-                loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-        </section>
-    </main>
-
-    <footer class="site-footer">
-        <div class="container footer-grid">
-            <div class="footer-brand">
-                <a href="../index.html" class="logo" aria-label="Clínica Vitalis - página inicial">
-                    <span class="logo-mark"><i class="fa-solid fa-heart-pulse" aria-hidden="true"></i></span>
-                    <span>Clínica Vitalis</span>
-                </a>
+<!-- CONTATO -->
+<section style="padding:64px 0;background:var(--bg-subtle);border-top:1px solid var(--border)">
+  <div class="container">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start">
+      <div>
+        <h2 class="section-title" style="margin-bottom:16px">Entre em contato</h2>
+        <p class="body-text" style="margin-bottom:24px">Tire suas dúvidas, solicite informações ou agende sua consulta. Nossa equipe está pronta para ajudar.</p>
+        <div class="flex flex-col gap-16">
+          <div class="flex items-center gap-12">
+            <div class="pillar-icon" style="margin:0;flex-shrink:0">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.56 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 8.91a16 16 0 0 0 5.99 5.99l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
             </div>
             <div>
-                <h3>Endereço</h3>
-                <p>Centro - Juiz de Fora - MG</p>
-                <h3>Horário de atendimento</h3>
-                <p>Segunda a sexta, mediante agendamento</p>
+              <div style="font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.05em;color:var(--text-muted)">Telefone</div>
+              <div style="font-size:15px;font-weight:600;color:var(--text-primary)">(11) 3456-7890</div>
+            </div>
+          </div>
+          <div class="flex items-center gap-12">
+            <div class="pillar-icon" style="margin:0;flex-shrink:0">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
             </div>
             <div>
-                <h3>Contato</h3>
-                <p>(32) 2102-7700</p>
-                <p>contato@clinicavitalis.com.br</p>
-                <h3>Siga-nos</h3>
-                <p><i class="fa-brands fa-instagram" aria-hidden="true"></i> @clinicavitalis</p>
+              <div style="font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.05em;color:var(--text-muted)">E-mail</div>
+              <div style="font-size:15px;font-weight:600;color:var(--text-primary)">contato@clinicavitalis.com.br</div>
+            </div>
+          </div>
+          <div class="flex items-center gap-12">
+            <div class="pillar-icon" style="margin:0;flex-shrink:0">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
             </div>
             <div>
-                <h3>Menu</h3>
-                <a href="../index.html">Home</a>
-                <a href="sobre_clinica.html">Empresa</a>
-                <a href="servicos_especialidades.html">Especialidades</a>
-                <a href="profissionais.html">Profissionais</a>
-                <a href="agendamento.html">Agendamento</a>
+              <div style="font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.05em;color:var(--text-muted)">Horário</div>
+              <div style="font-size:15px;font-weight:600;color:var(--text-primary)">Seg–Sex: 08h–18h · Sáb: 08h–12h</div>
             </div>
+          </div>
         </div>
-        <div class="footer-bottom">
-            <p>&copy; 2024 Clínica Vitalis. Todos os direitos reservados.</p>
-        </div>
-    </footer>
+      </div>
 
-    <script src="../vitalis-db.js"></script>
-    <script src="../script.js"></script>
+      <!-- Formulário de contato -->
+      <div class="card">
+        <form id="contato-form" class="form-grid" style="gap:14px">
+          <div class="form-grid form-grid-2" style="gap:12px">
+            <div class="field"><label class="field-label" for="ct-nome">Nome</label><input class="field-input" type="text" id="ct-nome" placeholder="Seu nome" required></div>
+            <div class="field"><label class="field-label" for="ct-tel">Telefone</label><input class="field-input" type="tel" id="ct-tel" placeholder="(11) 99999-9999"></div>
+          </div>
+          <div class="field"><label class="field-label" for="ct-email">E-mail</label><input class="field-input" type="email" id="ct-email" placeholder="seu@email.com" required></div>
+          <div class="field"><label class="field-label" for="ct-msg">Mensagem</label><textarea class="field-textarea" id="ct-msg" placeholder="Como podemos ajudar?" required></textarea></div>
+          <div id="ct-feedback" class="hidden"></div>
+          <button type="submit" class="btn btn-primary btn-full" id="ct-btn">Enviar mensagem</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-bottom" style="border-top:none;padding-top:0">
+      <span>&copy; 2026 Clínica Vitalis. Todos os direitos reservados.</span>
+      <a href="../index.html" style="color:var(--text-muted);font-size:14px">Voltar ao início</a>
+    </div>
+  </div>
+</footer>
+
+<script src="../vitalis-db.js"></script>
+<script>
+(function () {
+  /* Theme */
+  const html  = document.documentElement;
+  const saved = localStorage.getItem('vt_theme') || 'light';
+  html.setAttribute('data-theme', saved);
+  syncIcons(saved);
+  document.getElementById('theme-toggle').addEventListener('click', function () {
+    const next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    html.setAttribute('data-theme', next); localStorage.setItem('vt_theme', next); syncIcons(next);
+  });
+  function syncIcons(t) {
+    document.getElementById('icon-moon').style.display = t === 'dark' ? 'none' : 'block';
+    document.getElementById('icon-sun').style.display  = t === 'dark' ? 'block' : 'none';
+  }
+
+  /* ---- Star picker ---- */
+  let nota = 0;
+  const picker = document.getElementById('star-picker');
+  for (let i = 1; i <= 5; i++) {
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.style.cssText = 'background:none;border:none;cursor:pointer;padding:2px;color:var(--border);font-size:24px';
+    btn.innerHTML = '<svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>';
+    btn.dataset.val = i;
+    btn.addEventListener('click', function () {
+      nota = Number(this.dataset.val);
+      document.getElementById('av-nota').value = nota;
+      picker.querySelectorAll('button').forEach(function (b) {
+        b.style.color = Number(b.dataset.val) <= nota ? 'var(--amber)' : 'var(--border)';
+      });
+    });
+    picker.appendChild(btn);
+  }
+
+  /* ---- Carregar avaliações (Supabase + localStorage) ---- */
+  async function loadAvaliacoes() {
+    let items = [];
+    if (window.VITALIS_DB) {
+      try {
+        const rows = await window.VITALIS_DB.select('avaliacoes', 'select=*&aprovada=eq.true&order=criado_em.desc&limit=6');
+        if (Array.isArray(rows)) items = rows;
+      } catch (e) {}
+    }
+    /* Fallback localStorage */
+    if (!items.length) {
+      items = JSON.parse(localStorage.getItem('vitalis_avaliacoes') || '[]').filter(function (a) { return a.aprovada; });
+    }
+
+    const list  = document.getElementById('aval-list');
+    const avgEl = document.getElementById('rating-avg');
+    const totEl = document.getElementById('rating-total');
+    const starsEl = document.getElementById('rating-stars');
+
+    if (!items.length) {
+      list.innerHTML = '<p style="font-size:14px;color:var(--text-muted)">Nenhuma avaliação publicada ainda.</p>';
+      return;
+    }
+
+    const avg = (items.reduce(function (s,a) { return s + Number(a.nota); }, 0) / items.length).toFixed(1);
+    avgEl.textContent = avg.replace('.', ',');
+    totEl.textContent = items.length + ' avaliações';
+
+    starsEl.innerHTML = '';
+    starsEl.className = 'stars-row';
+    starsEl.style.justifyContent = 'center';
+    for (let i = 1; i <= 5; i++) {
+      const s = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+      s.setAttribute('width', '16'); s.setAttribute('height', '16'); s.setAttribute('viewBox', '0 0 24 24');
+      s.setAttribute('fill', i <= Math.round(avg) ? 'currentColor' : 'none');
+      s.setAttribute('stroke', 'currentColor'); s.setAttribute('stroke-width', '2');
+      const poly = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
+      poly.setAttribute('points', '12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2');
+      s.appendChild(poly);
+      starsEl.appendChild(s);
+    }
+
+    list.innerHTML = items.map(function (a) {
+      const stars = Array.from({length:5}, function (_,i) {
+        return '<svg width="13" height="13" viewBox="0 0 24 24" fill="' + (i < a.nota ? 'currentColor' : 'none') + '" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>';
+      }).join('');
+      return '<div class="card card-sm">' +
+        '<div class="flex items-center justify-between" style="margin-bottom:8px">' +
+          '<span style="font-weight:700;font-size:14px">' + esc(a.nome) + '</span>' +
+          '<span class="stars-row">' + stars + '</span>' +
+        '</div>' +
+        '<p style="font-size:13px;color:var(--text-secondary);line-height:1.6">' + esc(a.comentario) + '</p>' +
+      '</div>';
+    }).join('');
+  }
+
+  loadAvaliacoes();
+
+  /* ---- Form avaliação ---- */
+  document.getElementById('aval-form').addEventListener('submit', async function (e) {
+    e.preventDefault();
+    const nome = document.getElementById('av-nome').value.trim();
+    const com  = document.getElementById('av-comentario').value.trim();
+    const n    = Number(document.getElementById('av-nota').value);
+    const msg  = document.getElementById('aval-msg');
+
+    if (!nome || !com) { showFeedback(msg, 'Preencha todos os campos.', 'error'); return; }
+    if (n < 1)         { showFeedback(msg, 'Selecione uma nota.', 'error'); return; }
+
+    const payload = { nome: nome, nota: n, comentario: com, aprovada: false, criado_em: new Date().toISOString() };
+
+    /* Salva no Supabase */
+    let ok = false;
+    if (window.VITALIS_DB) { try { ok = await window.VITALIS_DB.insert('avaliacoes', payload); } catch (e) {} }
+
+    /* Fallback localStorage */
+    if (!ok) {
+      const ls = JSON.parse(localStorage.getItem('vitalis_avaliacoes') || '[]');
+      ls.push(payload);
+      localStorage.setItem('vitalis_avaliacoes', JSON.stringify(ls));
+    }
+
+    showFeedback(msg, 'Avaliação enviada! Será publicada após aprovação.', 'success');
+    document.getElementById('aval-form').reset();
+    nota = 0; document.getElementById('av-nota').value = 0;
+    picker.querySelectorAll('button').forEach(function (b) { b.style.color = 'var(--border)'; });
+  });
+
+  /* ---- Form contato ---- */
+  document.getElementById('contato-form').addEventListener('submit', async function (e) {
+    e.preventDefault();
+    const btn  = document.getElementById('ct-btn');
+    const feed = document.getElementById('ct-feedback');
+    btn.disabled = true; btn.textContent = 'Enviando...';
+
+    const payload = {
+      nome:     document.getElementById('ct-nome').value.trim(),
+      email:    document.getElementById('ct-email').value.trim(),
+      telefone: document.getElementById('ct-tel').value.trim(),
+      mensagem: document.getElementById('ct-msg').value.trim(),
+      lido:     false,
+    };
+
+    let ok = false;
+    if (window.VITALIS_DB) { try { ok = await window.VITALIS_DB.insert('contatos', payload); } catch (e) {} }
+    if (!ok) {
+      const ls = JSON.parse(localStorage.getItem('vitalis_contatos') || '[]');
+      ls.push(payload);
+      localStorage.setItem('vitalis_contatos', JSON.stringify(ls));
+    }
+
+    showFeedback(feed, 'Mensagem enviada! Retornaremos em breve.', 'success');
+    document.getElementById('contato-form').reset();
+    btn.disabled = false; btn.textContent = 'Enviar mensagem';
+  });
+
+  function showFeedback(el, text, type) {
+    el.textContent = text;
+    el.style.cssText = 'padding:10px 14px;border-radius:var(--r-sm);font-size:13px;';
+    if (type === 'success') {
+      el.style.background = 'var(--green-tint)'; el.style.color = '#065F46';
+    } else {
+      el.style.background = 'var(--red-tint)'; el.style.color = '#991B1B';
+    }
+    el.classList.remove('hidden');
+    setTimeout(function () { el.classList.add('hidden'); }, 5000);
+  }
+
+  function esc(s) {
+    return String(s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+})();
+</script>
 </body>
-
 </html>

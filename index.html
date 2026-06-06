@@ -1,335 +1,367 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
-
+<html lang="pt-BR" data-theme="light">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Clínica Vitalis - Sua Saúde é Nossa Prioridade</title>
-    <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="./style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Clínica Vitalis — Saúde com excelência</title>
+  <meta name="description" content="Clínica multidisciplinar com atendimento em Clínica Geral, Cardiologia, Odontologia, Fisioterapia, Dermatologia e Nutrição.">
+  <link rel="stylesheet" href="assets/css/vitalis.css">
 </head>
-
 <body>
-    <nav class="navbar">
-        <div class="container">
-            <a href="index.html" class="logo" aria-label="Clínica Vitalis - página inicial">
-                <span class="logo-mark"><i class="fa-solid fa-heart-pulse" aria-hidden="true"></i></span>
-                <span>Clínica Vitalis</span>
-            </a>
-            <ul class="nav-menu">
-                <li><a href="index.html" class="nav-link">Home</a></li>
-                <li><a href="paginas/sobre_clinica.html" class="nav-link">Sobre</a></li>
-                <li><a href="paginas/profissionais.html" class="nav-link">Profissionais</a></li>
-                <li><a href="paginas/servicos_especialidades.html" class="nav-link">Serviços</a></li>
-                <li><a href="paginas/agendamento.html" class="nav-link nav-link-cta">Agendamento</a></li>
-            </ul>
-            <button class="hamburger" type="button" aria-label="Abrir menu" aria-expanded="false">
-                <span></span>
-                <span></span>
-                <span></span>
+
+<!-- ===== NAV ===== -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <span class="nav-logo-icon">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+        </svg>
+      </span>
+      Clínica Vitalis
+    </a>
+
+    <div class="nav-links">
+      <a href="index.html" class="nav-link active">Home</a>
+      <a href="paginas/sobre_clinica.html" class="nav-link">Empresa</a>
+      <a href="paginas/profissionais.html" class="nav-link">Profissionais</a>
+      <a href="paginas/servicos_especialidades.html" class="nav-link">Serviços</a>
+    </div>
+
+    <div class="nav-actions">
+      <button class="theme-toggle" id="theme-toggle" aria-label="Alternar tema">
+        <svg id="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+        </svg>
+        <svg id="icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none">
+          <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+        </svg>
+      </button>
+      <a href="paginas/agendamento.html" class="btn btn-primary">Agendar consulta</a>
+      <button class="nav-hamburger" id="nav-hamburger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<div class="nav-mobile" id="nav-mobile">
+  <a href="index.html" class="nav-link active">Home</a>
+  <a href="paginas/sobre_clinica.html" class="nav-link">Empresa</a>
+  <a href="paginas/profissionais.html" class="nav-link">Profissionais</a>
+  <a href="paginas/servicos_especialidades.html" class="nav-link">Serviços</a>
+  <a href="paginas/agendamento.html" class="btn btn-primary btn-full" style="margin-top:8px">Agendar consulta</a>
+</div>
+
+<!-- ===== HERO ===== -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-inner">
+
+      <div>
+        <p class="hero-eyebrow">Atendimento de excelência</p>
+        <h1 class="hero-title">Cuide da sua saúde<br>com quem entende</h1>
+        <p class="hero-sub">
+          Especialistas dedicados, tecnologia de ponta e ambiente acolhedor
+          para cuidar de você e da sua família em todas as fases da vida.
+        </p>
+        <div class="hero-cta">
+          <a href="paginas/agendamento.html" class="btn btn-primary btn-lg">Agendar consulta</a>
+          <a href="paginas/sobre_clinica.html" class="btn btn-ghost btn-lg">Conheça a clínica</a>
+        </div>
+
+        <div class="flex gap-24" style="margin-top:40px;padding-top:32px;border-top:1px solid var(--border)">
+          <div>
+            <div style="font-size:22px;font-weight:700;color:var(--text-primary);letter-spacing:-.02em">12+</div>
+            <div style="font-size:13px;color:var(--text-muted)">Anos de experiência</div>
+          </div>
+          <div>
+            <div style="font-size:22px;font-weight:700;color:var(--text-primary);letter-spacing:-.02em">6</div>
+            <div style="font-size:13px;color:var(--text-muted)">Especialidades</div>
+          </div>
+          <div>
+            <div style="font-size:22px;font-weight:700;color:var(--text-primary);letter-spacing:-.02em">4,9</div>
+            <div style="font-size:13px;color:var(--text-muted)">Avaliação média</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card de agendamento rápido -->
+      <div>
+        <div class="quick-book">
+          <p class="quick-book-title">Agende agora</p>
+          <form class="quick-form" id="quick-form">
+            <div class="field">
+              <label class="field-label" for="qs-especialidade">Especialidade</label>
+              <div class="select-wrap">
+                <select class="field-select" id="qs-especialidade">
+                  <option value="">Selecione uma especialidade</option>
+                  <option value="clinica-geral">Clínica Geral</option>
+                  <option value="cardiologia">Cardiologia</option>
+                  <option value="odontologia">Odontologia</option>
+                  <option value="fisioterapia">Fisioterapia</option>
+                  <option value="dermatologia">Dermatologia</option>
+                  <option value="nutricao">Nutrição</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="field">
+              <label class="field-label" for="qs-profissional">Profissional</label>
+              <div class="select-wrap">
+                <select class="field-select" id="qs-profissional" disabled>
+                  <option value="">Selecione a especialidade antes</option>
+                </select>
+              </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-full">
+              Continuar
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+              </svg>
             </button>
+            <p style="font-size:12px;color:var(--text-muted);text-align:center">Agendamento gratuito, sem compromisso</p>
+          </form>
         </div>
-    </nav>
+      </div>
 
-    <main>
-        <section id="home" class="hero">
-            <div class="container hero-layout">
-                <div class="hero-content">
-                    <p class="section-eyebrow">Atendimento em Juiz de Fora</p>
-                    <h1>Escolha seu atendimento e agende com o profissional certo</h1>
-                    <p>Clínica geral, odontologia e fisioterapia com responsáveis definidos, informações claras e agendamento direto.</p>
-                    <div class="cta-buttons">
-                        <a href="#atendimentos" class="btn btn-primary">Escolher atendimento</a>
-                        <a href="paginas/agendamento.html" class="btn btn-secondary">Agendar agora</a>
-                    </div>
-                    <div class="hero-highlights" aria-label="Destaques da clínica">
-                        <div>
-                            <strong>6+</strong>
-                            <span>especialistas</span>
-                        </div>
-                        <div>
-                            <strong>3</strong>
-                            <span>áreas principais</span>
-                        </div>
-                        <div>
-                            <strong>Online</strong>
-                            <span>agendamento simples</span>
-                        </div>
-                    </div>
-                </div>
-                <aside class="hero-summary" aria-label="Resumo de atendimento">
-                    <span class="summary-icon"><i class="fa-solid fa-calendar-check" aria-hidden="true"></i></span>
-                    <h2>Agendamento rápido</h2>
-                    <p>Escolha a especialidade e vá direto para o formulário com o profissional indicado.</p>
-                    <form class="quick-booking-form" data-base-path="">
-                        <label for="quickService">Especialidade</label>
-                        <select id="quickService" name="quickService" required>
-                            <option value="">Selecione</option>
-                            <option value="clinica-geral">Clínica Geral</option>
-                            <option value="cardiologia">Cardiologia</option>
-                            <option value="odontologia">Odontologia</option>
-                            <option value="fisioterapia">Fisioterapia</option>
-                            <option value="dermatologia">Dermatologia</option>
-                            <option value="nutricao">Nutrição</option>
-                        </select>
-                        <button type="submit" class="btn btn-primary">Agendar</button>
-                    </form>
-                </aside>
-            </div>
-        </section>
+    </div>
+  </div>
+</section>
 
-        <section class="trust-strip" aria-label="Diferenciais da Clínica Vitalis">
-            <div class="container trust-grid">
-                <div>
-                    <i class="fa-solid fa-user-doctor" aria-hidden="true"></i>
-                    <span>Equipe multidisciplinar</span>
-                </div>
-                <div>
-                    <i class="fa-solid fa-shield-heart" aria-hidden="true"></i>
-                    <span>Atendimento preventivo</span>
-                </div>
-                <div>
-                    <i class="fa-solid fa-location-dot" aria-hidden="true"></i>
-                    <span>Localização central</span>
-                </div>
-            </div>
-        </section>
+<!-- ===== ESPECIALIDADES ===== -->
+<section class="specs-section">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-header-left">
+        <p style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--accent)">Nossas especialidades</p>
+        <h2 class="section-title">Cuidado completo para toda a família</h2>
+      </div>
+      <a href="paginas/servicos_especialidades.html" class="btn btn-ghost btn-sm">Ver todas</a>
+    </div>
 
-        <section class="quick-access" aria-label="Acessos rápidos">
-            <div class="container quick-access-grid">
-                <a href="paginas/agendamento.html" class="quick-access-item">
-                    <i class="fa-solid fa-calendar-check" aria-hidden="true"></i>
-                    <span>Agendar consulta</span>
-                </a>
-                <a href="paginas/servicos_especialidades.html" class="quick-access-item">
-                    <i class="fa-solid fa-list-check" aria-hidden="true"></i>
-                    <span>Especialidades</span>
-                </a>
-                <a href="paginas/profissionais.html" class="quick-access-item">
-                    <i class="fa-solid fa-user-doctor" aria-hidden="true"></i>
-                    <span>Corpo clínico</span>
-                </a>
-                <a href="paginas/sobre_clinica.html#avaliacao-clinica" class="quick-access-item">
-                    <i class="fa-solid fa-star" aria-hidden="true"></i>
-                    <span>Avaliar clínica</span>
-                </a>
-                <a href="#localizacao" class="quick-access-item">
-                    <i class="fa-solid fa-location-dot" aria-hidden="true"></i>
-                    <span>Localização</span>
-                </a>
-            </div>
-        </section>
+    <div class="specs-grid">
 
-        <section id="atendimentos" class="featured-services">
-            <div class="container">
-                <div class="section-heading">
-                    <p class="section-eyebrow">Atendimentos</p>
-                    <h2>Escolha a área que você precisa</h2>
-                    <p>Cada atendimento mostra o profissional responsável, o que está incluso e o caminho direto para agendar.</p>
-                </div>
-                <div class="services-grid">
-                    <article class="service-card">
-                        <div class="service-icon"><i class="fa-solid fa-stethoscope" aria-hidden="true"></i></div>
-                        <h3>Clínica Geral</h3>
-                        <p>Avaliação inicial, acompanhamento de rotina e prevenção com visão completa da sua saúde.</p>
-                        <div class="service-card-doctor">
-                            <img src="assets/profissionais/carlos-silva.jpg" alt="Dr. Carlos Silva">
-                            <div>
-                                <strong>Dr. Carlos Silva</strong>
-                                <small>Clínico Geral</small>
-                            </div>
-                        </div>
-                        <div class="service-card-actions">
-                            <a href="paginas/servicos_especialidades.html#clinica-geral" class="btn btn-outline">Ver atendimento</a>
-                            <a href="paginas/agendamento.html?servico=clinica-geral&profissional=carlos-silva" class="btn btn-primary">Agendar</a>
-                        </div>
-                    </article>
-                    <article class="service-card">
-                        <div class="service-icon"><i class="fa-solid fa-heart-pulse" aria-hidden="true"></i></div>
-                        <h3>Cardiologia</h3>
-                        <p>Avaliação cardiovascular, prevenção e acompanhamento com atenção aos sinais do coração.</p>
-                        <div class="service-card-doctor">
-                            <img src="assets/profissionais/marina-costa.jpg" alt="Dra. Marina Costa">
-                            <div>
-                                <strong>Dra. Marina Costa</strong>
-                                <small>Cardiologista</small>
-                            </div>
-                        </div>
-                        <div class="service-card-actions">
-                            <a href="paginas/servicos_especialidades.html#cardiologia" class="btn btn-outline">Ver atendimento</a>
-                            <a href="paginas/agendamento.html?servico=cardiologia&profissional=marina-costa" class="btn btn-primary">Agendar</a>
-                        </div>
-                    </article>
-                    <article class="service-card">
-                        <div class="service-icon"><i class="fa-solid fa-tooth" aria-hidden="true"></i></div>
-                        <h3>Odontologia</h3>
-                        <p>Cuidados para saúde bucal, estética e prevenção, com foco em conforto e continuidade.</p>
-                        <div class="service-card-doctor">
-                            <img src="assets/profissionais/fernando-oliveira.jpg" alt="Dr. Fernando Oliveira">
-                            <div>
-                                <strong>Dr. Fernando Oliveira</strong>
-                                <small>Dentista</small>
-                            </div>
-                        </div>
-                        <div class="service-card-actions">
-                            <a href="paginas/servicos_especialidades.html#odontologia" class="btn btn-outline">Ver atendimento</a>
-                            <a href="paginas/agendamento.html?servico=odontologia&profissional=fernando-oliveira" class="btn btn-primary">Agendar</a>
-                        </div>
-                    </article>
-                    <article class="service-card">
-                        <div class="service-icon"><i class="fa-solid fa-dumbbell" aria-hidden="true"></i></div>
-                        <h3>Fisioterapia</h3>
-                        <p>Reabilitação, controle de dor e recuperação funcional para voltar ao movimento com segurança.</p>
-                        <div class="service-card-doctor">
-                            <img src="assets/profissionais/ana-paula.jpg" alt="Dra. Ana Paula">
-                            <div>
-                                <strong>Dra. Ana Paula</strong>
-                                <small>Fisioterapeuta</small>
-                            </div>
-                        </div>
-                        <div class="service-card-actions">
-                            <a href="paginas/servicos_especialidades.html#fisioterapia" class="btn btn-outline">Ver atendimento</a>
-                            <a href="paginas/agendamento.html?servico=fisioterapia&profissional=ana-paula" class="btn btn-primary">Agendar</a>
-                        </div>
-                    </article>
-                    <article class="service-card">
-                        <div class="service-icon"><i class="fa-solid fa-hand-sparkles" aria-hidden="true"></i></div>
-                        <h3>Dermatologia</h3>
-                        <p>Tratamentos clínicos e estéticos para pele com avaliação individualizada.</p>
-                        <div class="service-card-doctor">
-                            <img src="assets/profissionais/roberto-santos.jpg" alt="Dr. Roberto Santos">
-                            <div>
-                                <strong>Dr. Roberto Santos</strong>
-                                <small>Dermatologista</small>
-                            </div>
-                        </div>
-                        <div class="service-card-actions">
-                            <a href="paginas/servicos_especialidades.html#dermatologia" class="btn btn-outline">Ver atendimento</a>
-                            <a href="paginas/agendamento.html?servico=dermatologia&profissional=roberto-santos" class="btn btn-primary">Agendar</a>
-                        </div>
-                    </article>
-                    <article class="service-card">
-                        <div class="service-icon"><i class="fa-solid fa-apple-whole" aria-hidden="true"></i></div>
-                        <h3>Nutrição</h3>
-                        <p>Acompanhamento alimentar personalizado para objetivos de saúde e rotina.</p>
-                        <div class="service-card-doctor">
-                            <img src="assets/profissionais/juliana-martins.jpg" alt="Dra. Juliana Martins">
-                            <div>
-                                <strong>Dra. Juliana Martins</strong>
-                                <small>Nutricionista</small>
-                            </div>
-                        </div>
-                        <div class="service-card-actions">
-                            <a href="paginas/servicos_especialidades.html#nutricao" class="btn btn-outline">Ver atendimento</a>
-                            <a href="paginas/agendamento.html?servico=nutricao&profissional=juliana-martins" class="btn btn-primary">Agendar</a>
-                        </div>
-                    </article>
-                </div>
-                <div class="section-action">
-                    <a href="paginas/servicos_especialidades.html" class="btn btn-secondary">Ver todos os atendimentos</a>
-                </div>
-            </div>
-        </section>
-
-        <section class="care-flow" aria-label="Como funciona o atendimento">
-            <div class="container care-flow-grid">
-                <div>
-                    <p class="section-eyebrow">Como funciona</p>
-                    <h2>Do interesse ao agendamento sem confusão</h2>
-                </div>
-                <div class="flow-step">
-                    <span>1</span>
-                    <strong>Escolha a área</strong>
-                    <p>Veja Clínica Geral, Odontologia ou Fisioterapia com linguagem direta.</p>
-                </div>
-                <div class="flow-step">
-                    <span>2</span>
-                    <strong>Confira o responsável</strong>
-                    <p>Cada área mostra o profissional, foto e principais cuidados.</p>
-                </div>
-                <div class="flow-step">
-                    <span>3</span>
-                    <strong>Agende com contexto</strong>
-                    <p>O formulário já pode abrir com serviço e profissional selecionados.</p>
-                </div>
-            </div>
-        </section>
-
-        <section class="patient-tools" aria-label="Informações úteis para pacientes">
-            <div class="container">
-                <div class="section-heading">
-                    <p class="section-eyebrow">Antes da consulta</p>
-                    <h2>Informações úteis sem precisar procurar</h2>
-                    <p>Atalhos inspirados no fluxo de clínicas reais: preparação, documentos e canais de atendimento sempre à mão.</p>
-                </div>
-                <div class="patient-tools-grid">
-                    <article class="patient-tool-card">
-                        <i class="fa-solid fa-clipboard-list" aria-hidden="true"></i>
-                        <h3>Como se preparar</h3>
-                        <p>Leve documento com foto, CPF e exames anteriores, se houver. Chegue alguns minutos antes do horário.</p>
-                    </article>
-                    <article class="patient-tool-card">
-                        <i class="fa-solid fa-id-card" aria-hidden="true"></i>
-                        <h3>Dados do paciente</h3>
-                        <p>O formulário já organiza nome, contato, especialidade, profissional, data e horário em um resumo final.</p>
-                    </article>
-                    <article class="patient-tool-card">
-                        <i class="fa-solid fa-phone-volume" aria-hidden="true"></i>
-                        <h3>Contato rápido</h3>
-                        <p>Use o botão de agendamento flutuante ou escolha uma especialidade diretamente nos cards da home.</p>
-                    </article>
-                </div>
-            </div>
-        </section>
-
-        <section id="localizacao" class="location">
-            <div class="container">
-                <div class="section-heading">
-                    <p class="section-eyebrow">Como chegar</p>
-                    <h2>Nossa localização</h2>
-                    <p>Estamos em uma região de fácil acesso em Juiz de Fora, próxima a pontos de referência conhecidos.</p>
-                </div>
-                <div class="location-content">
-                    <div class="location-info">
-                        <div class="location-details">
-                            <div class="location-icon"><i class="fa-solid fa-location-dot" aria-hidden="true"></i></div>
-                            <div class="location-text">
-                                <h3>Clínica Vitalis</h3>
-                                <p><i class="fa-solid fa-map-location-dot" aria-hidden="true"></i> Colégio Cristo Redentor, Academia de Comércio</p>
-                                <p><i class="fa-solid fa-city" aria-hidden="true"></i> Juiz de Fora - MG</p>
-                                <p><i class="fa-solid fa-clock" aria-hidden="true"></i> Atendimento mediante agendamento</p>
-                                <a href="https://maps.google.com/maps?q=Colegio+Cristo+Redentor+Academia+de+Comercio+Juiz+de+Fora"
-                                    target="_blank" rel="noopener" class="btn btn-primary">
-                                    Abrir no mapa
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="location-map">
-                        <iframe
-                            title="Mapa da Clínica Vitalis"
-                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3745.5!2d-43.3527!3d-21.7644!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xa3d54d6a7e7e7e7d%3A0x1234567890abcdef!2sCol%C3%A9gio%20Cristo%20Redentor%20Academia%20de%20Com%C3%A9rcio%2C%20Juiz%20de%20Fora%2C%20MG!5e0!3m2!1spt-BR!2sbr!4v1234567890"
-                            width="100%" height="360" style="border:0;" allowfullscreen=""
-                            loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <footer>
-        <div class="container">
-            <p>&copy; 2024 Clínica Vitalis. Todos os direitos reservados.</p>
-            <p>Desenvolvido usando HTML, CSS e JavaScript</p>
+      <div class="spec-card">
+        <div class="spec-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
         </div>
-    </footer>
+        <div class="spec-name">Clínica Geral</div>
+        <div class="spec-desc">Consultas de rotina, diagnóstico e acompanhamento de doenças crônicas com visão ampla da saúde.</div>
+        <div class="spec-doc">
+          <div class="avatar avatar-sm">CS</div>
+          <div><div class="spec-doc-name">Dr. Carlos Silva</div><div class="spec-doc-role">Clínico Geral</div></div>
+        </div>
+        <a href="paginas/agendamento.html?especialidade=clinica-geral" class="btn btn-secondary btn-sm btn-full">Agendar</a>
+      </div>
 
-    <script src="./vitalis-db.js"></script>
-    <script src="./script.js"></script>
+      <div class="spec-card">
+        <div class="spec-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        </div>
+        <div class="spec-name">Cardiologia</div>
+        <div class="spec-desc">Prevenção, diagnóstico e tratamento de doenças do coração com exames de alta tecnologia.</div>
+        <div class="spec-doc">
+          <div class="avatar avatar-sm">MC</div>
+          <div><div class="spec-doc-name">Dra. Marina Costa</div><div class="spec-doc-role">Cardiologista</div></div>
+        </div>
+        <a href="paginas/agendamento.html?especialidade=cardiologia" class="btn btn-secondary btn-sm btn-full">Agendar</a>
+      </div>
+
+      <div class="spec-card">
+        <div class="spec-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2C8 2 4 6 4 10c0 6 8 12 8 12s8-6 8-12c0-4-4-8-8-8z"/><circle cx="12" cy="10" r="3"/></svg>
+        </div>
+        <div class="spec-name">Odontologia</div>
+        <div class="spec-desc">Saúde bucal completa: prevenção, estética e tratamentos avançados para sorrir com confiança.</div>
+        <div class="spec-doc">
+          <div class="avatar avatar-sm">FO</div>
+          <div><div class="spec-doc-name">Dr. Fernando Oliveira</div><div class="spec-doc-role">Odontologista</div></div>
+        </div>
+        <a href="paginas/agendamento.html?especialidade=odontologia" class="btn btn-secondary btn-sm btn-full">Agendar</a>
+      </div>
+
+      <div class="spec-card">
+        <div class="spec-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 3a3 3 0 0 0-3 3v12a3 3 0 0 0 6 0V6a3 3 0 0 0-3-3z"/><path d="M6 3a3 3 0 0 0-3 3v12a3 3 0 0 0 6 0V6a3 3 0 0 0-3-3z"/><path d="M3 12h18"/></svg>
+        </div>
+        <div class="spec-name">Fisioterapia</div>
+        <div class="spec-desc">Reabilitação, alívio de dores e recuperação de movimentos com técnicas modernas e personalizadas.</div>
+        <div class="spec-doc">
+          <div class="avatar avatar-sm">AP</div>
+          <div><div class="spec-doc-name">Dra. Ana Paula</div><div class="spec-doc-role">Fisioterapeuta</div></div>
+        </div>
+        <a href="paginas/agendamento.html?especialidade=fisioterapia" class="btn btn-secondary btn-sm btn-full">Agendar</a>
+      </div>
+
+      <div class="spec-card">
+        <div class="spec-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/><line x1="12" y1="10" x2="12" y2="14"/></svg>
+        </div>
+        <div class="spec-name">Dermatologia</div>
+        <div class="spec-desc">Diagnóstico e tratamento de doenças da pele, cabelo e unhas, além de procedimentos estéticos.</div>
+        <div class="spec-doc">
+          <div class="avatar avatar-sm">RS</div>
+          <div><div class="spec-doc-name">Dr. Roberto Santos</div><div class="spec-doc-role">Dermatologista</div></div>
+        </div>
+        <a href="paginas/agendamento.html?especialidade=dermatologia" class="btn btn-secondary btn-sm btn-full">Agendar</a>
+      </div>
+
+      <div class="spec-card">
+        <div class="spec-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="M7 13s.5 3 5 3 5-3 5-3"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
+        </div>
+        <div class="spec-name">Nutrição</div>
+        <div class="spec-desc">Orientação nutricional personalizada para emagrecimento, ganho de massa e saúde metabólica.</div>
+        <div class="spec-doc">
+          <div class="avatar avatar-sm">JM</div>
+          <div><div class="spec-doc-name">Dra. Juliana Martins</div><div class="spec-doc-role">Nutricionista</div></div>
+        </div>
+        <a href="paginas/agendamento.html?especialidade=nutricao" class="btn btn-secondary btn-sm btn-full">Agendar</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ===== COMO FUNCIONA ===== -->
+<section class="how-section">
+  <div class="container">
+    <div class="how-card">
+      <div style="text-align:center">
+        <p style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--accent);margin-bottom:8px">Simples e rápido</p>
+        <h2 class="section-title">Como funciona o agendamento</h2>
+      </div>
+      <div class="how-steps">
+        <div class="how-step">
+          <div class="how-num">1</div>
+          <div class="how-step-title">Escolha a especialidade</div>
+          <div class="how-step-desc">Selecione a especialidade e o profissional de sua preferência a partir da nossa equipe.</div>
+        </div>
+        <div class="how-step">
+          <div class="how-num">2</div>
+          <div class="how-step-title">Informe data e horário</div>
+          <div class="how-step-desc">Veja em tempo real os horários disponíveis e escolha o mais conveniente para você.</div>
+        </div>
+        <div class="how-step">
+          <div class="how-num">3</div>
+          <div class="how-step-title">Confirme e compareça</div>
+          <div class="how-step-desc">Preencha seus dados, confirme o agendamento e receba o comprovante. Simples assim.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="nav-logo" style="font-size:15px">
+          <span class="nav-logo-icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+          </span>
+          Clínica Vitalis
+        </a>
+        <p class="footer-tagline">Saúde com excelência, tecnologia e humanidade. Cuidando de você e da sua família há mais de 12 anos.</p>
+      </div>
+      <div>
+        <div class="footer-col-title">Navegação</div>
+        <div class="footer-links">
+          <a href="paginas/sobre_clinica.html" class="footer-link">Sobre a clínica</a>
+          <a href="paginas/profissionais.html" class="footer-link">Profissionais</a>
+          <a href="paginas/servicos_especialidades.html" class="footer-link">Especialidades</a>
+          <a href="paginas/agendamento.html" class="footer-link">Agendar consulta</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-title">Especialidades</div>
+        <div class="footer-links">
+          <a href="paginas/agendamento.html?especialidade=clinica-geral" class="footer-link">Clínica Geral</a>
+          <a href="paginas/agendamento.html?especialidade=cardiologia" class="footer-link">Cardiologia</a>
+          <a href="paginas/agendamento.html?especialidade=odontologia" class="footer-link">Odontologia</a>
+          <a href="paginas/agendamento.html?especialidade=fisioterapia" class="footer-link">Fisioterapia</a>
+          <a href="paginas/agendamento.html?especialidade=dermatologia" class="footer-link">Dermatologia</a>
+          <a href="paginas/agendamento.html?especialidade=nutricao" class="footer-link">Nutrição</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-title">Contato</div>
+        <div class="footer-links">
+          <span class="footer-link">(11) 3456-7890</span>
+          <span class="footer-link">contato@clinicavitalis.com.br</span>
+          <span class="footer-link">Seg–Sex: 08h–18h</span>
+          <span class="footer-link">Sáb: 08h–12h</span>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2026 Clínica Vitalis. Todos os direitos reservados.</span>
+      <a href="admin/index.html" style="color:var(--text-muted);font-size:12px">Área administrativa</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function () {
+  /* Theme */
+  const html  = document.documentElement;
+  const saved = localStorage.getItem('vt_theme') || 'light';
+  html.setAttribute('data-theme', saved);
+  syncIcons(saved);
+
+  document.getElementById('theme-toggle').addEventListener('click', function () {
+    const next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    html.setAttribute('data-theme', next);
+    localStorage.setItem('vt_theme', next);
+    syncIcons(next);
+  });
+
+  function syncIcons(t) {
+    document.getElementById('icon-moon').style.display = t === 'dark' ? 'none'  : 'block';
+    document.getElementById('icon-sun').style.display  = t === 'dark' ? 'block' : 'none';
+  }
+
+  /* Mobile nav */
+  document.getElementById('nav-hamburger').addEventListener('click', function () {
+    document.getElementById('nav-mobile').classList.toggle('open');
+  });
+
+  /* Quick-book form */
+  const profMap = {
+    'clinica-geral': [{ id: 'carlos-silva',      nome: 'Dr. Carlos Silva' }],
+    'cardiologia':   [{ id: 'marina-costa',      nome: 'Dra. Marina Costa' }],
+    'odontologia':   [{ id: 'fernando-oliveira', nome: 'Dr. Fernando Oliveira' }],
+    'fisioterapia':  [{ id: 'ana-paula',         nome: 'Dra. Ana Paula' }],
+    'dermatologia':  [{ id: 'roberto-santos',    nome: 'Dr. Roberto Santos' }],
+    'nutricao':      [{ id: 'juliana-martins',   nome: 'Dra. Juliana Martins' }],
+  };
+
+  const selEsp  = document.getElementById('qs-especialidade');
+  const selProf = document.getElementById('qs-profissional');
+
+  selEsp.addEventListener('change', function () {
+    const profs = profMap[this.value] || [];
+    selProf.innerHTML = '<option value="">Selecione um profissional</option>';
+    profs.forEach(function (p) {
+      const o = document.createElement('option');
+      o.value = p.id; o.textContent = p.nome;
+      selProf.appendChild(o);
+    });
+    selProf.disabled = profs.length === 0;
+  });
+
+  document.getElementById('quick-form').addEventListener('submit', function (e) {
+    e.preventDefault();
+    const esp = selEsp.value;
+    if (!esp) return;
+    const p = new URLSearchParams({ especialidade: esp });
+    if (selProf.value) p.set('profissional', selProf.value);
+    window.location.href = 'paginas/agendamento.html?' + p.toString();
+  });
+})();
+</script>
 </body>
-
 </html>

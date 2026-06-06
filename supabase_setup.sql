@@ -67,6 +67,32 @@ CREATE POLICY "admin_tudo_agendamentos"
   ON agendamentos FOR ALL TO authenticated USING (true) WITH CHECK (true);
 
 
+-- -----------------------------------------------------------------
+-- FUNÇÃO: verificar_horarios_ocupados
+-- Permite que usuários anônimos consultem horários ocupados
+-- sem expor dados pessoais (nome, e-mail, telefone, motivo).
+-- SECURITY DEFINER garante acesso à tabela ignorando RLS interno.
+-- -----------------------------------------------------------------
+DROP FUNCTION IF EXISTS verificar_horarios_ocupados(text, date);
+CREATE OR REPLACE FUNCTION verificar_horarios_ocupados(
+  p_profissional text,
+  p_data         date
+)
+RETURNS TABLE(horario text)
+LANGUAGE sql
+SECURITY DEFINER
+SET search_path = public
+AS $$
+  SELECT horario::text
+  FROM   agendamentos
+  WHERE  profissional = p_profissional
+    AND  data_consulta = p_data
+    AND  status != 'cancelado';
+$$;
+
+GRANT EXECUTE ON FUNCTION verificar_horarios_ocupados TO anon;
+
+
 -- AVALIAÇÕES
 DROP POLICY IF EXISTS "publico_inserir_avaliacoes"        ON avaliacoes;
 DROP POLICY IF EXISTS "publico_ler_avaliacoes_aprovadas"  ON avaliacoes;

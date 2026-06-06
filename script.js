@@ -209,16 +209,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const reviewForm = document.getElementById('reviewForm');
     const userReviewsList = document.getElementById('userReviewsList');
     const reviewFeedback = document.getElementById('reviewFeedback');
-    const clearReviews = document.getElementById('clearReviews');
     const patientTestimonials = document.getElementById('patientTestimonials');
     const patientTestimonialsGrid = document.getElementById('patientTestimonialsGrid');
     const ratingButtons = document.querySelectorAll('.rating-star-btn');
     const reviewRating = document.getElementById('reviewRating');
     const ratingHelp = document.getElementById('ratingHelp');
     const reviewsKey = 'clinicaVitalisReviews';
-    const API_BASE_URL = window.location.origin && window.location.protocol.startsWith('http')
-        ? `${window.location.origin}/backend/routes`
-        : 'http://localhost:8000/backend/routes';
 
     const updateInteractiveStars = (rating = 0) => {
         ratingButtons.forEach((button) => {

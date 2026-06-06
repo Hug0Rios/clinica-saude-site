@@ -107,6 +107,20 @@
     }
   }
 
+  async function rpc(fn, params) {
+    try {
+      var res = await restFetch('rpc/' + fn, {
+        method: 'POST',
+        body: JSON.stringify(params || {}),
+      });
+      if (!res.ok) return null;
+      return res.json();
+    } catch (e) {
+      console.error('[Vitalis DB] rpc error', e);
+      return null;
+    }
+  }
+
   /* ---------- Auth ---------- */
   async function authLogin(email, password) {
     try {
@@ -144,6 +158,6 @@
     return isTokenValid();
   }
 
-  window.VITALIS_DB = { insert: insert, select: select, update: update, remove: remove,
+  window.VITALIS_DB = { insert: insert, select: select, update: update, remove: remove, rpc: rpc,
                         authLogin: authLogin, authLogout: authLogout, authCheck: authCheck };
 })();

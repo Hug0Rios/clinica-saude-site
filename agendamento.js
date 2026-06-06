@@ -91,10 +91,10 @@ function esc(str) {
 async function buscarHorariosOcupados(nomeProf, dateStr) {
     if (!window.VITALIS_DB) return [];
     try {
-        const rows = await window.VITALIS_DB.select(
-            'agendamentos',
-            `select=horario&profissional=eq.${encodeURIComponent(nomeProf)}&data_consulta=eq.${dateStr}&status=neq.cancelado`
-        );
+        const rows = await window.VITALIS_DB.rpc('verificar_horarios_ocupados', {
+            p_profissional: nomeProf,
+            p_data: dateStr,
+        });
         return Array.isArray(rows) ? rows.map(r => String(r.horario).slice(0, 5)) : [];
     } catch {
         return [];

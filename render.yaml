@@ -1,9 +1,9 @@
 services:
   - type: web
     name: clinica-vitalis
-    runtime: php
+    runtime: docker
     rootDir: backend
-    startCommand: php -S 0.0.0.0:$PORT index.php
+    dockerfilePath: ./Dockerfile
     plan: free
     envVars:
       - key: FRONTEND_URL

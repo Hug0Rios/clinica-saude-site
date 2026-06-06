@@ -170,7 +170,7 @@ function renderAgendamentos() {
     </tr>`).join('');
 }
 
-async function loadAgendamentos() {
+function loadAgendamentos() {
   renderAgendamentos();
 }
 
@@ -378,7 +378,7 @@ function viewContato(id) {
 /* ----------------------------------------------------------------
    UI HELPERS
 ---------------------------------------------------------------- */
-function showSection(name) {
+async function showSection(name) {
   document.querySelectorAll('.section').forEach(s => {
     s.classList.remove('active');
     s.classList.add('hidden');
@@ -396,10 +396,11 @@ function showSection(name) {
   document.getElementById('page-title').textContent = SECTION_TITLES[name] || name;
   closeSidebar();
 
-  if (name === 'overview')     loadDashboard();
-  if (name === 'agendamentos') loadAgendamentos();
-  if (name === 'avaliacoes')   loadAvaliacoes();
-  if (name === 'contatos')     loadContatos();
+  await loadDashboard();
+
+  if (name === 'agendamentos') renderAgendamentos();
+  if (name === 'avaliacoes')   renderAvaliacoes();
+  if (name === 'contatos')     renderContatos();
 }
 
 function showModal(html) {
@@ -513,7 +514,7 @@ function initLoginForm() {
   });
 }
 
-function showApp() {
+async function showApp() {
   document.getElementById('login-screen').style.display = 'none';
   document.getElementById('app').classList.remove('hidden');
 
@@ -543,5 +544,5 @@ function showApp() {
   });
   document.getElementById('filter-lido').addEventListener('change', renderContatos);
 
-  showSection('overview');
+  await showSection('overview');
 }

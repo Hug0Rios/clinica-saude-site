@@ -127,20 +127,24 @@ function updateBadge(id, count) {
 /* ----------------------------------------------------------------
    AGENDAMENTOS
 ---------------------------------------------------------------- */
-async function loadAgendamentos() {
-  const status = document.getElementById('filter-status').value;
-  const search = document.getElementById('filter-search').value.trim();
+function renderAgendamentos() {
+  const status = (document.getElementById('filter-status') || {}).value || '';
+  const search = ((document.getElementById('filter-search') || {}).value || '').trim().toLowerCase();
 
-  let q = 'select=*&order=data_consulta.desc,horario.desc&limit=500';
-  if (status) q += `&status=eq.${encodeURIComponent(status)}`;
-  if (search) {
-    const s = encodeURIComponent(`*${search}*`);
-    q += `&or=(nome.ilike.${s},email.ilike.${s},telefone.ilike.${s})`;
-  }
+  let items = (_agendamentos || []).slice().sort((a, b) => {
+    const d = (b.data_consulta || '').localeCompare(a.data_consulta || '');
+    return d !== 0 ? d : (b.horario || '').localeCompare(a.horario || '');
+  });
 
-  const items = await DB.select('agendamentos', q);
-  _agendamentos = items;
+  if (status) items = items.filter(a => a.status === status);
+  if (search) items = items.filter(a =>
+    (a.nome || '').toLowerCase().includes(search) ||
+    (a.email || '').toLowerCase().includes(search) ||
+    (a.telefone || '').toLowerCase().includes(search)
+  );
+
   const tbody = document.getElementById('tbody-agendamentos');
+  if (!tbody) return;
 
   if (!items.length) {
     tbody.innerHTML = '<tr><td colspan="7" class="empty">Nenhum agendamento encontrado.</td></tr>';
@@ -166,12 +170,16 @@ async function loadAgendamentos() {
     </tr>`).join('');
 }
 
+async function loadAgendamentos() {
+  renderAgendamentos();
+}
+
 async function setStatus(id, status) {
   const ok = await DB.update('agendamentos', { status }, `id=eq.${id}`);
   if (ok) {
     toast('Status atualizado.', 'success');
-    loadAgendamentos();
-    loadDashboard();
+    await loadDashboard();
+    renderAgendamentos();
   } else {
     toast('Erro ao atualizar. Verifique se está logado.', 'error');
   }
@@ -182,8 +190,8 @@ async function delAgendamento(id) {
   const ok = await DB.remove('agendamentos', `id=eq.${id}`);
   if (ok) {
     toast('Agendamento excluído.', 'success');
-    loadAgendamentos();
-    loadDashboard();
+    await loadDashboard();
+    renderAgendamentos();
   } else {
     toast('Erro ao excluir.', 'error');
   }
@@ -209,10 +217,12 @@ function viewAgendamento(id) {
 /* ----------------------------------------------------------------
    AVALIAÇÕES
 ---------------------------------------------------------------- */
-async function loadAvaliacoes() {
-  const items = await DB.select('avaliacoes', 'select=*&order=criado_em.desc&limit=500');
-  _avaliacoes = items;
+function renderAvaliacoes() {
+  const items = (_avaliacoes || []).slice().sort((a, b) =>
+    (b.criado_em || '').localeCompare(a.criado_em || '')
+  );
   const tbody = document.getElementById('tbody-avaliacoes');
+  if (!tbody) return;
 
   if (!items.length) {
     tbody.innerHTML = '<tr><td colspan="6" class="empty">Nenhuma avaliação encontrada.</td></tr>';
@@ -240,11 +250,16 @@ async function loadAvaliacoes() {
     </tr>`).join('');
 }
 
+function loadAvaliacoes() {
+  renderAvaliacoes();
+}
+
 async function toggleAv(id, aprovada) {
   const ok = await DB.update('avaliacoes', { aprovada }, `id=eq.${id}`);
   if (ok) {
     toast(aprovada ? 'Avaliação publicada no site.' : 'Avaliação ocultada.', 'success');
-    loadAvaliacoes();
+    await loadDashboard();
+    renderAvaliacoes();
   } else {
     toast('Erro ao atualizar.', 'error');
   }
@@ -255,7 +270,8 @@ async function delAv(id) {
   const ok = await DB.remove('avaliacoes', `id=eq.${id}`);
   if (ok) {
     toast('Avaliação excluída.', 'success');
-    loadAvaliacoes();
+    await loadDashboard();
+    renderAvaliacoes();
   } else {
     toast('Erro ao excluir.', 'error');
   }
@@ -280,15 +296,16 @@ function viewAvaliacao(id) {
 /* ----------------------------------------------------------------
    CONTATOS / MENSAGENS
 ---------------------------------------------------------------- */
-async function loadContatos() {
-  const lido = document.getElementById('filter-lido').value;
-  let q = 'select=*&order=criado_em.desc&limit=500';
-  if (lido === '0') q += '&lido=eq.false';
-  if (lido === '1') q += '&lido=eq.true';
+function renderContatos() {
+  const lido = (document.getElementById('filter-lido') || {}).value || '';
+  let items = (_contatos || []).slice().sort((a, b) =>
+    (b.criado_em || '').localeCompare(a.criado_em || '')
+  );
+  if (lido === '0') items = items.filter(c => !c.lido);
+  if (lido === '1') items = items.filter(c =>  c.lido);
 
-  const items = await DB.select('contatos', q);
-  _contatos = items;
   const tbody = document.getElementById('tbody-contatos');
+  if (!tbody) return;
 
   if (!items.length) {
     tbody.innerHTML = '<tr><td colspan="7" class="empty">Nenhuma mensagem encontrada.</td></tr>';
@@ -317,10 +334,16 @@ async function loadContatos() {
     </tr>`).join('');
 }
 
+function loadContatos() {
+  renderContatos();
+}
+
 async function markRead(id, lido) {
   const ok = await DB.update('contatos', { lido }, `id=eq.${id}`);
-  if (ok) { loadContatos(); loadDashboard(); }
-  else toast('Erro ao atualizar.', 'error');
+  if (ok) {
+    await loadDashboard();
+    renderContatos();
+  } else toast('Erro ao atualizar.', 'error');
 }
 
 async function delContato(id) {
@@ -328,8 +351,8 @@ async function delContato(id) {
   const ok = await DB.remove('contatos', `id=eq.${id}`);
   if (ok) {
     toast('Mensagem excluída.', 'success');
-    loadContatos();
-    loadDashboard();
+    await loadDashboard();
+    renderContatos();
   } else {
     toast('Erro ao excluir.', 'error');
   }
@@ -514,11 +537,11 @@ function showApp() {
     if (e.target === document.getElementById('modal')) hideModal();
   });
 
-  document.getElementById('btn-filtrar').addEventListener('click', loadAgendamentos);
+  document.getElementById('btn-filtrar').addEventListener('click', renderAgendamentos);
   document.getElementById('filter-search').addEventListener('keydown', function (e) {
-    if (e.key === 'Enter') loadAgendamentos();
+    if (e.key === 'Enter') renderAgendamentos();
   });
-  document.getElementById('filter-lido').addEventListener('change', loadContatos);
+  document.getElementById('filter-lido').addEventListener('change', renderContatos);
 
   showSection('overview');
 }

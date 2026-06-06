@@ -279,6 +279,9 @@ table { border-collapse: collapse; width: 100%; }
 .sidebar-bottom {
   padding: 16px;
   border-top: 1px solid rgba(255,255,255,.08);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 }
 
 .btn-logout {
@@ -290,6 +293,8 @@ table { border-collapse: collapse; width: 100%; }
   font-weight: 500;
   text-align: left;
   transition: background .15s, color .15s;
+  display: block;
+  text-decoration: none;
 }
 .btn-logout:hover { background: rgba(255,255,255,.07); color: rgba(255,255,255,.85); }
 

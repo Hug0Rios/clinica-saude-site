@@ -4,6 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Admin — Clínica Vitalis</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="admin.css">
 </head>
 <body>
@@ -40,6 +43,9 @@
   <!-- ===== APP ===== -->
   <div id="app" class="hidden">
 
+    <!-- Backdrop mobile -->
+    <div class="sidebar-backdrop" id="sidebar-backdrop"></div>
+
     <!-- Sidebar -->
     <aside class="sidebar" id="sidebar">
       <div class="sidebar-top">
@@ -51,9 +57,12 @@
       </div>
 
       <nav class="sidebar-nav">
+        <span class="nav-group-label">Geral</span>
         <a href="#" class="nav-item active" data-section="overview">
           <span class="nav-icon">&#9635;</span> Visão Geral
         </a>
+
+        <span class="nav-group-label">Clínica</span>
         <a href="#" class="nav-item" data-section="agendamentos">
           <span class="nav-icon">&#128197;</span> Agendamentos
           <span class="nav-badge hidden" id="badge-pendentes"></span>
@@ -87,19 +96,31 @@
         <section id="section-overview" class="section active">
           <div class="stats-grid" id="stats-grid">
             <div class="stat-card stat-blue">
-              <div class="stat-label">Agendamentos Hoje</div>
+              <div class="stat-label">
+                <span class="stat-icon">&#128197;</span>
+                Agendamentos Hoje
+              </div>
               <div class="stat-value" id="stat-hoje">—</div>
             </div>
             <div class="stat-card stat-orange">
-              <div class="stat-label">Pendentes de Confirmação</div>
+              <div class="stat-label">
+                <span class="stat-icon">&#9200;</span>
+                Pendentes de Confirmação
+              </div>
               <div class="stat-value" id="stat-pendentes">—</div>
             </div>
             <div class="stat-card stat-green">
-              <div class="stat-label">Total de Avaliações</div>
+              <div class="stat-label">
+                <span class="stat-icon">&#11088;</span>
+                Total de Avaliações
+              </div>
               <div class="stat-value" id="stat-avaliacoes">— <small id="stat-nota"></small></div>
             </div>
             <div class="stat-card stat-purple">
-              <div class="stat-label">Mensagens Novas</div>
+              <div class="stat-label">
+                <span class="stat-icon">&#9993;</span>
+                Mensagens Novas
+              </div>
               <div class="stat-value" id="stat-contatos">—</div>
             </div>
           </div>

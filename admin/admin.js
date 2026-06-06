@@ -153,7 +153,7 @@ function renderAgendamentos() {
 
   tbody.innerHTML = items.map(a => `
     <tr id="ag-${a.id}">
-      <td><strong>${esc(a.nome)}</strong><br><small style="color:var(--muted)">${esc(a.email)}</small></td>
+      <td><strong>${esc(a.nome)}</strong><br><small style="color:var(--gray-500)">${esc(a.email)}</small></td>
       <td>${esc(a.servico)}</td>
       <td>${esc(a.profissional)}</td>
       <td>${fmtDate(a.data_consulta)}<br><small>${fmtTime(a.horario)}</small></td>
@@ -288,7 +288,7 @@ function viewAvaliacao(id) {
     <div class="detail-row"><span class="detail-label">Status</span><span class="detail-value">${a.aprovada ? '<span class="badge badge-aprovada">Visível</span>' : '<span class="badge badge-oculta">Oculta</span>'}</span></div>
     <div class="detail-row" style="flex-direction:column;gap:6px">
       <span class="detail-label">Comentário</span>
-      <span class="detail-value" style="background:var(--bg);padding:14px;border-radius:var(--radius);line-height:1.6">${esc(a.comentario)}</span>
+      <span class="detail-value" style="background:var(--gray-50);padding:14px;border-radius:var(--radius);line-height:1.6">${esc(a.comentario)}</span>
     </div>
   `);
 }
@@ -369,7 +369,7 @@ function viewContato(id) {
     <div class="detail-row"><span class="detail-label">Recebido em</span><span class="detail-value">${fmtDatetime(c.criado_em)}</span></div>
     <div class="detail-row" style="flex-direction:column;gap:6px">
       <span class="detail-label">Mensagem</span>
-      <span class="detail-value" style="background:var(--bg);padding:14px;border-radius:var(--radius);line-height:1.7;white-space:pre-wrap">${esc(c.mensagem)}</span>
+      <span class="detail-value" style="background:var(--gray-50);padding:14px;border-radius:var(--radius);line-height:1.7;white-space:pre-wrap">${esc(c.mensagem)}</span>
     </div>
   `);
   if (!c.lido) markRead(id, true);
@@ -443,11 +443,7 @@ function closeSidebar() {
 document.addEventListener('DOMContentLoaded', async function () {
 
   /* Backdrop mobile */
-  const backdrop = document.createElement('div');
-  backdrop.id = 'sidebar-backdrop';
-  backdrop.className = 'sidebar-backdrop';
-  backdrop.addEventListener('click', closeSidebar);
-  document.body.appendChild(backdrop);
+  document.getElementById('sidebar-backdrop').addEventListener('click', closeSidebar);
 
   /* Supabase não configurado */
   if (!DB) {

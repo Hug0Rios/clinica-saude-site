@@ -1,148 +1,131 @@
-/* =================================================================
-   dashboard.js — polling de dados reais via Railway API
-   Atualiza os cards KPI e a tabela de agendamentos do dia a cada 30s
-================================================================= */
-(function () {
-  var base = (typeof API_BASE !== 'undefined') ? API_BASE : '';
+// admin/dashboard.js — popula cards KPI com dados reais e atualiza a cada 30s
 
-  function hoje() {
-    return new Date().toISOString().split('T')[0];
+const HOJE = new Date().toISOString().split('T')[0];
+
+async function apiFetch(path) {
+  const res = await fetch(API_BASE + path);
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  return res.json();
+}
+
+function setText(id, val) {
+  const el = document.getElementById(id);
+  if (el) el.textContent = val;
+}
+
+function setLoading() {
+  ['kpi-mes', 'kpi-pacientes', 'kpi-hoje', 'kpi-nota'].forEach(id => setText(id, '…'));
+}
+
+async function atualizarDashboard() {
+  try {
+    const [agendamentos, pacientes] = await Promise.all([
+      apiFetch('/api/agendamentos.php'),
+      apiFetch('/api/pacientes.php'),
+    ]);
+
+    const mesAtual   = HOJE.slice(0, 7);
+    const doMes      = agendamentos.filter(a => (a.data_consulta || '').startsWith(mesAtual));
+    const deHoje     = agendamentos.filter(a => a.data_consulta === HOJE);
+
+    setText('kpi-mes',       doMes.length);
+    setText('kpi-pacientes', pacientes.length);
+    setText('kpi-hoje',      deHoje.length);
+    setText('dash-hoje-count', deHoje.length);
+
+    // Avaliação média (se existir endpoint ou campo nota nos agendamentos)
+    const comNota = agendamentos.filter(a => a.nota != null);
+    if (comNota.length) {
+      const media = (comNota.reduce((s, a) => s + Number(a.nota), 0) / comNota.length).toFixed(1);
+      setText('kpi-nota', media);
+    } else {
+      setText('kpi-nota', '—');
+    }
+
+    renderTabelaHoje(deHoje);
+    renderProfsHoje(deHoje);
+
+  } catch {
+    // falha silenciosa — não quebra o layout
+  }
+}
+
+function renderTabelaHoje(agendamentos) {
+  const tbody = document.getElementById('dash-table-body');
+  if (!tbody) return;
+
+  if (!agendamentos.length) {
+    tbody.innerHTML = '<tr><td colspan="5" class="table-empty">Nenhum agendamento para hoje.</td></tr>';
+    return;
   }
 
-  function setText(id, val) {
-    var el = document.getElementById(id);
-    if (el) el.textContent = val;
-  }
-
-  function fmtData(iso) {
-    if (!iso) return '—';
-    var p = iso.split('-');
-    return p[2] + '/' + p[1] + '/' + p[0];
-  }
-
-  function statusBadge(status) {
-    var map = {
+  tbody.innerHTML = agendamentos.map(a => {
+    const statusMap = {
       pendente:   ['badge-amber', 'Pendente'],
       confirmado: ['badge-green', 'Confirmado'],
       cancelado:  ['badge-red',   'Cancelado'],
     };
-    var s = (status || '').toLowerCase();
-    var pair = map[s] || ['badge-muted', status || '—'];
-    return '<span class="badge ' + pair[0] + '">' + pair[1] + '</span>';
-  }
+    const [cls, label] = statusMap[(a.status || '').toLowerCase()] || ['badge-muted', a.status || '—'];
+    return `<tr>
+      <td>${a.paciente || (a.pacientes?.nome_completo) || '—'}</td>
+      <td>${a.especialidade || (a.profissionais?.especialidades?.nome) || '—'}</td>
+      <td>${a.profissional  || (a.profissionais?.nome) || '—'}</td>
+      <td>${String(a.horario || '').slice(0, 5) || '—'}</td>
+      <td><span class="badge ${cls}">${label}</span></td>
+    </tr>`;
+  }).join('');
+}
 
-  async function fetchHoje() {
-    try {
-      var res  = await fetch(base + '/api/agendamentos?data=' + hoje());
-      if (!res.ok) return null;
-      return res.json();
-    } catch (e) { return null; }
-  }
+function renderProfsHoje(agendamentos) {
+  const cont = document.getElementById('profs-hoje');
+  if (!cont) return;
 
-  async function fetchMes() {
-    try {
-      var mesInicio = hoje().slice(0, 7) + '-01';
-      var res = await fetch(base + '/api/agendamentos?data_inicio=' + mesInicio);
-      if (!res.ok) return null;
-      return res.json();
-    } catch (e) { return null; }
-  }
-
-  async function fetchPacientes() {
-    try {
-      var res = await fetch(base + '/api/pacientes');
-      if (!res.ok) return null;
-      return res.json();
-    } catch (e) { return null; }
-  }
-
-  function renderTabelaHoje(agendamentos) {
-    var tbody = document.getElementById('dash-table-body');
-    if (!tbody) return;
-
-    if (!Array.isArray(agendamentos) || agendamentos.length === 0) {
-      tbody.innerHTML = '<tr><td colspan="5" class="table-empty">Nenhum agendamento para hoje.</td></tr>';
-      setText('dash-hoje-count', '0');
-      return;
-    }
-
-    setText('dash-hoje-count', String(agendamentos.length));
-
-    tbody.innerHTML = agendamentos.map(function (a) {
-      var pac  = a.pacientes  || {};
-      var prof = a.profissionais || {};
-      var esp  = (prof.especialidades || {}).nome || '—';
-      return '<tr>' +
-        '<td>' + (pac.nome_completo  || a.nome || '—') + '</td>' +
-        '<td>' + esp + '</td>' +
-        '<td>' + (prof.nome || '—') + '</td>' +
-        '<td>' + (String(a.horario || '').slice(0, 5) || '—') + '</td>' +
-        '<td>' + statusBadge(a.status) + '</td>' +
-      '</tr>';
-    }).join('');
-
-    /* Profissionais com agenda hoje (lista lateral) */
-    var profsHoje = document.getElementById('profs-hoje');
-    if (profsHoje) {
-      var vistos = {};
-      var itens  = agendamentos.filter(function (a) {
-        var nome = (a.profissionais || {}).nome;
-        if (!nome || vistos[nome]) return false;
-        vistos[nome] = true;
-        return true;
-      });
-
-      profsHoje.innerHTML = itens.length === 0
-        ? '<p style="font-size:13px;color:var(--text-muted)">Nenhum profissional hoje.</p>'
-        : itens.map(function (a) {
-            var nome = (a.profissionais || {}).nome || '—';
-            var ini  = nome.replace(/^(Dr\.|Dra\.)\s*/i, '').trim().split(' ');
-            var av   = ((ini[0] || '?')[0] + ((ini[1] || '')[0] || '')).toUpperCase();
-            var qtd  = agendamentos.filter(function (x) { return (x.profissionais || {}).nome === nome; }).length;
-            return '<div class="mini-item">' +
-              '<div class="avatar avatar-sm">' + av + '</div>' +
-              '<div class="mini-item-info">' +
-                '<div class="mini-item-name">' + nome + '</div>' +
-                '<div class="mini-item-sub">' + qtd + ' consulta' + (qtd !== 1 ? 's' : '') + '</div>' +
-              '</div></div>';
-          }).join('');
-    }
-  }
-
-  function updateKPIs(hojeAg, totalPacientes) {
-    if (Array.isArray(hojeAg)) {
-      setText('kpi-hoje',       String(hojeAg.length));
-      setText('kpi-delta-hoje', hojeAg.length + ' hoje');
-    }
-    if (typeof totalPacientes === 'number') {
-      setText('kpi-pacientes', String(totalPacientes));
-    }
-  }
-
-  async function refresh() {
-    var [agHoje, pacientes] = await Promise.all([fetchHoje(), fetchPacientes()]);
-
-    if (Array.isArray(agHoje)) {
-      renderTabelaHoje(agHoje);
-      updateKPIs(agHoje, Array.isArray(pacientes) ? pacientes.length : undefined);
-
-      /* KPI "Consultas do mês" — conta do cache da tabela se não há rota de mês */
-      var mesAtual = hoje().slice(0, 7);
-      var kpiMes = document.getElementById('kpi-mes');
-      if (kpiMes && kpiMes.textContent === '—') {
-        setText('kpi-mes', String(agHoje.filter(function (a) {
-          return (a.data_consulta || '').startsWith(mesAtual);
-        }).length));
-      }
-    }
-  }
-
-  /* Aguarda o DOM estar pronto, inicia e agenda polling */
-  document.addEventListener('DOMContentLoaded', function () {
-    /* Pequeno delay para não colidir com o carregamento inicial do vitalis-admin.js */
-    setTimeout(function () {
-      refresh();
-      setInterval(refresh, 30000);
-    }, 2000);
+  const contagem = {};
+  agendamentos.forEach(a => {
+    const nome = a.profissional || a.profissionais?.nome || '—';
+    contagem[nome] = (contagem[nome] || 0) + 1;
   });
-})();
+
+  const profs = Object.entries(contagem);
+  if (!profs.length) {
+    cont.innerHTML = '<p style="font-size:13px;color:var(--text-muted)">Nenhum profissional hoje.</p>';
+    return;
+  }
+
+  cont.innerHTML = profs.map(([nome, qtd]) => {
+    const partes = nome.replace(/^(Dr\.|Dra\.)\s*/i, '').trim().split(' ');
+    const iniciais = ((partes[0]?.[0] ?? '') + (partes[1]?.[0] ?? '')).toUpperCase();
+    return `<div class="mini-item">
+      <div class="avatar avatar-sm">${iniciais}</div>
+      <div class="mini-item-info">
+        <div class="mini-item-name">${nome}</div>
+        <div class="mini-item-sub">${qtd} consulta${qtd !== 1 ? 's' : ''}</div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+/* ── Clique nos cards KPI ─────────────────────────────────────── */
+function configurarCliqueCards() {
+  const ações = {
+    'kpi-mes':       '../admin/agenda.html',
+    'kpi-pacientes': '../admin/pacientes.html',
+    'kpi-hoje':      `../admin/agenda.html?data=${HOJE}`,
+    'kpi-nota':      '../admin/avaliacoes.html',
+  };
+
+  Object.entries(ações).forEach(([id, href]) => {
+    const card = document.getElementById(id)?.closest('.kpi-card');
+    if (!card) return;
+    card.style.cursor = 'pointer';
+    card.addEventListener('click', () => { window.location.href = href; });
+  });
+}
+
+/* ── Init ─────────────────────────────────────────────────────── */
+document.addEventListener('DOMContentLoaded', () => {
+  setLoading();
+  configurarCliqueCards();
+  atualizarDashboard();
+  setInterval(atualizarDashboard, 30_000);
+});

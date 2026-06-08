@@ -71,6 +71,8 @@
   </div>
 </footer>
 
+<script src="../config.js"></script>
+<script src="../vitalis-db.js"></script>
 <script>
 (function () {
   /* Theme */
@@ -87,91 +89,91 @@
     document.getElementById('icon-sun').style.display  = t === 'dark' ? 'block' : 'none';
   }
 
-  /* Dados */
-  const PROFS = [
-    {
-      id: 'carlos-silva', nome: 'Dr. Carlos Silva', esp: 'Clínica Geral',
-      crm: 'CRM/SP 12345',
-      bio: 'Clínico geral com 15 anos de experiência, especialista em medicina preventiva e acompanhamento de doenças crônicas.',
-      horarios: ['08:00','09:00','10:00','11:00','13:00','14:00','15:00','16:00'],
-    },
-    {
-      id: 'marina-costa', nome: 'Dra. Marina Costa', esp: 'Cardiologia',
-      crm: 'CRM/SP 23456',
-      bio: 'Cardiologista especializada em diagnóstico e tratamento de doenças cardiovasculares, com fellowships em São Paulo e Europa.',
-      horarios: ['08:30','09:30','10:30','11:30','14:00','15:00','16:00'],
-    },
-    {
-      id: 'fernando-oliveira', nome: 'Dr. Fernando Oliveira', esp: 'Odontologia',
-      crm: 'CRO/SP 34567',
-      bio: 'Odontologista com pós-graduação em implantodontia e odontologia estética. Referência em reabilitação oral completa.',
-      horarios: ['08:00','09:00','10:00','11:00','13:00','14:00','15:00','16:00','17:00'],
-    },
-    {
-      id: 'ana-paula', nome: 'Dra. Ana Paula', esp: 'Fisioterapia',
-      crm: 'CREFITO 4567',
-      bio: 'Fisioterapeuta especializada em reabilitação ortopédica e neurológica, com abordagem humanizada e personalizada.',
-      horarios: ['08:00','09:00','10:00','11:00','13:00','14:00','15:00','16:00'],
-    },
-    {
-      id: 'roberto-santos', nome: 'Dr. Roberto Santos', esp: 'Dermatologia',
-      crm: 'CRM/SP 56789',
-      bio: 'Dermatologista com especialização em dermatologia clínica, cirúrgica e estética. Membro da Sociedade Brasileira de Dermatologia.',
-      horarios: ['08:30','09:30','10:30','11:30','13:30','14:30','15:30','16:30'],
-    },
-    {
-      id: 'juliana-martins', nome: 'Dra. Juliana Martins', esp: 'Nutrição',
-      crm: 'CRN/SP 67890',
-      bio: 'Nutricionista clínica com abordagem funcional. Especialista em emagrecimento, distúrbios metabólicos e nutrição esportiva.',
-      horarios: ['08:00','09:00','10:00','11:00','13:00','14:00','15:00','16:00'],
-    },
-  ];
+  // Dados biográficos estáticos (não vêm da API)
+  const BIO = {
+    'Dr. Carlos Silva':      { crm: 'CRM/SP 12345', bio: 'Clínico geral com 15 anos de experiência, especialista em medicina preventiva e acompanhamento de doenças crônicas.' },
+    'Dra. Marina Costa':     { crm: 'CRM/SP 23456', bio: 'Cardiologista especializada em diagnóstico e tratamento de doenças cardiovasculares, com fellowships em São Paulo e Europa.' },
+    'Dr. Fernando Oliveira': { crm: 'CRO/SP 34567', bio: 'Odontologista com pós-graduação em implantodontia e odontologia estética. Referência em reabilitação oral completa.' },
+    'Dra. Ana Paula':        { crm: 'CREFITO 4567', bio: 'Fisioterapeuta especializada em reabilitação ortopédica e neurológica, com abordagem humanizada e personalizada.' },
+    'Dr. Roberto Santos':    { crm: 'CRM/SP 56789', bio: 'Dermatologista com especialização em dermatologia clínica, cirúrgica e estética. Membro da Sociedade Brasileira de Dermatologia.' },
+    'Dra. Juliana Martins':  { crm: 'CRN/SP 67890', bio: 'Nutricionista clínica com abordagem funcional. Especialista em emagrecimento, distúrbios metabólicos e nutrição esportiva.' },
+  };
 
   function initials(nome) {
     const parts = nome.replace(/^(Dr\.|Dra\.)\s*/i, '').trim().split(' ');
-    return (parts[0][0] + (parts[1] ? parts[1][0] : '')).toUpperCase();
+    return ((parts[0]?.[0] ?? '') + (parts[1]?.[0] ?? '')).toUpperCase();
   }
 
-  /* Renderiza grid */
+  function renderCard(p) {
+    const esp     = p.especialidade || p.especialidades?.nome || '';
+    const fotoUrl = p.foto_url ? '../' + p.foto_url : '';
+    const meta    = BIO[p.nome] || { crm: '', bio: '' };
+    const ini     = initials(p.nome);
+    const slug    = encodeURIComponent(esp);
+
+    const avatar = fotoUrl
+      ? `<img src="${fotoUrl}" alt="${p.nome}" class="avatar avatar-lg"
+             onerror="this.outerHTML='<div class=\\'avatar avatar-lg\\'>${ini}</div>'">`
+      : `<div class="avatar avatar-lg">${ini}</div>`;
+
+    return `<div class="prof-card">
+      <div class="prof-card-top">
+        ${avatar}
+        <div class="prof-card-info">
+          <div class="prof-card-name">${p.nome}</div>
+          <div style="margin-top:4px"><span class="badge badge-accent">${esp}</span></div>
+          ${meta.crm ? `<div class="prof-crm">${meta.crm}</div>` : ''}
+        </div>
+      </div>
+      ${meta.bio ? `<p class="prof-desc">${meta.bio}</p>` : ''}
+      <div class="prof-actions">
+        <button class="btn btn-ghost btn-sm" onclick="verAgenda('${p.id}')">Ver agenda</button>
+        <a href="agendamento.html?especialidade=${slug}&profissional=${p.id}" class="btn btn-primary btn-sm">Agendar</a>
+      </div>
+    </div>`;
+  }
+
   const grid = document.getElementById('prof-grid');
-  grid.innerHTML = PROFS.map(function (p) {
-    return '<div class="prof-card">' +
-      '<div class="prof-card-top">' +
-        '<div class="avatar avatar-lg">' + initials(p.nome) + '</div>' +
-        '<div class="prof-card-info">' +
-          '<div class="prof-card-name">' + p.nome + '</div>' +
-          '<div style="margin-top:4px"><span class="badge badge-accent">' + p.esp + '</span></div>' +
-          '<div class="prof-crm">' + p.crm + '</div>' +
-        '</div>' +
-      '</div>' +
-      '<p class="prof-desc">' + p.bio + '</p>' +
-      '<div class="prof-actions">' +
-        '<button class="btn btn-ghost btn-sm" onclick="verAgenda(\'' + p.id + '\')">Ver agenda</button>' +
-        '<a href="agendamento.html?especialidade=' + encodeURIComponent(espId(p.esp)) + '&profissional=' + p.id + '" class="btn btn-primary btn-sm">Agendar</a>' +
-      '</div>' +
-    '</div>';
-  }).join('');
 
-  function espId(nome) {
-    const m = { 'Clínica Geral': 'clinica-geral', 'Cardiologia': 'cardiologia', 'Odontologia': 'odontologia', 'Fisioterapia': 'fisioterapia', 'Dermatologia': 'dermatologia', 'Nutrição': 'nutricao' };
-    return m[nome] || nome.toLowerCase();
-  }
+  // Esqueleto de loading
+  grid.innerHTML = Array(6).fill(
+    '<div class="prof-card" style="min-height:200px;background:var(--bg-subtle);border-radius:var(--r-card);animation:pulse 1.5s infinite"></div>'
+  ).join('');
+
+  getProfissionais()
+    .then(function (profs) {
+      grid.innerHTML = profs.map(renderCard).join('');
+    })
+    .catch(function () {
+      grid.innerHTML = '<p style="color:var(--text-muted);grid-column:1/-1">Não foi possível carregar os profissionais. Tente recarregar a página.</p>';
+    });
+
+  // Modal de agenda
+  let profsCache = [];
+  getProfissionais().then(function (p) { profsCache = p; }).catch(function () {});
 
   window.verAgenda = function (id) {
-    const p = PROFS.find(function (x) { return x.id === id; });
+    const p = profsCache.find(function (x) { return x.id === id; });
     if (!p) return;
+    const esp  = p.especialidade || p.especialidades?.nome || '';
+    const slug = encodeURIComponent(esp);
+    const meta = BIO[p.nome] || {};
+
     document.getElementById('modal-title').textContent = 'Agenda — ' + p.nome;
     document.getElementById('modal-body').innerHTML =
-      '<p style="font-size:13px;color:var(--text-muted);margin-bottom:16px">' + p.esp + ' · ' + p.crm + '</p>' +
-      '<p class="field-label" style="margin-bottom:10px">Horários disponíveis (Seg–Sex)</p>' +
-      '<div class="time-grid">' +
-        p.horarios.map(function (h) {
-          return '<a href="agendamento.html?especialidade=' + encodeURIComponent(espId(p.esp)) + '&profissional=' + p.id + '" class="time-btn" style="text-decoration:none">' + h + '</a>';
-        }).join('') +
-      '</div>' +
-      '<div style="margin-top:20px">' +
-        '<a href="agendamento.html?especialidade=' + encodeURIComponent(espId(p.esp)) + '&profissional=' + p.id + '" class="btn btn-primary btn-full">Agendar com ' + p.nome.split(' ')[0] + ' ' + p.nome.split(' ')[1] + '</a>' +
-      '</div>';
+      `<p style="font-size:13px;color:var(--text-muted);margin-bottom:16px">${esp}${meta.crm ? ' · ' + meta.crm : ''}</p>
+       <p class="field-label" style="margin-bottom:10px">Horários disponíveis (Seg–Sex)</p>
+       <div class="time-grid">
+         ${HORARIOS_PADRAO.map(h =>
+           `<a href="agendamento.html?especialidade=${slug}&profissional=${id}" class="time-btn" style="text-decoration:none">${h}</a>`
+         ).join('')}
+       </div>
+       <div style="margin-top:20px">
+         <a href="agendamento.html?especialidade=${slug}&profissional=${id}" class="btn btn-primary btn-full">
+           Agendar com ${p.nome}
+         </a>
+       </div>`;
+
     document.getElementById('modal-overlay').classList.remove('hidden');
   };
 
@@ -179,8 +181,7 @@
     document.getElementById('modal-overlay').classList.add('hidden');
   });
   document.getElementById('modal-overlay').addEventListener('click', function (e) {
-    if (e.target === document.getElementById('modal-overlay'))
-      document.getElementById('modal-overlay').classList.add('hidden');
+    if (e.target === this) this.classList.add('hidden');
   });
 })();
 </script>

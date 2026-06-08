@@ -1,360 +1,334 @@
-/* ================================================================
-   agendamento.js — Clínica Vitalis
-================================================================ */
+// agendamento.js — fluxo completo de agendamento (3 etapas)
 
-const profissionaisData = {
-    'clinica-geral': [
-        { id: 'carlos-silva',     nome: 'Dr. Carlos Silva',       horarios: ['08:00','09:00','10:00','11:00','13:00','14:00','15:00','16:00'] },
-    ],
-    cardiologia: [
-        { id: 'marina-costa',     nome: 'Dra. Marina Costa',      horarios: ['08:30','09:30','10:30','11:30','14:00','15:00','16:00'] },
-    ],
-    odontologia: [
-        { id: 'fernando-oliveira',nome: 'Dr. Fernando Oliveira',  horarios: ['08:00','09:00','10:00','11:00','13:00','14:00','15:00','16:00','17:00'] },
-    ],
-    fisioterapia: [
-        { id: 'ana-paula',        nome: 'Dra. Ana Paula',         horarios: ['08:00','09:00','10:00','11:00','13:00','14:00','15:00','16:00'] },
-    ],
-    dermatologia: [
-        { id: 'roberto-santos',   nome: 'Dr. Roberto Santos',     horarios: ['08:30','09:30','10:30','11:30','13:30','14:30','15:30','16:30'] },
-    ],
-    nutricao: [
-        { id: 'juliana-martins',  nome: 'Dra. Juliana Martins',   horarios: ['08:00','09:00','10:00','11:00','13:00','14:00','15:00','16:00'] },
-    ],
+/* ── Estado ─────────────────────────────────────────────────── */
+const state = {
+  especialidade: null, // { nome }
+  profissional:  null, // objeto completo da API
+  data:    '',
+  horario: '',
+  nome: '', email: '', telefone: '', cpf: '',
+  primeiraConsulta: false, motivo: '',
 };
 
-/* ---- DOM ---- */
-const formulario          = document.getElementById('agendamentoForm');
-const selectServico       = document.getElementById('servico');
-const selectProfissional  = document.getElementById('profissional');
-const inputData           = document.getElementById('data');
-const horariosContainer   = document.getElementById('horariosContainer');
-const inputHorario        = document.getElementById('horarioSelecionado');
-const msgContainer        = document.getElementById('mensagemAgendamento');
-const resumoAgendamento   = document.getElementById('resumoAgendamento');
-const resumoConteudo      = document.getElementById('resumoConteudo');
-const agendamentoContexto = document.getElementById('agendamentoContexto');
+let todosOsProfissionais = [];
 
-/* ---- Helpers de data ---- */
-function isWeekend(dateStr) {
-    const [y, m, d] = dateStr.split('-').map(Number);
-    const dow = new Date(y, m - 1, d).getDay();
-    return dow === 0 || dow === 6;
-}
+/* ── Refs DOM ────────────────────────────────────────────────── */
+const selEsp   = document.getElementById('esp-select');
+const selProf  = document.getElementById('prof-select');
+const dateGrid = document.getElementById('date-grid');
+const timeWrap = document.getElementById('time-wrap');
+const btnNext1 = document.getElementById('btn-next-1');
 
-function proximoDiaUtil(date) {
-    const d = new Date(date);
-    while ([0, 6].includes(d.getDay())) d.setDate(d.getDate() + 1);
-    return d.toISOString().split('T')[0];
-}
+/* ── Init ────────────────────────────────────────────────────── */
+document.addEventListener('DOMContentLoaded', carregarDados);
 
-function dataMinima() {
-    const amanha = new Date();
-    amanha.setDate(amanha.getDate() + 1);
-    amanha.setHours(0, 0, 0, 0);
-    return proximoDiaUtil(amanha);
-}
+async function carregarDados() {
+  selEsp.innerHTML = '<option value="">Carregando...</option>';
+  selEsp.disabled  = true;
 
-function dataMaxima() {
-    const d = new Date();
-    d.setDate(d.getDate() + 90);
-    return d.toISOString().split('T')[0];
-}
+  try {
+    todosOsProfissionais = await getProfissionais();
 
-function horarioJaPassou(dateStr, horario) {
-    const [h, min] = horario.split(':').map(Number);
-    const agora = new Date();
-    const consulta = new Date(dateStr);
-    consulta.setHours(h, min, 0, 0);
-    return consulta <= agora;
-}
+    // especialidades únicas mantendo a ordem de chegada
+    const espVistas = new Set();
+    const especialidades = todosOsProfissionais
+      .map(p => p.especialidade || p.especialidades?.nome || '')
+      .filter(e => { if (!e || espVistas.has(e)) return false; espVistas.add(e); return true; });
 
-function formatarData(str) {
-    const [y, m, d] = str.split('-');
-    return `${d}/${m}/${y}`;
-}
-
-function formatarTelefone(tel) {
-    const digits = tel.replace(/\D/g, '');
-    if (digits.length === 11) return `(${digits.slice(0,2)}) ${digits.slice(2,7)}-${digits.slice(7)}`;
-    if (digits.length === 10) return `(${digits.slice(0,2)}) ${digits.slice(2,6)}-${digits.slice(6)}`;
-    return tel;
-}
-
-function esc(str) {
-    return String(str ?? '').replace(/[&<>"']/g, c =>
-        ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[c])
-    );
-}
-
-/* ---- Buscar slots ocupados no Supabase ---- */
-async function buscarHorariosOcupados(nomeProf, dateStr) {
-    if (!window.VITALIS_DB) return [];
-    try {
-        const rows = await window.VITALIS_DB.rpc('verificar_horarios_ocupados', {
-            p_profissional: nomeProf,
-            p_data: dateStr,
-        });
-        return Array.isArray(rows) ? rows.map(r => String(r.horario).slice(0, 5)) : [];
-    } catch {
-        return [];
-    }
-}
-
-/* ---- UI: profissionais ---- */
-function atualizarProfissionais() {
-    const svc = selectServico.value;
-    selectProfissional.innerHTML = '<option value="">Selecione um profissional</option>';
-    inputData.value   = '';
-    inputHorario.value = '';
-    horariosContainer.innerHTML = '<p class="horario-placeholder">Selecione um profissional e uma data</p>';
-    msgContainer.innerHTML = '';
-    msgContainer.className = 'mensagem-agendamento';
-
-    if (!svc) {
-        selectProfissional.disabled = true;
-        return;
-    }
-
-    selectProfissional.disabled = false;
-    (profissionaisData[svc] || []).forEach(p => {
-        const opt = document.createElement('option');
-        opt.value = p.id;
-        opt.textContent = p.nome;
-        selectProfissional.appendChild(opt);
+    selEsp.innerHTML = '<option value="">Selecione</option>';
+    especialidades.forEach(nome => {
+      const opt = document.createElement('option');
+      opt.value = nome; opt.textContent = nome;
+      selEsp.appendChild(opt);
     });
-}
+    selEsp.disabled = false;
 
-/* ---- UI: datas ---- */
-function atualizarDatasDisponíveis() {
-    inputData.setAttribute('min', dataMinima());
-    inputData.setAttribute('max', dataMaxima());
-    inputData.value    = '';
-    inputHorario.value = '';
-    horariosContainer.innerHTML = '<p class="horario-placeholder">Selecione uma data</p>';
-    msgContainer.innerHTML = '';
-    msgContainer.className = 'mensagem-agendamento';
-}
-
-/* ---- UI: horários ---- */
-async function atualizarHorarios() {
-    const dateStr = inputData.value;
-    const profId  = selectProfissional.value;
-
-    inputHorario.value     = '';
-    msgContainer.innerHTML = '';
-    msgContainer.className = 'mensagem-agendamento';
-
-    if (!dateStr || !profId) {
-        horariosContainer.innerHTML = '<p class="horario-placeholder">Selecione profissional e data</p>';
-        return;
-    }
-
-    if (isWeekend(dateStr)) {
-        inputData.value = '';
-        horariosContainer.innerHTML = '<p class="horario-placeholder">Selecione uma data</p>';
-        showMsg('A clínica não atende nos fins de semana. Escolha uma data de segunda a sexta-feira.', 'aviso');
-        return;
-    }
-
-    const svc      = selectServico.value;
-    const profInfo = (profissionaisData[svc] || []).find(p => p.id === profId);
-    if (!profInfo) return;
-
-    horariosContainer.innerHTML = `
-        <p class="horario-placeholder">
-            <i class="fa-solid fa-spinner fa-spin" aria-hidden="true"></i> Verificando disponibilidade…
-        </p>`;
-
-    const ocupados = await buscarHorariosOcupados(profInfo.nome, dateStr);
-
-    horariosContainer.innerHTML = '';
-    let algumDisponivel = false;
-
-    profInfo.horarios.forEach(horario => {
-        const btn    = document.createElement('button');
-        btn.type     = 'button';
-        btn.className = 'horario-item';
-        btn.textContent = horario;
-
-        const passado = horarioJaPassou(dateStr, horario);
-        const ocupado = ocupados.includes(horario);
-
-        if (passado) {
-            btn.classList.add('passado');
-            btn.disabled = true;
-            btn.setAttribute('aria-label', `${horario} — horário passado`);
-        } else if (ocupado) {
-            btn.classList.add('ocupado');
-            btn.disabled = true;
-            btn.setAttribute('aria-label', `${horario} — horário ocupado`);
-        } else {
-            btn.classList.add('disponivel');
-            algumDisponivel = true;
-            btn.setAttribute('aria-label', `Selecionar horário ${horario}`);
-            btn.addEventListener('click', () => selecionarHorario(horario, btn));
-        }
-
-        horariosContainer.appendChild(btn);
-    });
-
-    if (!algumDisponivel) {
-        showMsg('Não há horários disponíveis nesta data. Por favor, escolha outra data.', 'aviso');
-    }
-}
-
-function selecionarHorario(horario, btn) {
-    document.querySelectorAll('.horario-item.selecionado').forEach(el => el.classList.remove('selecionado'));
-    btn.classList.add('selecionado');
-    inputHorario.value = horario;
-    showMsg(`Horário ${horario} selecionado com sucesso.`, 'sucesso');
-}
-
-function showMsg(text, type) {
-    msgContainer.innerHTML = `<p>${esc(text)}</p>`;
-    msgContainer.className = `mensagem-agendamento ${type === 'sucesso' ? 'sucesso-box' : 'aviso-box'}`;
-}
-
-/* ---- Envio para o banco ---- */
-async function enviarAgendamento(dados) {
-    if (!window.VITALIS_DB) return false;
-    return window.VITALIS_DB.insert('agendamentos', {
-        nome:          dados.nome,
-        email:         dados.email,
-        telefone:      dados.telefone,
-        servico:       dados.servico,
-        profissional:  dados.profissional,
-        data_consulta: dados.dataISO,
-        horario:       dados.horario,
-        motivo:        dados.motivo || null,
-        status:        'pendente',
-    });
-}
-
-/* ---- Submit ---- */
-formulario.addEventListener('submit', async e => {
-    e.preventDefault();
-
-    if (!inputHorario.value) {
-        showMsg('Selecione um horário disponível antes de confirmar.', 'aviso');
-        return;
-    }
-
-    const svc      = selectServico.value;
-    const profId   = selectProfissional.value;
-    const profInfo = (profissionaisData[svc] || []).find(p => p.id === profId);
-    const dateStr  = inputData.value;
-
-    const dados = {
-        nome:         document.getElementById('nome').value.trim(),
-        email:        document.getElementById('email').value.trim(),
-        telefone:     formatarTelefone(document.getElementById('telefone').value.trim()),
-        servico:      document.querySelector(`#servico option[value="${svc}"]`)?.textContent || svc,
-        profissional: profInfo?.nome || '',
-        dataISO:      dateStr,
-        data:         formatarData(dateStr),
-        horario:      inputHorario.value,
-        motivo:       document.getElementById('motivo').value.trim(),
-    };
-
-    const submitBtn = formulario.querySelector('[type="submit"]');
-    submitBtn.disabled = true;
-    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin" aria-hidden="true"></i> Enviando…';
-
-    const ok = await enviarAgendamento(dados);
-
-    submitBtn.disabled = false;
-    submitBtn.innerHTML = '<i class="fas fa-check" aria-hidden="true"></i> Confirmar Agendamento';
-
-    if (ok) {
-        exibirResumo(dados);
-        formulario.reset();
-        selectProfissional.disabled = true;
-        inputHorario.value = '';
-        horariosContainer.innerHTML = '<p class="horario-placeholder">Selecione uma data</p>';
-        msgContainer.innerHTML = '';
-        msgContainer.className = 'mensagem-agendamento';
-    } else {
-        showMsg('Não foi possível enviar o agendamento. Verifique sua conexão e tente novamente, ou ligue para a clínica.', 'aviso');
-    }
-});
-
-/* ---- Resumo ---- */
-function exibirResumo(dados) {
-    const motivo = dados.motivo
-        ? `<div class="resumo-item"><span class="label">Motivo</span><span class="valor">${esc(dados.motivo)}</span></div>`
-        : '';
-
-    resumoConteudo.innerHTML = `
-        <div class="resumo-item"><span class="label">Paciente</span><span class="valor">${esc(dados.nome)}</span></div>
-        <div class="resumo-item"><span class="label">E-mail</span><span class="valor">${esc(dados.email)}</span></div>
-        <div class="resumo-item"><span class="label">Telefone</span><span class="valor">${esc(dados.telefone)}</span></div>
-        <div class="resumo-item"><span class="label">Especialidade</span><span class="valor">${esc(dados.servico)}</span></div>
-        <div class="resumo-item"><span class="label">Profissional</span><span class="valor">${esc(dados.profissional)}</span></div>
-        <div class="resumo-item"><span class="label">Data</span><span class="valor">${esc(dados.data)}</span></div>
-        <div class="resumo-item"><span class="label">Horário</span><span class="valor">${esc(dados.horario)}</span></div>
-        ${motivo}
-        <div class="resumo-rodape">
-            <p><strong>Agendamento realizado com sucesso!</strong></p>
-            <p>Nossa equipe entrará em contato para confirmar. Fique atento ao seu e-mail e telefone.</p>
-        </div>
-    `;
-
-    resumoAgendamento.classList.remove('hidden');
-    setTimeout(() => resumoAgendamento.scrollIntoView({ behavior: 'smooth', block: 'center' }), 200);
-    exibirModalConfirmacao(dados);
-}
-
-/* ---- Modal ---- */
-function exibirModalConfirmacao(dados) {
-    const modal = document.getElementById('modalConfirmacao');
-    if (!modal) return;
-    document.getElementById('modalProfissional').textContent = dados.profissional;
-    document.getElementById('modalDataHora').textContent    = `${dados.data} às ${dados.horario}`;
-    document.getElementById('modalEmail').textContent       = dados.email;
-    modal.classList.remove('hidden');
-    setTimeout(fecharModalConfirmacao, 8000);
-}
-
-function fecharModalConfirmacao() {
-    document.getElementById('modalConfirmacao')?.classList.add('hidden');
-}
-
-/* ---- URL params ---- */
-function aplicarParametrosDaUrl() {
-    const params    = new URLSearchParams(window.location.search);
-    const svcParam  = params.get('servico');
-    const profParam = params.get('profissional');
-
-    if (!svcParam || !profissionaisData[svcParam]) return;
-
-    selectServico.value = svcParam;
-    atualizarProfissionais();
-
-    const profExiste = (profissionaisData[svcParam] || []).some(p => p.id === profParam);
-    if (profParam && profExiste) {
-        selectProfissional.value = profParam;
-        atualizarDatasDisponíveis();
-    }
-
-    const profSel = (profissionaisData[svcParam] || []).find(p => p.id === selectProfissional.value);
-    if (agendamentoContexto && profSel) {
-        agendamentoContexto.classList.remove('hidden');
-        const svcNome = document.querySelector(`#servico option[value="${svcParam}"]`)?.textContent || '';
-        agendamentoContexto.innerHTML = `
-            <i class="fa-solid fa-circle-check" aria-hidden="true"></i>
-            <div>
-                <strong>Atendimento selecionado</strong>
-                <span>${esc(svcNome)} com ${esc(profSel.nome)}</span>
-            </div>
-        `;
-    }
-}
-
-/* ---- Init ---- */
-document.addEventListener('DOMContentLoaded', () => {
-    inputData.setAttribute('min', dataMinima());
-    inputData.setAttribute('max', dataMaxima());
-    selectProfissional.disabled = true;
     aplicarParametrosDaUrl();
+  } catch (e) {
+    selEsp.innerHTML = '<option value="">Erro ao carregar</option>';
+    toast('Não foi possível carregar os profissionais. Recarregue a página.', 'error');
+  }
+}
+
+/* ── Seleção de especialidade ────────────────────────────────── */
+selEsp.addEventListener('change', function () {
+  resetState({ especialidade: this.value ? { nome: this.value } : null });
+
+  const profs = todosOsProfissionais.filter(
+    p => (p.especialidade || p.especialidades?.nome) === this.value
+  );
+  selProf.innerHTML = '<option value="">Selecione um profissional</option>';
+  profs.forEach(p => {
+    const opt = document.createElement('option');
+    opt.value = p.id; opt.textContent = p.nome;
+    selProf.appendChild(opt);
+  });
+  selProf.disabled = profs.length === 0;
+
+  renderDates(); renderTimes([]); checkNext1();
 });
+
+/* ── Seleção de profissional ─────────────────────────────────── */
+selProf.addEventListener('change', function () {
+  state.profissional = todosOsProfissionais.find(p => p.id === this.value) || null;
+  state.data = ''; state.horario = '';
+  renderDates(); renderTimes([]); checkNext1();
+});
+
+/* ── Grade de datas (próximos 14 dias úteis) ─────────────────── */
+function renderDates() {
+  if (!state.profissional) {
+    dateGrid.innerHTML = '<p style="font-size:13px;color:var(--text-muted);grid-column:1/-1">Selecione uma especialidade e profissional.</p>';
+    return;
+  }
+
+  const hoje = new Date();
+  hoje.setHours(0, 0, 0, 0);
+  dateGrid.innerHTML = '';
+
+  const dows = ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'];
+
+  for (let i = 1; i <= 14; i++) {
+    const d    = new Date(hoje);
+    d.setDate(hoje.getDate() + i);
+    const dow       = d.getDay();
+    const fimDeSemana = dow === 0 || dow === 6;
+    const iso       = d.toISOString().split('T')[0];
+
+    const btn = document.createElement('button');
+    btn.type      = 'button';
+    btn.className = 'date-btn' + (iso === state.data ? ' selected' : '');
+    btn.disabled  = fimDeSemana;
+    btn.innerHTML = `<span class="date-dow">${dows[dow]}</span><span class="date-num">${d.getDate()}</span>`;
+
+    if (!fimDeSemana) {
+      btn.addEventListener('click', () => {
+        state.data = iso; state.horario = '';
+        document.querySelectorAll('.date-btn').forEach(b => b.classList.remove('selected'));
+        btn.classList.add('selected');
+        loadTimes(iso); checkNext1();
+      });
+    }
+    dateGrid.appendChild(btn);
+  }
+}
+
+/* ── Horários disponíveis ────────────────────────────────────── */
+async function loadTimes(data) {
+  if (!state.profissional) return;
+  timeWrap.innerHTML = '<p style="font-size:13px;color:var(--text-muted)">Verificando disponibilidade…</p>';
+
+  try {
+    const livres = await getHorariosDisponiveis(state.profissional.id, data);
+    renderTimes(livres, data);
+  } catch {
+    // fallback: exibe todos os horários se API falhar
+    renderTimes(HORARIOS_PADRAO, data);
+  }
+}
+
+function renderTimes(horarios, data) {
+  if (!horarios?.length) {
+    timeWrap.innerHTML = '<p style="font-size:13px;color:var(--text-muted)">Selecione uma data para ver os horários.</p>';
+    return;
+  }
+
+  const agora = new Date();
+  const grid  = document.createElement('div');
+  grid.className = 'time-grid';
+
+  horarios.forEach(h => {
+    const btn = document.createElement('button');
+    btn.type  = 'button';
+    btn.textContent = h;
+
+    // desabilita horários que já passaram no dia de hoje
+    if (data) {
+      const [hh, mm] = h.split(':').map(Number);
+      const dt = new Date(data); dt.setHours(hh, mm, 0, 0);
+      if (dt <= agora) { btn.className = 'time-btn ocupado'; btn.disabled = true; grid.appendChild(btn); return; }
+    }
+
+    btn.className = 'time-btn' + (h === state.horario ? ' selected' : '');
+    btn.addEventListener('click', () => {
+      state.horario = h;
+      grid.querySelectorAll('.time-btn').forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+      checkNext1();
+    });
+    grid.appendChild(btn);
+  });
+
+  timeWrap.innerHTML = '';
+  timeWrap.appendChild(grid);
+}
+
+function checkNext1() {
+  btnNext1.disabled = !(state.especialidade && state.profissional && state.data && state.horario);
+}
+
+/* ── Stepper ─────────────────────────────────────────────────── */
+let etapaAtual = 1;
+
+function goTo(step) {
+  document.querySelectorAll('.step-panel').forEach(p => p.classList.remove('active'));
+  document.getElementById(step === 0 ? 'panel-sucesso' : `panel-${step}`).classList.add('active');
+  etapaAtual = step;
+  updateStepper();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function updateStepper() {
+  [1, 2, 3].forEach(n => {
+    const ind  = document.getElementById(`step-ind-${n}`);
+    const circ = ind.querySelector('.step-circle');
+    ind.classList.remove('active', 'done');
+    if (n < etapaAtual) {
+      ind.classList.add('done');
+      circ.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>';
+    } else {
+      if (n === etapaAtual) ind.classList.add('active');
+      circ.textContent = n;
+    }
+  });
+  [1, 2].forEach(n => {
+    document.getElementById(`line-${n}`)?.classList.toggle('done', n < etapaAtual);
+  });
+}
+
+/* ── Etapa 2: máscaras e validação ───────────────────────────── */
+document.getElementById('p-cpf').addEventListener('input', function () {
+  this.value = this.value.replace(/\D/g, '')
+    .replace(/(\d{3})(\d)/, '$1.$2')
+    .replace(/(\d{3})(\d)/, '$1.$2')
+    .replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+});
+
+document.getElementById('p-tel').addEventListener('input', function () {
+  const d = this.value.replace(/\D/g, '');
+  this.value = d.length <= 10
+    ? d.replace(/(\d{2})(\d{4})(\d*)/, '($1) $2-$3')
+    : d.replace(/(\d{2})(\d{5})(\d*)/, '($1) $2-$3');
+});
+
+document.getElementById('btn-next-1').addEventListener('click', () => goTo(2));
+document.getElementById('btn-back-2').addEventListener('click', () => goTo(1));
+
+document.getElementById('btn-next-2').addEventListener('click', () => {
+  const nome  = document.getElementById('p-nome').value.trim();
+  const email = document.getElementById('p-email').value.trim();
+  const tel   = document.getElementById('p-tel').value.trim();
+
+  if (!nome || !email || !tel) { toast('Preencha nome, e-mail e telefone.', 'error'); return; }
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { toast('Informe um e-mail válido.', 'error'); return; }
+
+  Object.assign(state, {
+    nome, email, telefone: tel,
+    cpf:              document.getElementById('p-cpf').value.trim(),
+    primeiraConsulta: document.getElementById('p-primeira').checked,
+    motivo:           document.getElementById('p-motivo').value.trim(),
+  });
+
+  buildResumo();
+  goTo(3);
+});
+
+document.getElementById('btn-editar')?.addEventListener('click',  () => goTo(2));
+document.getElementById('btn-back-3').addEventListener('click',  () => goTo(2));
+
+/* ── Etapa 3: resumo ─────────────────────────────────────────── */
+function buildResumo() {
+  const dataFmt = state.data ? state.data.split('-').reverse().join('/') : '—';
+  const linhas  = [
+    ['Especialidade', state.especialidade?.nome || '—'],
+    ['Profissional',  state.profissional?.nome  || '—'],
+    ['Data',          dataFmt],
+    ['Horário',       state.horario],
+    ['Paciente',      state.nome],
+    ['E-mail',        state.email],
+    ['Telefone',      state.telefone],
+  ];
+  if (state.cpf)              linhas.push(['CPF',    state.cpf]);
+  if (state.motivo)           linhas.push(['Motivo', state.motivo]);
+  if (state.primeiraConsulta) linhas.push(['Obs.',   'Primeira consulta']);
+
+  document.getElementById('resumo-content').innerHTML = linhas
+    .map(([k, v]) => `<div class="resumo-row">
+      <span class="resumo-key">${esc(k)}</span>
+      <span class="resumo-val">${esc(v)}</span>
+    </div>`).join('');
+}
+
+/* ── Submit ──────────────────────────────────────────────────── */
+document.getElementById('btn-confirmar').addEventListener('click', async function () {
+  const btn = this;
+  btn.disabled = true; btn.textContent = 'Confirmando…';
+
+  try {
+    const pacRes = await criarPaciente({
+      nome_completo: state.nome,
+      email:         state.email,
+      telefone:      state.telefone,
+      cpf:           state.cpf || '',
+      primeira_vez:  state.primeiraConsulta,
+    });
+    if (!pacRes.sucesso) throw new Error('Não foi possível registrar seus dados.');
+
+    // especialidade_id vem do próprio profissional
+    const espId = state.profissional.especialidade_id
+      ?? state.profissional.especialidades?.id
+      ?? null;
+
+    const agRes = await criarAgendamento({
+      paciente_id:      pacRes.paciente_id,
+      profissional_id:  state.profissional.id,
+      especialidade_id: espId,
+      data_consulta:    state.data,
+      horario:          state.horario,
+      motivo:           state.motivo || null,
+    });
+    if (!agRes.sucesso) throw new Error('Não foi possível confirmar o agendamento.');
+
+    const proto = 'VT' + String(agRes.id ?? Date.now()).slice(-8).toUpperCase();
+    document.getElementById('protocol-num').textContent = proto;
+    goTo(0);
+
+  } catch (e) {
+    toast(e.message || 'Ocorreu um erro. Tente novamente.', 'error');
+  } finally {
+    btn.disabled = false; btn.textContent = 'Confirmar agendamento';
+  }
+});
+
+/* ── URL params (link direto com especialidade/profissional) ─── */
+function aplicarParametrosDaUrl() {
+  const { searchParams } = new URL(window.location.href);
+  const esp  = searchParams.get('especialidade');
+  const prof = searchParams.get('profissional');
+  if (!esp) return;
+  selEsp.value = esp;
+  selEsp.dispatchEvent(new Event('change'));
+  if (prof) { selProf.value = prof; selProf.dispatchEvent(new Event('change')); }
+}
+
+/* ── Helpers ─────────────────────────────────────────────────── */
+function resetState(partial = {}) {
+  Object.assign(state, { profissional: null, data: '', horario: '' }, partial);
+}
+
+function esc(s) {
+  return String(s ?? '').replace(/[&<>"']/g, c =>
+    ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c])
+  );
+}
+
+function toast(msg, type = 'info') {
+  const cont = document.getElementById('toasts');
+  if (!cont) return;
+  const t = document.createElement('div');
+  t.className = `toast toast-${type}`;
+  t.textContent = msg;
+  cont.appendChild(t);
+  requestAnimationFrame(() => requestAnimationFrame(() => t.classList.add('show')));
+  setTimeout(() => { t.classList.remove('show'); setTimeout(() => t.remove(), 300); }, 4500);
+}
